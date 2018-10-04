@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const animalSchema = new mongoose.Schema({
-
+  type: {type: String, enum: ['cow', 'sheep']},
   dateOfBirth: Number,
   dateOfPurchase: Number,
   weights: [{ weight: Number, unit: String }],

@@ -26,37 +26,49 @@ const animalData = [
   }
 ];
 
-describe('GET /animals/:id', () => {
+const updateData = {
+  type: 'cow',
+  methodOfRemoval: 'death',
+  saleRevenue: null,
+  revenueCurrency: 'ZAR',
+  saleWeight: null,
+  weightUnit: 'kgs'
+};
+
+describe('PUT /animals/:id', () => {
   beforeEach(done => {
     Animal.deleteMany({})
       .then(() => Animal.create(animalData))
       .then(() => done());
   });
 
-  it('should return a 200 response', done => {
-    api.get(`/api/animals/${testIds[0]}`)
-      .end((err, res) => {
-        expect(res.status).to.eq(200);
+  it('should return a 201 response', done => {
+    api.put(`/api/animals/${testIds[0]}`)
+      .send(updateData)
+      .end(( err, res ) => {
+        expect(res.status).to.eq(201);
         done();
       });
   });
 
   it('should return an object', done => {
-    api.get(`/api/animals/${testIds[0]}`)
-      .end((err, res) => {
+    api.put(`/api/animals/${testIds[0]}`)
+      .send(updateData)
+      .end(( err, res ) => {
         expect(res.body).to.be.an('object');
-        // expect(res.body).to.eql('object');
         done();
       });
   });
 
   it('should return the correct data', done => {
-    api.get(`/api/animals/${testIds[0]}`)
-      .end((err, res) => {
-        expect(res.body._id).to.eq(animalData[0]._id);
-        expect(res.body.type).to.eq(animalData[0].type);
-        expect(res.body.saleRevenue).to.eq(animalData[0].saleRevenue);
+    api.put(`/api/animals/${testIds[0]}`)
+      .send(updateData)
+      .end(( err, res ) => {
+        expect(res.body.saleRevenue).to.eq(updateData.saleRevenue);
+        expect(res.body.methodOfRemoval).to.eq(updateData.methodOfRemoval);
+        expect(res.body.weight).to.eq(updateData.weight);
         done();
       });
+
   });
 });

@@ -14,7 +14,8 @@
    "start:client": "webpack-dev-server",
    "seed": "node db/seeds",
    "build": "webpack",
-   "start": "yarn build && node index"
+   "start": "yarn build && node index",
+   "test:server": "nyc mocha test/server/**/*_spec.js --require test/server/spec_helper --recursive --exit"
  },
  "engines": {
    "node": "9.10.0"

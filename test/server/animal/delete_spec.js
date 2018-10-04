@@ -26,37 +26,29 @@ const animalData = [
   }
 ];
 
-describe('GET /animals/:id', () => {
+describe('DELETE /animal/:id', () => {
   beforeEach(done => {
     Animal.deleteMany({})
-      .then(() => Animal.create(animalData))
+      .then(Animal.create(animalData))
       .then(() => done());
   });
 
-  it('should return a 200 response', done => {
-    api.get(`/api/animals/${testIds[0]}`)
-      .end((err, res) => {
-        expect(res.status).to.eq(200);
+  it('should return a 204 response', done => { // NOTE: get correct
+    api.delete(`/api/animals/${testIds[0]}`)
+      .end(( err, res ) => {
+        expect(res.status).to.eq(204);
         done();
       });
   });
 
-  it('should return an object', done => {
-    api.get(`/api/animals/${testIds[0]}`)
-      .end((err, res) => {
-        expect(res.body).to.be.an('object');
-        // expect(res.body).to.eql('object');
+  it('should remove one item from the database', done => {
+    api.delete(`/api/animals/${testIds[0]}`)
+      .then(() => Animal.find())
+      .then(animals => {
+        // console.log('the animals are: ', animals);
+        expect(animals.length).to.eq(animalData.length - 1);
         done();
       });
   });
 
-  it('should return the correct data', done => {
-    api.get(`/api/animals/${testIds[0]}`)
-      .end((err, res) => {
-        expect(res.body._id).to.eq(animalData[0]._id);
-        expect(res.body.type).to.eq(animalData[0].type);
-        expect(res.body.saleRevenue).to.eq(animalData[0].saleRevenue);
-        done();
-      });
-  });
 });
