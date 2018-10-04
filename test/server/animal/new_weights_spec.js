@@ -1,24 +1,12 @@
 /* globals describe, it, api expect beforeEach */
 
 const Animal = require('../../../models/animal');
-const User = require('../../../models/user');
+const animalTestData = require('../testData/animalsData');
 
-const testIds = [
-  '5b91752666708bc8b1622705', '5b91752666708bc8b1622706', '5b91752666708bc8b1622707', '5b91752666708bc8b1622708'
-];
-
-const animalData = {
-  _id: testIds[0],
-  type: 'cow',
-  owners: [ testIds[1] ],
-  weights: [{weight: 250, unit: 'kgs'}]
-};
-
-const newWeight = {
-  _id: testIds[2],
-  weight: 350,
-  unit: 'kgs'
-};
+//--- TEST DATA ---//
+const testIds = animalTestData.animalIds;
+const animalData = animalTestData.currentSingle;
+const newWeight = animalTestData.newWeight;
 
 describe('POST /animal/:id/weights', () => {
   beforeEach(done => {

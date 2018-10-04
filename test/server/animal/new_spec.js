@@ -1,15 +1,10 @@
 /* globals describe, it, api expect beforeEach */
 
 const Animal = require('../../../models/animal');
+const animalTestData = require('../testData/animalsData');
 
-const animalData = {
-  type: 'cow',
-  methodOfRemoval: 'sale',
-  saleRevenue: 10000,
-  revenueCurrency: 'ZAR',
-  saleWeight: 400,
-  weightUnit: 'kgs'
-};
+
+const animalData = animalTestData.archivedSingle;
 
 describe('POST /animals', () => {
 

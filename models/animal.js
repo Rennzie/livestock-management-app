@@ -5,13 +5,18 @@ const animalSchema = new mongoose.Schema({
   type: {type: String, enum: ['cow', 'sheep']},
   dateOfBirth: Number,
   dateOfPurchase: Number,
+
   weights: [{ weight: Number, unit: String },{timestamps: true}],
-  dateOfRemovel: Number,
+  owners: [{ type: ObjectId, ref: 'User' }],
+
+  // When archived
+  isArchived: {type: Boolean, default: false}, // NOTE: once transfered what happens to this animals archied status
   methodOfRemoval: {type: String, enum: ['sale', 'death', 'theft']},
+  dateOfRemovel: Number,
+  causeOfDeath: String,
+
   saleRevenue: Number,
   revenueCurrency: String,
-  causeOfDeath: String,
-  owners: [{ type: ObjectId, ref: 'User' }],
   saleWeight: Number,
   weightUnit: String
 

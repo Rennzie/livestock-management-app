@@ -1,30 +1,9 @@
 /* globals describe, it, api expect beforeEach */
 
 const Animal = require('../../../models/animal');
-const testIds = [
-  '5b91752666708bc8b1622705', '5b91752666708bc8b1622706', '5b91752666708bc8b1622707', '5b91752666708bc8b1622708'
-];
+const animalTestData = require('../testData/animalsData');
 
-const animalData = [
-  {
-    _id: testIds[0],
-    type: 'cow',
-    methodOfRemoval: 'sale',
-    saleRevenue: 10000,
-    revenueCurrency: 'ZAR',
-    saleWeight: 400,
-    weightUnit: 'kgs'
-  },{
-    _id: testIds[1],
-    type: 'cow',
-    methodOfRemoval: 'sale',
-    saleRevenue: 7000,
-    revenueCurrency: 'ZAR',
-    saleWeight: 300,
-    weightUnit: 'kgs',
-    weights: [{weight: 500, unit: 'kgs'}]
-  }
-];
+const animalData = animalTestData.archivedMulti;
 
 describe('GET /animals', () => {
   beforeEach(done => {
