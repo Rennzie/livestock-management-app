@@ -15,6 +15,6 @@ const animalSchema = new mongoose.Schema({
   saleWeight: Number,
   weightUnit: String
 
-});
+}, {timestamps: true});
 
 module.exports = mongoose.model('Animal', animalSchema);
