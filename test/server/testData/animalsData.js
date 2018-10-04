@@ -34,7 +34,7 @@ module.exports = {
       // dateOfBirth: ,
       // dateOfPurchase: ,
       type: 'cow',
-      owners: [ userIds[3] ],
+      owners: [ userIds[0] ],
       weights: [{weight: 250, unit: 'kgs'}]
     }, {
       _id: animalIds[1],
@@ -42,6 +42,21 @@ module.exports = {
       // dateOfPurchase: ,
       type: 'cow',
       owners: [ userIds[1] ],
+      weights: [{weight: 250, unit: 'kgs'}]
+    },
+    {
+      _id: animalIds[2],
+      // dateOfBirth: ,
+      // dateOfPurchase: ,
+      type: 'cow',
+      owners: [ userIds[2] ],
+      weights: [{weight: 250, unit: 'kgs'}]
+    }, {
+      _id: animalIds[3],
+      // dateOfBirth: ,
+      // dateOfPurchase: ,
+      type: 'cow',
+      owners: [ userIds[3] ],
       weights: [{weight: 250, unit: 'kgs'}]
     }
   ],
