@@ -11,7 +11,7 @@ const animalData = {
   _id: testIds[0],
   type: 'cow',
   owners: [ testIds[1] ],
-  weights: [{weight: 250, units: 'kgs'}]
+  weights: [{weight: 250, unit: 'kgs'}]
 };
 
 const newWeight = {
@@ -20,23 +20,10 @@ const newWeight = {
   unit: 'kgs'
 };
 
-const userData = {
-  _id: testIds[1],
-  username: 'Rennzie',
-  email: 'rnnsea001@gmail.com',
-  password: 'pass',
-  passwordConfirmation: 'pass',
-  firstName: 'Sean',
-  surname: 'Rennie',
-  age: 28,
-  farmName: 'Palmiet'
-};
-
 describe('POST /animal/:id/weights', () => {
   beforeEach(done => {
     Animal.deleteMany({})
       .then(() => Animal.create(animalData))
-      .then(() => User.create(userData))
       .then(() => done());
   });
 
@@ -44,6 +31,7 @@ describe('POST /animal/:id/weights', () => {
     api.post(`/api/animals/${testIds[0]}/weights`)
       .send(newWeight)
       .end(( err, res ) => {
+        console.log('the result is', res.body);
         expect(res.status).to.eq(201);
         done();
       });

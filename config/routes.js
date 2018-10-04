@@ -27,4 +27,7 @@ Router.route('/animals/:id')
   .delete(animalController.delete)
   .put(animalController.update);
 
+Router.route('/animals/:animalId/weights')
+  .post(animalController.addWeight);
+
 module.exports = Router;
