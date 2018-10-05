@@ -1,4 +1,6 @@
 const Animal = require('../models/animal');
+const csv = require('fast-csv');
+const fs = require('fs');
 
 function animalCreate( req, res, next ){
   Animal
@@ -47,6 +49,22 @@ function animalWeightAdd( req, res, next ){
     .catch(next);
 }
 
+function animalWeightsBatchUpload( req, res, next ){
+  console.log('the file path is====> ', req.file.path);
+  const fileRows = [];
+  csv.fromPath(req.file.path, {headers: true, ignoreEmpty: true})
+    .on('data', data => {
+      fileRows.push(data); //push each row into fileRows as JSON object
+      // console.log('the data should be', data);
+    })
+    .on('end', () => {
+      console.log('the converted CSV rows are ======> ', fileRows);
+      fs.unlinkSync(req.file.path);
+    })
+    .then(() => res.json(fileRows)) //remove tmp files
+    .catch(next);
+}
+
 module.exports = {
   create: animalCreate,
   show: animalShow,
@@ -55,5 +73,6 @@ module.exports = {
   update: animalEdit,
 
   //sub-documents
-  addWeight: animalWeightAdd
+  addWeight: animalWeightAdd,
+  addWeights: animalWeightsBatchUpload
 };

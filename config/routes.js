@@ -1,6 +1,9 @@
 const express = require('express');
 const Router = express.Router();
 
+const multer = require('multer');
+const upload = multer({dest: 'temp/csv'}); //saves uploaded files to destination
+
 // Controllers
 const authController = require('../controllers/authController');
 const userController = require('../controllers/userController');
@@ -29,5 +32,8 @@ Router.route('/animals/:id')
 
 Router.route('/animals/:animalId/weights')
   .post(animalController.addWeight);
+
+Router.route('/animals/weights')
+  .post(upload.single('file'), animalController.addWeights);
 
 module.exports = Router;
