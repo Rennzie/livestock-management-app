@@ -1,32 +1,31 @@
 /* globals describe, it, api expect beforeEach */
 
-const Animal = require('../../../models/animal');
-const animalTestData = require('../testData/animalsData');
+const Bovine = require('../../../models/bovine');
+const bovineTestData = require('../testData/bovinesData');
 
 //--- TEST DATA ---//
-const testIds = animalTestData.animalIds;
-const animalData = animalTestData.currentSingle;
-const newWeight = animalTestData.newWeight;
+const testIds = bovineTestData.bovineIds;
+const bovineData = bovineTestData.currentSingle;
+const newWeight = bovineTestData.newWeight;
 
-describe('POST /animal/:id/weights', () => {
+describe('POST /bovine/:id/weights', () => {
   beforeEach(done => {
-    Animal.deleteMany({})
-      .then(() => Animal.create(animalData))
+    Bovine.deleteMany({})
+      .then(() => Bovine.create(bovineData))
       .then(() => done());
   });
 
   it('should return a 201 response', done => {
-    api.post(`/api/animals/${testIds[0]}/weights`)
+    api.post(`/api/bovines/${testIds[0]}/weights`)
       .send(newWeight)
       .end(( err, res ) => {
-        console.log('the result is', res.body);
         expect(res.status).to.eq(201);
         done();
       });
   });
 
   it('should return an object which contains a weights array', done => {
-    api.post(`/api/animals/${testIds[0]}/weights`)
+    api.post(`/api/bovines/${testIds[0]}/weights`)
       .send(newWeight)
       .end(( err, res ) => {
         expect(res.body).to.be.an('object');
@@ -36,16 +35,16 @@ describe('POST /animal/:id/weights', () => {
   });
 
   it('should increase the length of the weights array by one if it exists', done => {
-    api.post(`/api/animals/${testIds[0]}/weights`)
+    api.post(`/api/bovines/${testIds[0]}/weights`)
       .send(newWeight)
       .end(( err, res ) => {
-        expect(res.body.weights.length).to.eq(animalData.weights.length + 1);
+        expect(res.body.weights.length).to.eq(bovineData.weights.length + 1);
         done();
       });
   });
 
   it('should return the correct data', done => {
-    api.post(`/api/animals/${testIds[0]}/weights`)
+    api.post(`/api/bovines/${testIds[0]}/weights`)
       .send(newWeight)
       .end(( err, res ) => {
         const updatedWeight = res.body.weights.filter(weight => weight._id === testIds[2])[0];

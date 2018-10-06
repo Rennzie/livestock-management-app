@@ -7,7 +7,7 @@ const upload = multer({dest: 'temp/csv'}); //saves uploaded files to destination
 // Controllers
 const authController = require('../controllers/authController');
 const userController = require('../controllers/userController');
-const animalController = require('../controllers/animalController');
+const bovineController = require('../controllers/bovineController');
 
 //--- Auth Routes ---//
 Router.route('/register')
@@ -21,19 +21,19 @@ Router.route('/users/:id')
   .delete(userController.delete);
 
 //--- Animal Model Routes ---//
-Router.route('/animals')
-  .post(animalController.create)
-  .get(animalController.index);
+Router.route('/bovines')
+  .post(bovineController.create)
+  .get(bovineController.index);
 
-Router.route('/animals/:id')
-  .get(animalController.show)
-  .delete(animalController.delete)
-  .put(animalController.update);
+Router.route('/bovines/:id')
+  .get(bovineController.show)
+  .delete(bovineController.delete)
+  .put(bovineController.update);
 
-Router.route('/animals/:animalId/weights')
-  .post(animalController.addWeight);
+Router.route('/bovines/:bovineId/weights')
+  .post(bovineController.addWeight);
 
-Router.route('/animals/weights')
-  .post(upload.single('file'), animalController.addWeights);
+Router.route('/bovines/weights')
+  .post(upload.single('file'), bovineController.addWeights);
 
 module.exports = Router;
