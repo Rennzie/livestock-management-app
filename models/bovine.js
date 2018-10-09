@@ -32,8 +32,11 @@ const bovineSchema = new mongoose.Schema({
 
   },
 
+  //--- FATTENING DETAILS ---///
   fattening: {
+    dateStarted: Number,
     status: { type: Boolean, default: false },
+    type: { type: String, enum: ['feedlot', 'grasslot'] },
     period: String
 
   },
@@ -53,6 +56,10 @@ const bovineSchema = new mongoose.Schema({
   owners: [{ type: ObjectId, ref: 'User' }]
 
 }, {timestamps: true});
+
+// make sure the virtuals get added
+bovineSchema.set('toObject', { virtuals: true });
+bovineSchema.set('toJSON', { virtuals: true });
 
 
 
