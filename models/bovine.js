@@ -51,9 +51,9 @@ const bovineSchema = new mongoose.Schema({
     saleRevenue: Number,
     revenueCurrency: String,
     dateOfSale: Number
-  },
+  }
 
-  owners: [{ type: ObjectId, ref: 'User' }]
+  // owners: [{ type: ObjectId, ref: 'User' }]
 
 }, {timestamps: true});
 

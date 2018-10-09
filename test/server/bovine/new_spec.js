@@ -3,7 +3,6 @@
 const Bovine = require('../../../models/bovine');
 const bovineTestData = require('../testData/bovinesData');
 
-
 const bovineData = bovineTestData.currentSingle;
 
 describe('POST /bovines', () => {
