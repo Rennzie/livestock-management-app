@@ -40,6 +40,43 @@ function  bovineEdit( req, res, next){
     .catch(next);
 }
 
+//--- UPDATE & CHANGES ---//
+function bovineCategoryUpdate( req, res, next ){
+  Bovine
+    .update(
+      {_id: {$in: req.body.ids}},
+      { category: req.body.newCategory },
+      {multi: true})
+    .then(() => Bovine.find({_id: {$in: req.body.ids}}))
+    .then(bovines => res.status(201).json(bovines))
+    .catch(next);
+}
+
+function bovineTogglePregnancy( req, res, next ){
+  Bovine
+    .find({_id: {$in: req.body}})
+    .then(bovines => bovines.forEach(bovine => bovine.togglePregnancy()))
+    .then(() => res.sendStatus(201))
+    .catch(next);
+}
+
+function bovineBreedingTrue( req, res, next ){
+  Bovine
+    .find({_id: {$in: req.body}})
+    .then(bovines => bovines.forEach(bovine => bovine.setBreedingStatus()))
+    .then(() => res.sendStatus(201))
+    .then(next);
+}
+
+function bovineFattengingTrue( req, res, next ){
+  Bovine
+    .find({_id: {$in: req.body}})
+    .then(bovines => bovines.forEach(bovine => bovine.setFatteningStatus()))
+    .then(() => res.sendStatus(201))
+    .then(next);
+}
+
+
 //--- SUB-DOCUMENTS ---//
 function  bovineWeightAdd( req, res, next ){
   Bovine
@@ -52,7 +89,6 @@ function  bovineWeightAdd( req, res, next ){
 function  bovineWeightsBatchUpload( req, res, next ){
   const csvOptions = {headers: ['_id', 'weight', 'unit'], renameHeaders: true, ignoreEmpty: true};
   const fileRows = [];
-
   csv.fromPath(req.file.path, csvOptions)
     .on('data', data => {
       fileRows.push(data); //push each row into fileRows as JSON object
@@ -72,12 +108,11 @@ function  bovineWeightsBatchUpload( req, res, next ){
             };
             bovine.addWeight(weightOnly);
           });
-          // BUG: runs this return before the forEach has completed
-          return Bovine.find();
         })
-        .then(bovines => res.status(201).json(bovines))
+        // BUG: runs this return before the forEach has completed
+        // .then(() => Bovine.find({'_id': {$in: ids}}))
+        .then(() => res.sendStatus(201))
         .catch(next);
-    // NOTE: need to now update each weight now that youve found only the ones needing updating
     });
 }
 
@@ -87,6 +122,12 @@ module.exports = {
   index: bovineIndex,
   delete: bovineDelete,
   update: bovineEdit,
+
+  //updates and changes
+  updateCategory: bovineCategoryUpdate,
+  togglePregnancy: bovineTogglePregnancy,
+  setBreedingStatus: bovineBreedingTrue,
+  setFatteningStatus: bovineFattengingTrue,
 
   //sub-documents
   addWeight: bovineWeightAdd,

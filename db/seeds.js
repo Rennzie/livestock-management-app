@@ -8,9 +8,9 @@ mongoose.connect(dbUri);
 
 // Import all the models
 
-const Animal = require('../models/animal');
+const Bovine = require('../models/bovine');
 
-const animalIds = [
+const bovineIds = [
   '5b91752666708bc8b1622705', '5b91752666708bc8b1622706', '5b91752666708bc8b1622707', '5b91752666708bc8b1622708'
 ];
 
@@ -18,43 +18,43 @@ const userIds = [
   '5b91752666708bc8b1622709', '5b91752666708bc8b162271a', '5b91752666708bc8b162271b', '5b91752666708bc8b162271c'
 ];
 
-const animalData = [
+const bovineData = [
   {
-    _id: animalIds[0],
+    _id: bovineIds[0],
     // dateOfBirth: ,
     // dateOfPurchase: ,
-    type: 'cow',
-    owners: [ userIds[0] ],
-    weights: [{weight: 250, unit: 'kgs'}]
+    category: 'calf',
+    breed: 'Hereford',
+    weights: [{timing: 'birth', weight: 250, unit: 'kgs'}]
   }, {
-    _id: animalIds[1],
+    _id: bovineIds[1],
     // dateOfBirth: ,
     // dateOfPurchase: ,
-    type: 'cow',
-    owners: [ userIds[1] ],
-    weights: [{weight: 250, unit: 'kgs'}]
+    category: 'calf',
+    breed: 'Hereford',
+    weights: [{timing: 'birth', weight: 250, unit: 'kgs'}]
   },
   {
-    _id: animalIds[2],
+    _id: bovineIds[2],
     // dateOfBirth: ,
     // dateOfPurchase: ,
-    type: 'cow',
-    owners: [ userIds[2] ],
-    weights: [{weight: 250, unit: 'kgs'}]
+    category: 'calf',
+    breed: 'Hereford',
+    weights: [{timing: 'birth', weight: 250, unit: 'kgs'}]
   }, {
-    _id: animalIds[3],
+    _id: bovineIds[3],
     // dateOfBirth: ,
     // dateOfPurchase: ,
-    type: 'cow',
-    owners: [ userIds[3] ],
-    weights: [{weight: 250, unit: 'kgs'}]
+    category: 'calf',
+    breed: 'Hereford',
+    weights: [{timing: 'birth', weight: 250, unit: 'kgs'}]
   }
 ];
 
-Animal.collection.drop();
+Bovine.collection.drop();
 
-Animal.create(animalData)
-  .then(animals => console.log(`created ${animals.length} new animals`))
+Bovine.create(bovineData)
+  .then(bovines => console.log(`created ${bovines.length} new bovines`))
   .catch(err => console.log('Seeding error is', err))
   .finally(() => mongoose.connection.close());
 

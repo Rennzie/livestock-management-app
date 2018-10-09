@@ -17,7 +17,7 @@ describe('POST /bovines/weights', () => {
       .then(() => done());
   });
 
-  it('should return a 201 response', done => {
+  xit('should return a 201 response', done => {
     api.post('/bovines/weights')
       // .field('Content-Type', 'multipart/form-data')
       .attach('file', newWeights)

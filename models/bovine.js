@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
+/*
+ * NOTE: Ids on palmiet are not always unique and not applied early on.
+ *       Many new technoligies for tracking, chipping etc which will have.
+ *       Use mongo objectId for now as unique identifier which can be changed later
+*/
+
 const bovineSchema = new mongoose.Schema({
   category: { type: String, enum: [ 'calf', 'weaner', 'ox', 'cow', 'bull', 'heifer' ] },
   dateOfBirth: Number,
@@ -15,8 +21,8 @@ const bovineSchema = new mongoose.Schema({
 
   //--- BREEDING DETAILS ---///
   breeding: {
-    status: Boolean,
-    currentlyPregnant: Boolean, // NOTE: this will need to be set to false when a calf is born
+    status: { type: Boolean, default: false },
+    isPregnant: { type: Boolean, default: false }, // NOTE: this will need to be set to false when a calf is born
     calvingPeriod: String,
     production: [{
       dateOfCalving: Number,
@@ -56,6 +62,21 @@ const bovineSchema = new mongoose.Schema({
 bovineSchema.methods.addWeight = function(newWeightObj){
   this.weights.push(newWeightObj);
   return this.save();
+};
+
+bovineSchema.methods.togglePregnancy = function(){
+  this.breeding.isPregnant = !this.breeding.isPregnant;
+  return this.save();
+};
+
+bovineSchema.methods.setBreedingStatus = function(){
+  this.breeding.status = true;
+  this.save();
+};
+
+bovineSchema.methods.setFatteningStatus = function(){
+  this.fattening.status = true;
+  this.save();
 };
 
 module.exports = mongoose.model('Animal', bovineSchema);

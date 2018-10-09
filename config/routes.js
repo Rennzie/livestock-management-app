@@ -20,7 +20,7 @@ Router.route('/users/:id')
   .put(userController.update)
   .delete(userController.delete);
 
-//--- Animal Model Routes ---//
+//--- Bovine Model Routes ---//
 Router.route('/bovines')
   .post(bovineController.create)
   .get(bovineController.index);
@@ -30,10 +30,26 @@ Router.route('/bovines/:id')
   .delete(bovineController.delete)
   .put(bovineController.update);
 
+//Updates & Changes
+Router.route('/bovines/categories')
+  .patch(bovineController.updateCategory);
+
+Router.route('/bovines/pregnant')
+  .patch(bovineController.togglePregnancy);
+
+Router.route('/bovines/breeding')
+  .patch(bovineController.setBreedingStatus);
+
+Router.route('/bovines/fattening')
+  .patch(bovineController.setFatteningStatus);
+
+//Sub-Documents
 Router.route('/bovines/:bovineId/weights')
   .post(bovineController.addWeight);
 
 Router.route('/bovines/weights')
   .post(upload.single('file'), bovineController.addWeights);
+
+
 
 module.exports = Router;

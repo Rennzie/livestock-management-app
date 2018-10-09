@@ -33,8 +33,7 @@ module.exports = {
       category: 'calf',
       breed: 'Hereford',
       weights: [{timing: 'birth', weight: 250, unit: 'kgs'}]
-    },
-    {
+    }, {
       _id: bovineIds[2],
       // dateOfBirth: ,
       // dateOfPurchase: ,
@@ -50,6 +49,11 @@ module.exports = {
       weights: [{timing: 'birth', weight: 250, unit: 'kgs'}]
     }
   ],
+
+  updatedCategories: {
+    ids: [ bovineIds[0], bovineIds[1], bovineIds[2], bovineIds[3] ],
+    newCategory: 'ox'
+  },
 
   currentSingleEdit: {
     category: 'ox',
