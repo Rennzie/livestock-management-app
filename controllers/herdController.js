@@ -38,7 +38,7 @@ function herdDelete(req, res, next){
     .catch(next);
 }
 
-//=== SUB-DOCUMENTS ===//
+//--- SUB-DOCUMENTS ---//
 function herdAddAnimals(req, res, next){
   Herd
     .findById(req.params.herdId)
