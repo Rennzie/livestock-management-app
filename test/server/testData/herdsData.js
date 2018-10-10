@@ -14,6 +14,13 @@ module.exports = {
     category: 'breeding'
   },
 
+  singleManyAnimals: {
+    _id: herdIds[0],
+    name: 'Braford Breeding Group A',
+    animals: [ ...bovineIds ],
+    category: 'breeding'
+  },
+
   updateSingle: {
     _id: herdIds[0],
     name: 'Braford Breeding Group B'

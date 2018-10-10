@@ -6,7 +6,6 @@ const bovineTestData = require('../testData/bovinesData');
 
 //--- TEST DATA ---//
 const herdData = herdTestData.single;
-const herdIds = herdTestData.herdIds;
 const bovineIds = bovineTestData.bovineIds;
 
 
@@ -35,7 +34,7 @@ describe('POST /herds/:id/animals', () => {
         // res.body.animals.forEach(animal => animals.push(animal));
         bovineIds.forEach(id => {
           expect(animals).to.include(id);
-        })
+        });
         done();
       });
   });
@@ -45,7 +44,7 @@ describe('POST /herds/:id/animals', () => {
       .send(bovineIds)
       .end((err, res) => {
         const returnedArray = res.body.animals;
-        const uniqueArray = [ ...new Set(returnedArray) ]
+        const uniqueArray = [ ...new Set(returnedArray) ];
         expect(returnedArray.length).to.eq(uniqueArray.length);
         done();
       });

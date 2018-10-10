@@ -41,11 +41,17 @@ function herdDelete(req, res, next){
 //=== SUB-DOCUMENTS ===//
 function herdAddAnimals(req, res, next){
   Herd
-    .findById(req.params.id)
-    .then(herd => {
-      return herd.addAnimals(req.body)
-    } )
+    .findById(req.params.herdId)
+    .then(herd => herd.addAnimals(req.body))
     .then(herd => res.status(201).json(herd))
+    .catch(next);
+}
+
+function herdRemoveAnimals( req, res, next ){
+  Herd
+    .findById(req.params.herdId)
+    .then(herd => herd.removeAnimals(req.body))
+    .then(herd => res.status(204).json(herd))
     .catch(next);
 }
 
@@ -57,5 +63,6 @@ module.exports ={
   delete: herdDelete,
 
   // Sub-Document
-  addAnimals: herdAddAnimals
+  addAnimals: herdAddAnimals,
+  deleteAnimals: herdRemoveAnimals
 };

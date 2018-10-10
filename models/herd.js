@@ -13,7 +13,7 @@ herdSchema.set('toJSON', { virtuals: true });
 
 //--- METHODS ---//
 
-// Accepts an array of ids and adds them into the animals array
+// Accepts an array of ids and adds them into the animals array if they are not already there
 herdSchema.methods.addAnimals = function(animalIdsArr){
   for(let i = 0; i < animalIdsArr.length; i++){
     if(this.animals.some(animal => animal._id.toString() === animalIdsArr[i])){
@@ -26,8 +26,12 @@ herdSchema.methods.addAnimals = function(animalIdsArr){
 
 // Accepts an array of Ids and filters the animals by them
 herdSchema.methods.removeAnimals = function(animalIdsArr){
-  const updatedAnimals = this.animals.filter(animal => animalIdsArr.includes(animal._id));
+  // console.log('remove animals fired from the model');
+  // console.log('array to filter is', this.animals);
+  const updatedAnimals = this.animals.filter(animal => !animalIdsArr.includes(animal._id.toString()));
+  // console.log('the filtered array is', updatedAnimals);
   this.animals = updatedAnimals;
+  // console.log('====>', this.animals);
   return this.save();
 };
 

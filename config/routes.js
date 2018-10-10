@@ -61,8 +61,9 @@ Router.route('/herds/:id')
   .put(herdController.update)
   .delete(herdController.delete);
 
-Router.route('/herds/:id/animals')
-  .post(herdController.addAnimals);
+Router.route('/herds/:herdId/animals')
+  .post(herdController.addAnimals)
+  .delete(herdController.deleteAnimals);
 
 
 
