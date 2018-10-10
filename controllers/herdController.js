@@ -30,9 +30,18 @@ function herdUpdate(req, res, next){
     .catch(next);
 }
 
+function herdDelete(req, res, next){
+  Herd
+    .findById(req.params.id)
+    .then(herd => herd.remove())
+    .then(() => res.sendStatus(204))
+    .catch(next);
+}
+
 module.exports ={
   create: herdNew,
   show: herdShow,
   index: herdIndex,
-  update: herdUpdate
+  update: herdUpdate,
+  delete: herdDelete
 };

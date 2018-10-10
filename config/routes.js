@@ -58,7 +58,8 @@ Router.route('/herds')
 
 Router.route('/herds/:id')
   .get(herdController.show)
-  .put(herdController.update);
+  .put(herdController.update)
+  .delete(herdController.delete);
 
 
 
