@@ -21,8 +21,18 @@ function herdIndex(req, res, next){
     .catch(next);
 }
 
+function herdUpdate(req, res, next){
+  Herd
+    .findById(req.params.id)
+    .then(herd => herd.set(req.body))
+    .then(herd => herd.save())
+    .then(herd => res.status(201).json(herd))
+    .catch(next);
+}
+
 module.exports ={
   create: herdNew,
   show: herdShow,
-  index: herdIndex
+  index: herdIndex,
+  update: herdUpdate
 };
