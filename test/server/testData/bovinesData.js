@@ -11,8 +11,8 @@ module.exports = {
 
   currentSingle: {
     _id: bovineIds[0],
-    // dateOfBirth: ,
-    // dateOfPurchase: ,
+    // birthDate: ,
+    // purchaseDate: ,
     category: 'calf',
     breed: 'Hereford',
     weights: [{_id: bovineIds[1], timing: 'birth', weight: 250, unit: 'kgs'}]
@@ -21,29 +21,29 @@ module.exports = {
   currentMulti: [
     {
       _id: bovineIds[0],
-      // dateOfBirth: ,
-      // dateOfPurchase: ,
+      // birthDate: ,
+      // purchaseDate: ,
       category: 'calf',
       breed: 'Hereford',
       weights: [{timing: 'birth', weight: 250, unit: 'kgs'}]
     }, {
       _id: bovineIds[1],
-      // dateOfBirth: ,
-      // dateOfPurchase: ,
+      // birthDate: ,
+      // purchaseDate: ,
       category: 'calf',
       breed: 'Hereford',
       weights: [{timing: 'birth', weight: 250, unit: 'kgs'}]
     }, {
       _id: bovineIds[2],
-      // dateOfBirth: ,
-      // dateOfPurchase: ,
+      // birthDate: ,
+      // purchaseDate: ,
       category: 'calf',
       breed: 'Hereford',
       weights: [{timing: 'birth', weight: 250, unit: 'kgs'}]
     }, {
       _id: bovineIds[3],
-      // dateOfBirth: ,
-      // dateOfPurchase: ,
+      // birthDate: ,
+      // purchaseDate: ,
       category: 'calf',
       breed: 'Hereford',
       weights: [{timing: 'birth', weight: 250, unit: 'kgs'}]
@@ -67,7 +67,7 @@ module.exports = {
     sale: {
       saleRevenue: 10000,
       revenueCurrency: 'ZAR'
-      // dateOfSale:
+      // saleDate:
     },
     weights: [
       {timing: 'birth', weight: 500, unit: 'kgs'},
@@ -83,7 +83,7 @@ module.exports = {
       sale: {
         saleRevenue: 10000,
         revenueCurrency: 'ZAR'
-        // dateOfSale:
+        // saleDate:
       },
       weights: [
         {timing: 'birth', weight: 500, unit: 'kgs'},
@@ -96,7 +96,7 @@ module.exports = {
       sale: {
         saleRevenue: 10000,
         revenueCurrency: 'ZAR'
-        // dateOfSale:
+        // saleDate:
       },
       weights: [
         {timing: 'birth', weight: 500, unit: 'kgs'},

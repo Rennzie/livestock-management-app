@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-/*
+/**
  * NOTE: Ids on palmiet are not always unique and not applied early on.
  *       Many new technoligies for tracking, chipping etc which will have.
  *       Use mongo objectId for now as unique identifier which can be changed later
-*/
+ */
 
 const bovineSchema = new mongoose.Schema({
   category: { type: String, enum: [ 'calf', 'weaner', 'ox', 'cow', 'bull', 'heifer' ] },
-  dateOfBirth: Number,
-  dateOfPurchase: Number,
+  birthDate: Number,
+  purchaseDate: Number,
   breed: String,
 
   weights: [{
@@ -44,13 +44,13 @@ const bovineSchema = new mongoose.Schema({
   // When archived
   isArchived: {type: Boolean, default: false}, // NOTE: once transfered what happens to this bovines archied status
   methodOfRemoval: {type: String, enum: ['sale', 'death', 'theft']},
-  dateOfRemovel: Number,
+  removalDate: Number,
   causeOfDeath: String,
 
   sale: {
     saleRevenue: Number,
     revenueCurrency: String,
-    dateOfSale: Number
+    saleDate: Number
   }
 
   // owners: [{ type: ObjectId, ref: 'User' }]
