@@ -1346,6 +1346,14 @@ caseless@~0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
 
+chai-like@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/chai-like/-/chai-like-1.1.1.tgz#8c558a414c34514e814d497c772547ceb7958f64"
+
+chai-things@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/chai-things/-/chai-things-0.2.0.tgz#c55128378f9bb399e994f00052151984ed6ebe70"
+
 chai@^4.1.2:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/chai/-/chai-4.2.0.tgz#760aa72cf20e3795e84b12877ce0e83737aa29e5"

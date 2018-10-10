@@ -61,6 +61,9 @@ Router.route('/herds/:id')
   .put(herdController.update)
   .delete(herdController.delete);
 
+Router.route('/herds/:id/animals')
+  .post(herdController.addAnimals);
+
 
 
 module.exports = Router;

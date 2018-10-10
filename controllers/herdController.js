@@ -38,10 +38,24 @@ function herdDelete(req, res, next){
     .catch(next);
 }
 
+//=== SUB-DOCUMENTS ===//
+function herdAddAnimals(req, res, next){
+  Herd
+    .findById(req.params.id)
+    .then(herd => {
+      return herd.addAnimals(req.body)
+    } )
+    .then(herd => res.status(201).json(herd))
+    .catch(next);
+}
+
 module.exports ={
   create: herdNew,
   show: herdShow,
   index: herdIndex,
   update: herdUpdate,
-  delete: herdDelete
+  delete: herdDelete,
+
+  // Sub-Document
+  addAnimals: herdAddAnimals
 };

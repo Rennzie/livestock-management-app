@@ -6,6 +6,9 @@ const chai = require('chai');
 global.should = chai.should();
 global.expect = chai.expect;
 
+chai.use(require('chai-like'));
+chai.use(require('chai-things'));
+
 const supertest = require('supertest');
 const app = require('../../index');
 

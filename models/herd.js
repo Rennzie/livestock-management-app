@@ -14,13 +14,18 @@ herdSchema.set('toJSON', { virtuals: true });
 //--- METHODS ---//
 
 // Accepts an array of ids and adds them into the animals array
-herdSchema.methods.addAnimal = function(animalIdsArr){
-  animalIdsArr.forEach(animal => this.animals.push(animal));
+herdSchema.methods.addAnimals = function(animalIdsArr){
+  for(let i = 0; i < animalIdsArr.length; i++){
+    if(this.animals.some(animal => animal._id.toString() === animalIdsArr[i])){
+      continue;
+    }
+    this.animals.push(animalIdsArr[i]);
+  }
   return this.save();
 };
 
 // Accepts an array of Ids and filters the animals by them
-herdSchema.methods.removeAnimal = function(animalIdsArr){
+herdSchema.methods.removeAnimals = function(animalIdsArr){
   const updatedAnimals = this.animals.filter(animal => animalIdsArr.includes(animal._id));
   this.animals = updatedAnimals;
   return this.save();
