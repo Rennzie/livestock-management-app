@@ -1,0 +1,37 @@
+/* globals describe, it, api expect  */
+
+const herdTestData = require('../testData/herdsData');
+
+//--- TEST DATA ---//
+const herdData = herdTestData.single;
+
+describe('POST /api/herds', () => {
+  it('should return a 201 response', done => {
+    api.post('/api/herds')
+      .send(herdData)
+      .end(( err, res ) => {
+        expect(res.status).to.eq(201);
+        done();
+      });
+  });
+
+  it('should return an object', done => {
+    api.post('/api/herds')
+      .send(herdData)
+      .end(( err, res ) => {
+        expect(res.body).to.be.an('object');
+        done();
+      });
+  });
+
+  it('should return the correct data ', done => {
+    api.post('/api/herds')
+      .send(herdData)
+      .end(( err, res ) => {
+        expect(res.body.name).to.eq(herdData.name);
+        expect(res.body.animals).to.eql(herdData.animals);
+        expect(res.body.category).to.eq(herdData.category);
+        done();
+      });
+  });
+});

@@ -8,6 +8,7 @@ const upload = multer({dest: 'temp/csv'}); //saves uploaded files to destination
 const authController = require('../controllers/authController');
 const userController = require('../controllers/userController');
 const bovineController = require('../controllers/bovineController');
+const herdController = require('../controllers/herdController');
 
 //--- Auth Routes ---//
 Router.route('/register')
@@ -49,6 +50,10 @@ Router.route('/bovines/:bovineId/weights')
 
 Router.route('/bovines/weights')
   .post(upload.single('file'), bovineController.addWeights);
+
+//--- Herd Model Routes ---//
+Router.route('/herds')
+  .post(herdController.create);
 
 
 

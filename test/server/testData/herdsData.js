@@ -1,0 +1,12 @@
+const herdIds = [
+  '5b91752666708bc8b1622821', '5b91752666708bc8b1622806', '5b91752666708bc8b1622807', '5b91752666708bc8b1622808'
+];
+
+module.exports = {
+  herdIds: herdIds,
+  single: {
+    name: 'Braford Breeding Group A',
+    animals: ['5b91752666708bc8b1622721'],
+    category: 'breeding'
+  }
+};
