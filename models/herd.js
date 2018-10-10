@@ -5,7 +5,7 @@ const herdSchema = new mongoose.Schema({
   name: String,
   animals: [{type: ObjectId, ref: 'Bovine'}],
   category: {type: String, enum: ['breeding', 'yearlings', 'bulls', 'fattening'] }
-});
+}, { timestamps: true });
 
 // make sure the virtuals get added
 herdSchema.set('toObject', { virtuals: true });

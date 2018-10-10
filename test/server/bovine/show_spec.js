@@ -6,30 +6,6 @@ const bovineTestData = require('../testData/bovinesData');
 //--- TEST DATA ---//
 const testIds = bovineTestData.bovineIds;
 const bovineData = bovineTestData.archivedMulti;
-// const testIds = [
-//   '5b91752666708bc8b1622705', '5b91752666708bc8b1622706', '5b91752666708bc8b1622707', '5b91752666708bc8b1622708'
-// ];
-//
-// const bovineData = [
-//   {
-//     _id: testIds[0],
-//     type: 'cow',
-//     methodOfRemoval: 'sale',
-//     saleRevenue: 10000,
-//     revenueCurrency: 'ZAR',
-//     saleWeight: 400,
-//     weightUnit: 'kgs'
-//   },{
-//     _id: testIds[1],
-//     type: 'cow',
-//     methodOfRemoval: 'sale',
-//     saleRevenue: 7000,
-//     revenueCurrency: 'ZAR',
-//     saleWeight: 300,
-//     weightUnit: 'kgs',
-//     weights: [{weight: 500, unit: 'kgs'}]
-//   }
-// ];
 
 describe('GET /bovines/:id', () => {
   beforeEach(done => {

@@ -1,11 +1,18 @@
-/* globals describe, it, api expect  */
+/* globals describe, it, api expect beforeEach  */
 
+const Herd = require('../../../models/herd');
 const herdTestData = require('../testData/herdsData');
 
 //--- TEST DATA ---//
 const herdData = herdTestData.single;
 
 describe('POST /api/herds', () => {
+
+  beforeEach(done => {
+    Herd.deleteMany({})
+      .then(() => done());
+  });
+
   it('should return a 201 response', done => {
     api.post('/api/herds')
       .send(herdData)

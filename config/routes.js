@@ -53,7 +53,11 @@ Router.route('/bovines/weights')
 
 //--- Herd Model Routes ---//
 Router.route('/herds')
-  .post(herdController.create);
+  .post(herdController.create)
+  .get(herdController.index);
+
+Router.route('/herds/:id')
+  .get(herdController.show);
 
 
 
