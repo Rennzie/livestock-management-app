@@ -36,7 +36,7 @@ module.exports = {
       _id: herdIds[1],
       name: 'Hereford Fattening Group A',
       animals: ['5b91752666708bc8b1622705'],
-      category: 'fattening'
+      category: 'grasslot'
     }
   ]
 };

@@ -54,12 +54,13 @@ describe('DELETE /users/:id', () => {
       });
   });
 
-  xit('should delete the correct user', done => {
+  it('should delete the correct user', done => {
     api.get(`/api/users/${testIds[0]}`)
       .then(() => User.find())
       .then(users => {
-        const isNotIncluded = users.filter(user => user._id !== testIds[0]);
-        expect(!!isNotIncluded.length).to.be.false;
+        const userIds = [];
+        users.forEach(user => userIds.push(user._id));
+        expect(userIds).to.not.include(testIds[0]);
         done();
       });
   });

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.Types.ObjectId;
+const Moment = require('moment');
 
 /**
  * NOTE: Ids on palmiet are not always unique and not applied early on.
@@ -20,16 +21,17 @@ const bovineSchema = new mongoose.Schema({
   }],
 
   //--- BREEDING DETAILS ---///
+  // NOTE: need answer about what is NB for mating period to track etc to see what else should be tracked
   breeding: {
     status: { type: Boolean, default: false },
-    isPregnant: { type: Boolean, default: false }, // NOTE: this will need to be set to false when a calf is born
+
+    // NOTE: this will need to be set to false when a calf is born
+    isPregnant: { type: Boolean, default: false },
     calvingPeriod: String,
     production: [{
       dateOfCalving: Number,
       offSpring: { type: ObjectId, ref: 'Bovine'}
-      // NOTE: need answer about what is NB for mating period to track etc to see what else should be tracked
     }]
-
   },
 
   //--- FATTENING DETAILS ---///
@@ -42,7 +44,8 @@ const bovineSchema = new mongoose.Schema({
   },
 
   // When archived
-  isArchived: {type: Boolean, default: false}, // NOTE: once transfered what happens to this bovines archied status
+  // NOTE: once transfered, what happens to this bovines archived status
+  isArchived: {type: Boolean, default: false},
   methodOfRemoval: {type: String, enum: ['sale', 'death', 'theft']},
   removalDate: Number,
   causeOfDeath: String,
@@ -61,7 +64,13 @@ const bovineSchema = new mongoose.Schema({
 bovineSchema.set('toObject', { virtuals: true });
 bovineSchema.set('toJSON', { virtuals: true });
 
+//--- VIRTUALS ---//
+// BUG: when this runs with a named function is crashed all the tests
+bovineSchema.virtual('formattedBirthDate')
+  .get(() => formatDate(this.birthDate));
 
+// bovineSchema.virtual('formattedSaleDate')
+//   .get(formatDate(this.birthDate));
 
 
 //--- METHODS ---//
@@ -87,3 +96,9 @@ bovineSchema.methods.setFatteningStatus = function(){
 };
 
 module.exports = mongoose.model('Animal', bovineSchema);
+
+//--- INTERNAL FUNCTIONS ---//
+function formatDate(unixDate){
+  const birthDateMoment = Moment.unix(unixDate);
+  return Moment(birthDateMoment).format('dddd, MMMM Do');
+}

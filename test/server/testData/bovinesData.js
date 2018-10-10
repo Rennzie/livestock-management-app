@@ -6,12 +6,18 @@ const bovineIds = [
 //   '5b91752666708bc8b1622709', '5b91752666708bc8b162271a', '5b91752666708bc8b162271b', '5b91752666708bc8b162271c'
 // ];
 
+// date as unix 10/10/2017 DD/MM/YYY
+const oneYearAgo = 1507564800;
+
+// date as unix 11/10/2018 DD/MM/YYYY
+const today = 1539213325;
+
 module.exports = {
   bovineIds: bovineIds,
 
   currentSingle: {
     _id: bovineIds[0],
-    // birthDate: ,
+    birthDate: oneYearAgo,
     // purchaseDate: ,
     category: 'calf',
     breed: 'Hereford',
@@ -21,28 +27,28 @@ module.exports = {
   currentMulti: [
     {
       _id: bovineIds[0],
-      // birthDate: ,
+      birthDate: oneYearAgo,
       // purchaseDate: ,
       category: 'calf',
       breed: 'Hereford',
       weights: [{timing: 'birth', weight: 250, unit: 'kgs'}]
     }, {
       _id: bovineIds[1],
-      // birthDate: ,
+      birthDate: oneYearAgo,
       // purchaseDate: ,
       category: 'calf',
       breed: 'Hereford',
       weights: [{timing: 'birth', weight: 250, unit: 'kgs'}]
     }, {
       _id: bovineIds[2],
-      // birthDate: ,
+      birthDate: oneYearAgo,
       // purchaseDate: ,
       category: 'calf',
       breed: 'Hereford',
       weights: [{timing: 'birth', weight: 250, unit: 'kgs'}]
     }, {
       _id: bovineIds[3],
-      // birthDate: ,
+      birthDate: oneYearAgo,
       // purchaseDate: ,
       category: 'calf',
       breed: 'Hereford',
@@ -66,8 +72,8 @@ module.exports = {
     methodOfRemoval: 'sale',
     sale: {
       saleRevenue: 10000,
-      revenueCurrency: 'ZAR'
-      // saleDate:
+      revenueCurrency: 'ZAR',
+      saleDate: today
     },
     weights: [
       {timing: 'birth', weight: 500, unit: 'kgs'},
@@ -82,8 +88,8 @@ module.exports = {
       methodOfRemoval: 'sale',
       sale: {
         saleRevenue: 10000,
-        revenueCurrency: 'ZAR'
-        // saleDate:
+        revenueCurrency: 'ZAR',
+        saleDate: today
       },
       weights: [
         {timing: 'birth', weight: 500, unit: 'kgs'},
@@ -95,8 +101,8 @@ module.exports = {
       methodOfRemoval: 'sale',
       sale: {
         saleRevenue: 10000,
-        revenueCurrency: 'ZAR'
-        // saleDate:
+        revenueCurrency: 'ZAR',
+        saleDate: today
       },
       weights: [
         {timing: 'birth', weight: 500, unit: 'kgs'},
