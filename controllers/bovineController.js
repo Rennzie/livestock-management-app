@@ -5,7 +5,9 @@ const fs = require('fs');
 function  bovineCreate( req, res, next ){
   Bovine
     .create(req.body)
-    .then(bovine => res.status(201).json(bovine)) // 201 created
+    
+    // 201 created
+    .then(bovine => res.status(201).json(bovine))
     .catch(next);
 }
 
@@ -91,10 +93,14 @@ function  bovineWeightsBatchUpload( req, res, next ){
   const fileRows = [];
   csv.fromPath(req.file.path, csvOptions)
     .on('data', data => {
-      fileRows.push(data); //push each row into fileRows as JSON object
+
+      //push each row into fileRows as JSON object
+      fileRows.push(data);
     })
     .on('end', () => {
-      fs.unlinkSync(req.file.path);   // remove temp file
+
+      // remove temp file
+      fs.unlinkSync(req.file.path);
       const ids = fileRows.map(item => item._id);
       Bovine
         .find({'_id': {$in: ids}})
