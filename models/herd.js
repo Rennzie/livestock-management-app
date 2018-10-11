@@ -4,7 +4,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const herdSchema = new mongoose.Schema({
   name: String,
   animals: [{type: ObjectId, ref: 'Bovine'}],
-  category: {type: String, enum: ['cow', 'bull-calves', 'weaners', 'bulls', 'pasturelot', 'feedlot', 'grassland'] }
+  category: {type: String, enum: ['cows', 'bull-calves', 'weaners', 'bulls', 'pasturelot', 'feedlot', 'grassland'] }
 }, { timestamps: true });
 
 // make sure the virtuals get added

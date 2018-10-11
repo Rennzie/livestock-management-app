@@ -11,14 +11,14 @@ module.exports = {
     _id: herdIds[0],
     name: 'Braford Breeding Group A',
     animals: [bovineIds[0]],
-    category: 'breeding'
+    category: 'cows'
   },
 
   singleManyAnimals: {
     _id: herdIds[0],
     name: 'Braford Breeding Group A',
     animals: [ ...bovineIds ],
-    category: 'breeding'
+    category: 'cows'
   },
 
   updateSingle: {
@@ -31,12 +31,12 @@ module.exports = {
       _id: herdIds[0],
       name: 'Braford Breeding Group A',
       animals: ['5b91752666708bc8b1622721'],
-      category: 'breeding'
+      category: 'cows'
     },{
       _id: herdIds[1],
       name: 'Hereford Fattening Group A',
       animals: ['5b91752666708bc8b1622705'],
-      category: 'grasslot'
+      category: 'pasturelot'
     }
   ]
 };
