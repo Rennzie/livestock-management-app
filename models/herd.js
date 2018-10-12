@@ -11,6 +11,18 @@ const herdSchema = new mongoose.Schema({
 herdSchema.set('toObject', { virtuals: true });
 herdSchema.set('toJSON', { virtuals: true });
 
+// herdSchema.virtual('averageBirth')
+//   .get(function() {
+//     return this.animals;
+//
+//   });
+
+herdSchema.virtual('animals2', {
+  ref: 'Bovine',
+  localField: 'id',
+  foreignField: 'herd'
+});
+
 //--- METHODS ---//
 // Accepts an array of ids and adds them into the animals array if they are not already there
 herdSchema.methods.addAnimals = function( animalIdsArr ){

@@ -13,6 +13,7 @@ const bovineSchema = new mongoose.Schema({
   birthDate: Number,
   purchaseDate: Number,
   breed: String,
+  herd: { type: ObjectId, ref: 'Herd'},
 
   weights: [{
     timing: { type: String, enum: ['birth', 'sale', 'other']},

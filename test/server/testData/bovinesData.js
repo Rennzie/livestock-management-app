@@ -2,6 +2,10 @@ const bovineIds = [
   '5b91752666708bc8b1622721', '5b91752666708bc8b1622706', '5b91752666708bc8b1622707', '5b91752666708bc8b1622708'
 ];
 
+const herdIds = [
+  '5b91752666708bc8b1622821', '5b91752666708bc8b1622806', '5b91752666708bc8b1622807', '5b91752666708bc8b1622808'
+];
+
 // const userIds = [
 //   '5b91752666708bc8b1622709', '5b91752666708bc8b162271a', '5b91752666708bc8b162271b', '5b91752666708bc8b162271c'
 // ];
@@ -29,6 +33,7 @@ module.exports = {
       _id: bovineIds[0],
       birthDate: oneYearAgo,
       // purchaseDate: ,
+      herd: herdIds[0],
       category: 'calf',
       breed: 'Hereford',
       weights: [{timing: 'birth', weight: 250, unit: 'kgs'}]
@@ -36,6 +41,7 @@ module.exports = {
       _id: bovineIds[1],
       birthDate: oneYearAgo,
       // purchaseDate: ,
+      herd: herdIds[0],
       category: 'calf',
       breed: 'Hereford',
       weights: [{timing: 'birth', weight: 250, unit: 'kgs'}]
@@ -43,6 +49,7 @@ module.exports = {
       _id: bovineIds[2],
       birthDate: oneYearAgo,
       // purchaseDate: ,
+      herd: herdIds[0],
       category: 'calf',
       breed: 'Hereford',
       weights: [{timing: 'birth', weight: 250, unit: 'kgs'}]
@@ -50,6 +57,7 @@ module.exports = {
       _id: bovineIds[3],
       birthDate: oneYearAgo,
       // purchaseDate: ,
+      herd: herdIds[0],
       category: 'calf',
       breed: 'Hereford',
       weights: [{timing: 'birth', weight: 250, unit: 'kgs'}]
