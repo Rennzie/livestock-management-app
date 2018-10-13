@@ -9,6 +9,12 @@ module.exports = {
     name: 'Braford Breeding Group A',
     category: 'cows'
   },
+  
+  single2: {
+    _id: herdIds[1],
+    name: 'Braford Breeding Group A',
+    category: 'cows'
+  },
 
   updateSingle: {
     name: 'Braford Breeding Group B'

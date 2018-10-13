@@ -154,17 +154,8 @@ This model act as a container for any type of animals. It relies primarily on th
 
 - `/herds/:herdId/animals`
 
-  - `post()`
+  - `patch()`
 
-  For adding animals to a herd.
+  Changing the herd of an animal
 
-  Request Requires: An array of animal `ids`
-
-
-- `/herds/:herdId/animals`
-
-  - `delete()`
-
-  For removing animals form a herd.
-
-  Request Requires: An array of animal `ids`
+  Request Requires: An array of animal `ids` in the body

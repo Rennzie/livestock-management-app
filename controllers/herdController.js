@@ -1,4 +1,5 @@
 const Herd = require('../models/herd');
+const Bovine = require('../models/bovine');
 
 function herdNew(req, res, next) {
   Herd
@@ -40,19 +41,13 @@ function herdDelete(req, res, next){
 }
 
 //--- SUB-DOCUMENTS ---//
-function herdAddAnimals(req, res, next){
-  Herd
-    .findById(req.params.herdId)
-    .then(herd => herd.addAnimals(req.body))
-    .then(herd => res.status(201).json(herd))
-    .catch(next);
-}
-
-function herdRemoveAnimals( req, res, next ){
-  Herd
-    .findById(req.params.herdId)
-    .then(herd => herd.removeAnimals(req.body))
-    .then(herd => res.status(204).json(herd))
+function changeHerds(req, res, next){
+  Bovine
+    .update(
+      {_id: {$in: req.body}},
+      {herd: req.params.herdId },
+      {multi: true})
+    .then(() => res.sendStatus(201))
     .catch(next);
 }
 
@@ -64,6 +59,5 @@ module.exports ={
   delete: herdDelete,
 
   // Sub-Document
-  addAnimals: herdAddAnimals,
-  deleteAnimals: herdRemoveAnimals
+  changeHerd: changeHerds
 };
