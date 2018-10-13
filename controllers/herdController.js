@@ -9,8 +9,8 @@ function herdNew(req, res, next) {
 
 function herdShow(req, res, next ){
   Herd
-    .findById(req.params.id)
-    // .populate('animals2')
+    .findById( req.params.id )
+    .populate( 'animals' )
     .then(herd => res.json(herd))
     .catch(next);
 }

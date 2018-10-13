@@ -12,10 +12,10 @@ const bovineData = bovineTestData.currentMulti;
 
 describe('SHOW herds/:id', () => {
   beforeEach(done => {
-    Herd.deleteMany({})
-      .then(() => Herd.create(herdData))
-      .then(() => Bovine.deleteMany({}))
+    Bovine.deleteMany({})
       .then(() => Bovine.create(bovineData))
+      .then(() => Herd.deleteMany({}))
+      .then(() => Herd.create(herdData))
       .then(() => done());
   });
 
@@ -40,18 +40,27 @@ describe('SHOW herds/:id', () => {
       .end(( err, res ) => {
         expect(res.body._id).to.eq(herdData._id);
         expect(res.body.name).to.eq(herdData.name);
-        expect(res.body.animals).to.eql(herdData.animals);
         expect(res.body.category).to.eq(herdData.category);
         done();
       });
   });
 
-  it('should return a key of averageBirth', done => {
+  it('should return a populated array of animals', done => {
     api.get(`/api/herds/${herdIds[0]}`)
       .end(( err, res ) => {
-        console.log('========>', res.body)
-        expect(res.body).to.have.property('animals2');
-        expect(res.body.averageBirth).to.be.an('array');
+        expect(res.body).to.have.property('animals');
+        expect(res.body.animals).to.be.an('array');
+        expect(res.body.animals[0]).to.be.an('object');
+        expect(res.body.animals[0]).to.have.property('breed');
+        done();
+      });
+  });
+
+  it('should return an averageBirth virtual', done => {
+    api.get(`/api/herds/${herdIds[0]}`)
+      .end(( err, res ) => {
+        expect(res.body).to.have.property('averageBirth');
+        expect(res.body.averageBirth).to.be.a('number');
         done();
       });
   });

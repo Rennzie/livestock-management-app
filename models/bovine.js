@@ -13,7 +13,7 @@ const bovineSchema = new mongoose.Schema({
   birthDate: Number,
   purchaseDate: Number,
   breed: String,
-  herd: { type: ObjectId, ref: 'Herd'},
+  herd: { type: ObjectId, ref: 'Herd' },
 
   weights: [{
     timing: { type: String, enum: ['birth', 'sale', 'other']},
@@ -96,7 +96,7 @@ bovineSchema.methods.setFatteningStatus = function(){
   this.save();
 };
 
-module.exports = mongoose.model('Animal', bovineSchema);
+module.exports = mongoose.model('Bovine', bovineSchema);
 
 //--- INTERNAL FUNCTIONS ---//
 function formatDate(unixDate){

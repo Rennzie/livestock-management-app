@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
-const ObjectId = mongoose.Schema.Types.ObjectId;
+// const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const herdSchema = new mongoose.Schema({
   name: String,
-  animals: [{type: ObjectId, ref: 'Bovine'}],
   category: {type: String, enum: ['cows', 'bull-calves', 'weaners', 'bulls', 'pasturelot', 'feedlot', 'grassland'] }
 }, { timestamps: true });
 
@@ -11,17 +10,23 @@ const herdSchema = new mongoose.Schema({
 herdSchema.set('toObject', { virtuals: true });
 herdSchema.set('toJSON', { virtuals: true });
 
-// herdSchema.virtual('averageBirth')
-//   .get(function() {
-//     return this.animals;
-//
-//   });
+//--- HOOKS ---//
 
-herdSchema.virtual('animals2', {
+//--- VIRTUALS ---//
+herdSchema.virtual('animals', {
   ref: 'Bovine',
-  localField: 'id',
+  localField: '_id',
   foreignField: 'herd'
 });
+//
+herdSchema.virtual('averageBirth')
+  .get(function() {
+    if(!this.animals) return null;
+    
+    let totalBirthDate = 0;
+    this.animals.forEach(animal => totalBirthDate += animal.birthDate);
+    return totalBirthDate/this.animals.length;
+  });
 
 //--- METHODS ---//
 // Accepts an array of ids and adds them into the animals array if they are not already there
