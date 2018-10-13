@@ -95,6 +95,7 @@ module.exports = {
       _id: bovineIds[0],
       category: 'ox',
       methodOfRemoval: 'sale',
+      birthDate: oneYearAgo,
       sale: {
         saleRevenue: 10000,
         revenueCurrency: 'ZAR',
@@ -108,6 +109,7 @@ module.exports = {
       _id: bovineIds[1],
       category: 'ox',
       methodOfRemoval: 'sale',
+      birthDate: oneYearAgo,
       sale: {
         saleRevenue: 10000,
         revenueCurrency: 'ZAR',

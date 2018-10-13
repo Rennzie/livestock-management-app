@@ -22,29 +22,31 @@ herdSchema.virtual('animals', {
 herdSchema.virtual('averageBirth')
   .get(function() {
     if(!this.animals) return null;
-    
+
     let totalBirthDate = 0;
     this.animals.forEach(animal => totalBirthDate += animal.birthDate);
     return totalBirthDate/this.animals.length;
   });
 
 //--- METHODS ---//
-// Accepts an array of ids and adds them into the animals array if they are not already there
-herdSchema.methods.addAnimals = function( animalIdsArr ){
-  for ( let i = 0; i < animalIdsArr.length; i++ ){
-    if ( this.animals.some( animal => animal._id.toString() === animalIdsArr[i] )){
-      continue;
-    }
-    this.animals.push( animalIdsArr[i] );
-  }
-  return this.save();
-};
-
-// Accepts an array of Ids and filters the animals by them
-herdSchema.methods.removeAnimals = function( animalIdsArr ){
-  const updatedAnimals = this.animals.filter( animal => !animalIdsArr.includes( animal._id.toString() ));
-  this.animals = updatedAnimals;
-  return this.save();
-};
 
 module.exports = mongoose.model('Herd', herdSchema);
+
+// NOTE: these methods are deprecated unless we need to change back to the old method of adding animals to herd.
+// Accepts an array of ids and adds them into the animals array if they are not already there
+// herdSchema.methods.addAnimals = function( animalIdsArr ){
+//   for ( let i = 0; i < animalIdsArr.length; i++ ){
+//     if ( this.animals.some( animal => animal._id.toString() === animalIdsArr[i] )){
+//       continue;
+//     }
+//     this.animals.push( animalIdsArr[i] );
+//   }
+//   return this.save();
+// };
+//
+// // Accepts an array of Ids and filters the animals by them
+// herdSchema.methods.removeAnimals = function( animalIdsArr ){
+//   const updatedAnimals = this.animals.filter( animal => !animalIdsArr.includes( animal._id.toString() ));
+//   this.animals = updatedAnimals;
+//   return this.save();
+// };

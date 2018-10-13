@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.Types.ObjectId;
-const Moment = require('moment');
+const moment = require('moment');
 
 /**
  * NOTE: Ids on palmiet are not always unique and not applied early on.
@@ -66,13 +66,14 @@ bovineSchema.set('toObject', { virtuals: true });
 bovineSchema.set('toJSON', { virtuals: true });
 
 //--- VIRTUALS ---//
-// BUG: when this runs with a named function is crashed all the tests
 bovineSchema.virtual('formattedBirthDate')
-  .get(() => formatDate(this.birthDate));
+  .get((function(){
+    const momentObj = moment.unix(this.birthDate);
+    return moment(momentObj).format('DD/MM/YYYY');
+  }));
 
 // bovineSchema.virtual('formattedSaleDate')
 //   .get(formatDate(this.birthDate));
-
 
 //--- METHODS ---//
 
@@ -96,10 +97,10 @@ bovineSchema.methods.setFatteningStatus = function(){
   this.save();
 };
 
-module.exports = mongoose.model('Bovine', bovineSchema);
-
 //--- INTERNAL FUNCTIONS ---//
-function formatDate(unixDate){
-  const birthDateMoment = Moment.unix(unixDate);
-  return Moment(birthDateMoment).format('dddd, MMMM Do');
-}
+// function formatDate(unixDate){
+//   const momentObj = moment.unix(unixDate);
+//   return moment(momentObj).format('DD/MM/YYYY');
+// }
+
+module.exports = mongoose.model('Bovine', bovineSchema);

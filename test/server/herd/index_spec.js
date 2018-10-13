@@ -34,11 +34,9 @@ describe('GET /herds', () => {
   it('should return the correct data', done => {
     api.get('/api/herds')
       .end((err, res) => {
-        console.log('the expected data is =========> ', res.body)
         res.body.forEach( herd => {
           const testHerd = herdData.filter( herdTest => herd._id.toString() === herdTest._id )[0];
           expect(herd.name).to.be.eq(testHerd.name);
-          // expect(herd.animals).to.eql(testHerd.animals);
           expect(herd.category).to.eq(testHerd.category);
         });
         done();
