@@ -1,13 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+// COMPONENTS
+import Dashboard from './components/Dashboard/index.jsx';
+
+
 console.log('app.js loaded with application');
 
 class App extends React.Component {
   render() {
     return(
       <main>
-        <div>Hello World</div>
+        <Dashboard />
       </main>
     );
   }

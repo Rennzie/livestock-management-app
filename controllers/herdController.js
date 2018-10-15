@@ -19,6 +19,7 @@ function herdShow(req, res, next ){
 function herdIndex(req, res, next){
   Herd
     .find()
+    .populate( 'animals' )
     .then(herds => res.json(herds))
     .catch(next);
 }

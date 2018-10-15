@@ -28,6 +28,23 @@ herdSchema.virtual('averageBirth')
     return totalBirthDate/this.animals.length;
   });
 
+herdSchema.virtual('totalAnimals')
+  .get(function() {
+    if(!this.animals) return null;
+
+    return this.animals.length;
+  });
+
+herdSchema.virtual('totalPregnant')
+  .get(function() {
+    if(!this.animals) return null;
+    if(this.category !== 'cows') return null;
+
+    const pregnantCows = this.animals.filter(animal => animal.breeding.isPregnant);
+
+    return pregnantCows.length;
+  });
+
 //--- METHODS ---//
 
 module.exports = mongoose.model('Herd', herdSchema);

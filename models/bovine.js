@@ -39,7 +39,7 @@ const bovineSchema = new mongoose.Schema({
   fattening: {
     dateStarted: Number,
     status: { type: Boolean, default: false },
-    type: { type: String, enum: ['feedlot', 'grasslot'] },
+    // type: { type: String, enum: ['feedlot', 'grasslot'] },
     period: String
 
   },

@@ -17,7 +17,7 @@ const HotModuleReplcement = new webpack.HotModuleReplacementPlugin();
 
 module.exports = {
   mode: 'development',
-  entry: './src/app.js',
+  entry: './src/app.jsx',
   output: {
     path: path.resolve('public'),
     filename: 'app.js',
@@ -47,5 +47,8 @@ module.exports = {
       }
     }
   },
+  // resolve: {
+  //   extensions: ["", ".jsx", ".webpack.js", ".web.js", ".js", ".json"]
+  // },
   plugins: [HotModuleReplcement, HtmlWebpack, CopyWebpack]
 };
