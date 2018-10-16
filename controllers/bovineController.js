@@ -5,7 +5,7 @@ const fs = require('fs');
 function  bovineCreate( req, res, next ){
   Bovine
     .create(req.body)
-    
+
     // 201 created
     .then(bovine => res.status(201).json(bovine))
     .catch(next);
@@ -78,11 +78,22 @@ function bovineFattengingTrue( req, res, next ){
     .then(next);
 }
 
+function updateProduction( req, res, next ) {
+  Bovine
+    .findById(req.params.id)
+    .then(bovine =>{
+      console.log('FIRED FROM THE BOVINE CONTROLLER!!!', req.body);
+      bovine.addNewCalf(req.body.calfId);
+    })
+    .then(() => res.sendStatus(201))
+    .catch(next);
+}
+
 
 //--- SUB-DOCUMENTS ---//
 function  bovineWeightAdd( req, res, next ){
   Bovine
-    .findById(req.params. bovineId)
+    .findById(req.params.bovineId)
     .then(bovine => bovine.addWeight(req.body))
     .then(bovine => res.status(201).json(bovine))
     .catch(next);
@@ -134,6 +145,7 @@ module.exports = {
   togglePregnancy: bovineTogglePregnancy,
   setBreedingStatus: bovineBreedingTrue,
   setFatteningStatus: bovineFattengingTrue,
+  updateProduction: updateProduction,
 
   //sub-documents
   addWeight: bovineWeightAdd,

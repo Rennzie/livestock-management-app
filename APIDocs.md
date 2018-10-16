@@ -111,6 +111,16 @@ Primary model for collecting information all Cattle.
 
     The request uses the `addWeight()` method to push the object into an animals `weights` array. It returns an object with animal whose weight has been changed.
 
+- `/bovines/:id/breeding/production`
+
+  -`post()`
+
+  For updating a mothers production array with a newly registered calf.
+
+  Request Requires: an object with a key of `calfId` and a value of the new calfs `id`.
+
+  The request uses the `.addNewCalf()` method to push the id into the mother animals `breeding.production` array.
+
 
 - `/bovines/weights`
   - `post()`

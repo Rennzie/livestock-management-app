@@ -25,6 +25,9 @@ Router.route('/bovines/pregnant')
 Router.route('/bovines/breeding')
   .patch(bovineController.setBreedingStatus);
 
+Router.route('/bovines/:id/breeding/production')
+  .post(bovineController.updateProduction);
+
 Router.route('/bovines/fattening')
   .patch(bovineController.setFatteningStatus);
 

@@ -28,6 +28,28 @@ module.exports = {
     breed: 'Hereford',
     weights: [{_id: bovineIds[1], timing: 'birth', weight: 250, unit: 'kgs'}]
   },
+  motherCow: {
+    _id: bovineIds[0],
+    birthDate: oneYearAgo,
+    category: 'cow',
+    breed: 'Hereford',
+    breeding: {
+      status: true,
+      production: [ bovineIds[1], bovineIds[2] ]
+    },
+    weights: [
+      {timing: 'birth', weight: 250, unit: 'kgs'},
+      {timing: 'other', weight: 500, unit: 'kgs'}
+    ]
+  },
+
+  newCalf: {
+    _id: bovineIds[3],
+    birthDate: today,
+    mother: bovineIds[0],
+    category: 'calf',
+    breed: 'Hereford'
+  },
 
   currentMulti: [
     {

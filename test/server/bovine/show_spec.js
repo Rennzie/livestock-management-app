@@ -44,7 +44,7 @@ describe('GET /bovines/:id', () => {
   it('should have a key called formattedBirthDate which is a string', done => {
     api.get(`/api/bovines/${testIds[0]}`)
       .end((err, res) => {
-        console.log('=======>', res.body.formattedBirthDate);
+        // console.log('=======>', res.body.formattedBirthDate);
         expect(res.body).to.have.property('formattedBirthDate');
         expect(res.body.formattedBirthDate).to.be.a('string');
         done();

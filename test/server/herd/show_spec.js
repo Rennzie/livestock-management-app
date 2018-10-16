@@ -48,7 +48,6 @@ describe('SHOW herds/:id', () => {
   it('should return a populated array of animals', done => {
     api.get(`/api/herds/${herdIds[0]}`)
       .end(( err, res ) => {
-        console.log('the populated virtuals are', res.body);
         expect(res.body).to.have.property('animals');
         expect(res.body.animals).to.be.an('array');
         expect(res.body.animals[0]).to.be.an('object');

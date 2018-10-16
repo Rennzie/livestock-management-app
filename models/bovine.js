@@ -14,6 +14,7 @@ const bovineSchema = new mongoose.Schema({
   purchaseDate: Number,
   breed: String,
   herd: { type: ObjectId, ref: 'Herd', default: null },
+  mother: { type: ObjectId, ref: 'Bovine' },
 
   weights: [{
     timing: { type: String, enum: ['birth', 'sale', 'other']},
@@ -29,10 +30,7 @@ const bovineSchema = new mongoose.Schema({
     // NOTE: this will need to be set to false when a calf is born
     isPregnant: { type: Boolean, default: false },
     calvingPeriod: String,
-    production: [{
-      dateOfCalving: Number,
-      offSpring: { type: ObjectId, ref: 'Bovine'}
-    }]
+    production: [{ type: ObjectId, ref: 'Bovine' }]
   },
 
   //--- FATTENING DETAILS ---///
@@ -82,18 +80,24 @@ bovineSchema.methods.addWeight = function(newWeightObj){
   return this.save();
 };
 
-bovineSchema.methods.togglePregnancy = function(){
+bovineSchema.methods.togglePregnancy = function() {
   this.breeding.isPregnant = !this.breeding.isPregnant;
   return this.save();
 };
 
-bovineSchema.methods.setBreedingStatus = function(){
+bovineSchema.methods.setBreedingStatus = function() {
   this.breeding.status = true;
   this.save();
 };
 
-bovineSchema.methods.setFatteningStatus = function(){
+bovineSchema.methods.setFatteningStatus = function() {
   this.fattening.status = true;
+  this.save();
+};
+
+// To add a newly registered calf to production array
+bovineSchema.methods.addNewCalf = function(newCalfId) {
+  this.breeding.production.push(newCalfId);
   this.save();
 };
 
