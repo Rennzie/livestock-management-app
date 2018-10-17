@@ -8,6 +8,7 @@ const capitalizeFirstLetter = (string) => {
 import { Grid, Card, CardContent } from '@material-ui/core';
 
 function HerdCard({ herd, onClick }) {
+  
   return (
     <Grid item xs={12} key={herd._id}>
       <Card>
