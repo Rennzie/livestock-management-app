@@ -34,6 +34,7 @@ const bovineData = [
   // cows herd
   {
     _id: bovineIds[0],
+    identifier: 'RSA-PAL-2014-01',
     birthDate: oneYearAgo,
     herd: herdIds[0],
     category: 'cow',
@@ -48,6 +49,7 @@ const bovineData = [
     ]
   }, {
     _id: bovineIds[1],
+    identifier: 'RSA-PAL-2014-02',
     birthDate: oneYearAgo,
     herd: herdIds[0],
     category: 'cow',
@@ -62,6 +64,7 @@ const bovineData = [
     ]
   }, {
     _id: bovineIds[2],
+    identifier: 'RSA-PAL-2014-03',
     birthDate: oneYearAgo,
     herd: herdIds[0],
     category: 'cow',
@@ -76,6 +79,7 @@ const bovineData = [
     ]
   }, {
     _id: bovineIds[3],
+    identifier: 'RSA-PAL-2014-04',
     birthDate: oneYearAgo,
     herd: herdIds[0],
     category: 'cow',
@@ -90,6 +94,7 @@ const bovineData = [
     ]
   }, {
     _id: bovineIds[4],
+    identifier: 'RSA-PAL-2014-05',
     birthDate: oneYearAgo,
     herd: herdIds[0],
     category: 'cow',

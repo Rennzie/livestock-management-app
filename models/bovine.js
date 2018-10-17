@@ -9,6 +9,7 @@ const moment = require('moment');
  */
 
 const bovineSchema = new mongoose.Schema({
+  identifier: String,
   category: { type: String, enum: [ 'calf', 'weaner', 'ox', 'cow', 'bull', 'bull-calf', 'heifer' ] },
   birthDate: Number,
   purchaseDate: Number,
