@@ -65,4 +65,13 @@ describe('SHOW herds/:id', () => {
       });
   });
 
+  it('should return an averageWeight virtual that is a number', done => {
+    api.get(`/api/herds/${herdIds[0]}`)
+      .end(( err, res ) => {
+        expect(res.body).to.have.property('averageWeight');
+        expect(res.body.averageWeight).to.be.a('number');
+        done();
+      });
+  });
+
 });

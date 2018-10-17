@@ -28,6 +28,20 @@ herdSchema.virtual('averageBirth')
     return totalBirthDate/this.animals.length;
   });
 
+herdSchema.virtual('averageWeight')
+  .get(function() {
+    if(!this.animals) return null;
+
+    let totalWeight = 0;
+    this.animals.forEach( animal => {
+      const lastIndex = animal.weights.length - 1;
+      if(!lastIndex) return;
+      totalWeight += animal.weights[lastIndex].weight;
+    });
+
+    return Math.round( totalWeight / this.animals.length );
+  });
+
 herdSchema.virtual('totalAnimals')
   .get(function() {
     if(!this.animals) return null;
@@ -43,6 +57,16 @@ herdSchema.virtual('totalPregnant')
     const pregnantCows = this.animals.filter(animal => animal.breeding.isPregnant);
 
     return pregnantCows.length;
+  });
+
+herdSchema.virtual('totalCalves')
+  .get(function() {
+    if(!this.animals) return null;
+    if(this.animals.every(animal => animal.category === 'cow')) return null;
+
+    const totalCalves = this.animals.filter(animal => animal.category === 'calf' || animal.category === 'bull-calf');
+
+    return totalCalves.length;
   });
 
 //--- METHODS ---//
