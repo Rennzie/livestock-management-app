@@ -62,6 +62,27 @@ function HerdCard({ herd, onClick }) {
               </Grid>
             </Grid>
           }
+          {(herd.category !== 'pasturelot' && herd.category !== 'cows') &&
+            <Grid container >
+              <Grid item xs={12} >
+                <Typography variant='h6' align='center'> {herd.name} </Typography>
+                <Typography variant='subtitle1'> Category:  {capitalizeFirstLetter(herd.category)} </Typography>
+              </Grid>
+              <Grid item xs={6} >
+                <Typography variant='subtitle2'>
+                  Total Animals: {herd.totalAnimals}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={6} >
+                <Typography variant='subtitle2'>
+                  Average Weight: {herd.averageWeight} /animal
+                </Typography>
+              </Grid>
+            </Grid>
+          }
+
+
 
         </CardContent>
       </Card>
