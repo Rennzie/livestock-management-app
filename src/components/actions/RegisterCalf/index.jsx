@@ -1,5 +1,6 @@
 import React from 'react';
 
+// dependancies
 import axios from 'axios';
 import moment from 'moment';
 import {
@@ -13,11 +14,11 @@ import {
   TextField,
   Button } from '@material-ui/core';
 
+// utils
+import Generate from '../../../lib/Generate';
+
 // components
 import HerdCard from '../../Herd/HerdCard.jsx';
-
-// untils
-import Generate from '../../../lib/Generate';
 
 export default class RegisterCalf extends React.Component{
   state={
@@ -43,25 +44,19 @@ export default class RegisterCalf extends React.Component{
       .then(cowHerds => this.setState({cowHerds}));
   }
 
-  // componentDidUpdate() {
-  //   const newState = this.state;
-  //
-  //   return;
-  // }
-
   handleHeardSelect = ( currentHerd ) => {
     return () => {
       const newState = this.state;
       newState.herdSelected = true;
       newState.currentHerd = currentHerd;
-      newState.currentHerd.animals = newState.currentHerd.animals.filter(animal => animal.category === 'cow');
+      newState.currentHerd.animals = newState.currentHerd.animals.filter(animal => animal.category === 'cow' && animal.breeding.isPregnant);
       newState.newCalf.herd = currentHerd._id;
 
       this.setState(newState, () => console.log('=====>', this.state));
     };
   }
 
-  handleChooseMother = ( motherId ) => {
+  handleMotherSelect = ( motherId ) => {
     return () => {
       const newState = this.state;
       newState.newCalf.mother = motherId;
@@ -73,7 +68,7 @@ export default class RegisterCalf extends React.Component{
     };
   }
 
-  handleSelectChange = name => event => {
+  handleChange = name => event => {
     const newState = this.state;
     newState.newCalf[name] = event.target.value;
     if(Object.values(newState.newCalf).every(item => item)) {
@@ -84,7 +79,6 @@ export default class RegisterCalf extends React.Component{
   }
 
   handleCalfRegister = () => {
-    //create a calf object
     const newState = this.state;
     const { newCalf } = newState;
     const unixBirthDate = moment(newCalf.birthDate).unix();
@@ -102,19 +96,23 @@ export default class RegisterCalf extends React.Component{
       }]
     };
 
-    // get the calfs id for motherId
     const mothersProductionUpdate = {
       calfId: newCalf._id
     };
-    // submit 2 axios requests
-    axios.post('/api/bovines', calf);
 
+    axios.post('/api/bovines', calf);
     axios.post(`/api/bovines/${newCalf.mother}/breeding/production`, mothersProductionUpdate);
-    // add the mother in calf registerd array
-    newState.motherRegistrationComplete.push(newCalf.mother);
-    // remove that mother from the cowHerds animals array
+
+    this.resetCalfRegister(newCalf.mother);
+  }
+
+  resetCalfRegister = (mothersId) => {
+    const newState = this.state;
+
+    newState.motherRegistrationComplete.push(mothersId);
+
     newState.currentHerd.animals = newState.currentHerd.animals.filter(animal =>
-      animal._id.toString() !== newCalf.mother
+      animal._id.toString() !== mothersId
     );
     newState.motherSelected = false;
     newState.readyToRegister = false;
@@ -127,7 +125,6 @@ export default class RegisterCalf extends React.Component{
       weight: '',
       units: ''
     };
-    // reset the state for the next calf
     this.setState(newState, () => console.log('the reset state is', this.state));
   }
 
@@ -160,7 +157,7 @@ export default class RegisterCalf extends React.Component{
                 {this.state.currentHerd.animals.map( animal =>
                   <Grid item xs={12} key={animal._id}>
                     <Card>
-                      <CardContent onClick={this.handleChooseMother(animal._id)}>
+                      <CardContent onClick={this.handleMotherSelect(animal._id)}>
                         <Grid container alignItems='center'>
                           <Grid item xs={8} >
                             <p> { animal.identifier } </p>
@@ -202,7 +199,7 @@ export default class RegisterCalf extends React.Component{
                     <NativeSelect
                       fullWidth
                       value={this.state.newCalf.breed}
-                      onChange={this.handleSelectChange('breed')}
+                      onChange={this.handleChange('breed')}
                       input={<Input name='breed' id='breed' />}
                     >
                       <option value=''>None</option>
@@ -218,7 +215,7 @@ export default class RegisterCalf extends React.Component{
                     <NativeSelect
                       fullWidth
                       value={this.state.newCalf.category}
-                      onChange={this.handleSelectChange('category')}
+                      onChange={this.handleChange('category')}
                       input={<Input name='category' id='category' />}
                     >
                       <option value=''>None</option>
@@ -234,7 +231,7 @@ export default class RegisterCalf extends React.Component{
                     label='Weight'
                     type='number'
                     value={this.state.newCalf.weight}
-                    onChange={this.handleSelectChange('weight')}
+                    onChange={this.handleChange('weight')}
                     placeholder='250'
                     margin='normal'
                   />
@@ -246,7 +243,7 @@ export default class RegisterCalf extends React.Component{
                     <NativeSelect
                       fullWidth
                       value={this.state.newCalf.units}
-                      onChange={this.handleSelectChange('units')}
+                      onChange={this.handleChange('units')}
                       input={<Input name='units' id='units' />}
                     >
                       <option value=''>None</option>
@@ -263,7 +260,7 @@ export default class RegisterCalf extends React.Component{
                       name='birthDate'
                       id='birthDate'
                       value={this.state.newCalf.birthDate}
-                      onChange={this.handleSelectChange('birthDate')}
+                      onChange={this.handleChange('birthDate')}
                     />
                   </FormControl>
                 </Grid>

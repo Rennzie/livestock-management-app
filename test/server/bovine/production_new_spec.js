@@ -36,12 +36,22 @@ describe('POST /bovines/:id/breeding/production', () => {
   });
 
   //test that the calf and the mother exist in bovine.find() and in the mother production array
-  it('the mothers production array should include the calfs id', done => {
+  it('should update the mothers production array to include the calfs id', done => {
     api.post(`/api/bovines/${motherCow._id}/breeding/production`)
       .send(calfId)
       .then(() => Bovine.findById(motherCow._id))
       .then( mother => {
         expect(mother.breeding.production).to.include(newCalf._id);
+        done();
+      });
+  });
+
+  it('should change the isPregnant to false', done => {
+    api.post(`/api/bovines/${motherCow._id}/breeding/production`)
+      .send(calfId)
+      .then(() => Bovine.findById(motherCow._id))
+      .then( mother => {
+        expect(mother.breeding.isPregnant).to.be.false;
         done();
       });
   });

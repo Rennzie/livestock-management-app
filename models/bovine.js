@@ -81,6 +81,7 @@ bovineSchema.methods.addWeight = function(newWeightObj){
   return this.save();
 };
 
+// NOTE: might not be necessary to toggle if only setting to false at calf registration
 bovineSchema.methods.togglePregnancy = function() {
   this.breeding.isPregnant = !this.breeding.isPregnant;
   return this.save();
@@ -96,8 +97,9 @@ bovineSchema.methods.setFatteningStatus = function() {
   this.save();
 };
 
-// To add a newly registered calf to production array
+// To add a newly registered calf to production array and set isPregnant to false
 bovineSchema.methods.addNewCalf = function(newCalfId) {
+  this.breeding.isPregnant = false;
   this.breeding.production.push(newCalfId);
   this.save();
 };

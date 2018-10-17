@@ -35,6 +35,7 @@ module.exports = {
     breed: 'Hereford',
     breeding: {
       status: true,
+      isPregnant: true,
       production: [ bovineIds[1], bovineIds[2] ]
     },
     weights: [

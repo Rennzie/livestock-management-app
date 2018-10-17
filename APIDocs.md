@@ -113,13 +113,13 @@ Primary model for collecting information all Cattle.
 
 - `/bovines/:id/breeding/production`
 
-  -`post()`
+  - `post()`
 
   For updating a mothers production array with a newly registered calf.
 
   Request Requires: an object with a key of `calfId` and a value of the new calfs `id`.
 
-  The request uses the `.addNewCalf()` method to push the id into the mother animals `breeding.production` array.
+  The request uses the `.addNewCalf()` method to push the id into the mother animals `breeding.production` array. It will also set the mothers `breeding.isPregnant` to false to simplify front end calf registration. 
 
 
 - `/bovines/weights`
