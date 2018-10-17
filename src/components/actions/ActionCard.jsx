@@ -5,15 +5,15 @@ import { Grid, Card, CardContent } from '@material-ui/core';
 
 function ActionCard({ name, destination }) {
   return(
-    <Link to={destination}>
-      <Grid item xs={12}>
+    <Grid item xs={6}>
+      <Link to={destination}>
         <Card>
           <CardContent>
             <p> {name} </p>
           </CardContent>
         </Card>
-      </Grid>
-    </Link>
+      </Link>
+    </Grid>
   );
 }
 

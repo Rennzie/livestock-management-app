@@ -12,7 +12,9 @@ import {
   InputLabel,
   Input,
   TextField,
-  Button } from '@material-ui/core';
+  Button,
+  Typography
+} from '@material-ui/core';
 
 // utils
 import Generate from '../../../lib/Generate';
@@ -44,17 +46,14 @@ export default class RegisterCalf extends React.Component{
       .then(cowHerds => this.setState({cowHerds}));
   }
 
-  handleHeardSelect = ( currentHerd ) => {
-    return () => {
-      const newState = this.state;
-      newState.herdSelected = true;
-      newState.currentHerd = currentHerd;
-      newState.currentHerd.animals = newState.currentHerd.animals.filter(animal => animal.category === 'cow' && animal.breeding.isPregnant);
-      newState.newCalf.herd = currentHerd._id;
-
-      this.setState(newState, () => console.log('=====>', this.state));
-    };
-  }
+  handleHerdSelect = ( selectedHerd )=> () => {
+    const newState = this.state;
+    newState.herdSelected = true;
+    newState.selectedHerd = selectedHerd;
+    newState.selectedHerd.animals = newState.selectedHerd.animals.filter(animal => animal.category === 'cow' && animal.breeding.isPregnant);
+    newState.newCalf.herd = selectedHerd._id;
+    this.setState(newState, () => console.log('=====>', this.state));
+  };
 
   handleMotherSelect = ( motherId ) => {
     return () => {
@@ -111,7 +110,7 @@ export default class RegisterCalf extends React.Component{
 
     newState.motherRegistrationComplete.push(mothersId);
 
-    newState.currentHerd.animals = newState.currentHerd.animals.filter(animal =>
+    newState.selectedHerd.animals = newState.selectedHerd.animals.filter(animal =>
       animal._id.toString() !== mothersId
     );
     newState.motherSelected = false;
@@ -133,28 +132,29 @@ export default class RegisterCalf extends React.Component{
       <div>
         {this.state.cowHerds &&
           <main>
-            {!this.state.currentHerd ?
-              <h1>Register new Calf</h1>
+            {!this.state.selectedHerd ?
+              <Typography variant='subtitle1'>Register new Calf</Typography>
               :
-              <h3>Registering calfs to {this.state.currentHerd.name}</h3>
+              <Typography variant='subtitle1'>Registering calfs to {this.state.selectedHerd.name}</Typography>
             }
 
-            {!this.state.currentHerd  &&
+            {!this.state.selectedHerd  &&
               <div>
                 <h2>Which heard is registering calves?</h2>
                 {this.state.cowHerds.map(herd =>
                   <HerdCard
                     key={herd._id}
                     herd={herd}
-                    onClick={this.handleHeardSelect(herd)}
+                    onClick={this.handleHerdSelect(herd)}
                   />
                 )}
               </div>
             }
 
-            {(this.state.currentHerd && !this.state.motherSelected) &&
+            {(this.state.selectedHerd && !this.state.motherSelected) &&
               <Grid container direction='column'>
-                {this.state.currentHerd.animals.map( animal =>
+                <Typography variant='subtitle2'>Select mother:</Typography>
+                {this.state.selectedHerd.animals.map( animal =>
                   <Grid item xs={12} key={animal._id}>
                     <Card>
                       <CardContent onClick={this.handleMotherSelect(animal._id)}>
