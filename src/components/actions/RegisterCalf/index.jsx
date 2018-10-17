@@ -133,14 +133,14 @@ export default class RegisterCalf extends React.Component{
         {this.state.cowHerds &&
           <main>
             {!this.state.selectedHerd ?
-              <Typography variant='subtitle1'>Register new Calf</Typography>
+              <Typography variant='h5'>Register new Calf</Typography>
               :
-              <Typography variant='subtitle1'>Registering calfs to {this.state.selectedHerd.name}</Typography>
+              <Typography variant='h5'>Registering calfs to {this.state.selectedHerd.name}</Typography>
             }
 
             {!this.state.selectedHerd  &&
               <div>
-                <h2>Which heard is registering calves?</h2>
+                <Typography variant='subtitle1'>Which heard is registering calves?</Typography>
                 {this.state.cowHerds.map(herd =>
                   <HerdCard
                     key={herd._id}
