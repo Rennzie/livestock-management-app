@@ -9,6 +9,9 @@ import Dashboard from './components/Dashboard/index.jsx';
 import Herds from './components/Herd/index.jsx';
 import HerdShow from './components/Herd/Show.jsx';
 
+// Actions
+import RegisterCalf from './components/actions/RegisterCalf/index.jsx';
+
 class App extends React.Component {
   render() {
     return(
@@ -17,6 +20,9 @@ class App extends React.Component {
           <Route exact path='/' component={Dashboard} />
           <Route exact path='/herds' component={Herds} />
           <Route path='/herds/:id' component={HerdShow} />
+
+          {/* Actions */}
+          <Route path='/register/calf' component={RegisterCalf} />
         </Switch>
         {/* <AppMenu /> */}
       </main>

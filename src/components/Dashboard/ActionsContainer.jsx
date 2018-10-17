@@ -8,7 +8,7 @@ export default class ActionsContainer extends React.Component{
   state={
     actions: [
       {name: 'Manage Herds', destination: '/herds'},
-      {name: 'Register Calf', destination: '/bovines/new'}
+      {name: 'Register Calf', destination: '/register/calf'}
     ]
   }
 

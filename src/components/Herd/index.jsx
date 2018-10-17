@@ -22,6 +22,12 @@ export default class Herds extends React.Component{
     this.setState(newState);
   }
 
+  chooseHeard = (herdId) => {
+    return () => {
+      this.props.history.push(`/herds/${herdId}`);
+    };
+  }
+
   render() {
     return(
       <section>
@@ -29,7 +35,7 @@ export default class Herds extends React.Component{
         <Grid container direction="column" justify="space-around">
           {this.state.cows &&
             this.state.cows.map(herd =>
-              <HerdCard key={herd._id} herd={herd} />
+              <HerdCard key={herd._id} herd={herd} onClick={this.chooseHeard(herd._id)} />
             )
           }
         </Grid>
@@ -37,7 +43,7 @@ export default class Herds extends React.Component{
         <Grid container direction="column" justify="space-around">
           {this.state.pasturelot &&
             this.state.pasturelot.map(herd =>
-              <HerdCard key={herd._id} herd={herd} />
+              <HerdCard key={herd._id} herd={herd} onClick={this.chooseHeard(herd._id)} />
             )
           }
         </Grid>
