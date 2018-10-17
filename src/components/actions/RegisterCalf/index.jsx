@@ -43,15 +43,11 @@ export default class RegisterCalf extends React.Component{
       .then(cowHerds => this.setState({cowHerds}));
   }
 
-  componentDidUpdate() {
-    const newState = this.state;
-    for(const item in newState.newCalf){
-      if(!newState.newCalf[item]) return newState.readyToRegister = false;
-      return newState.readyToRegister = true;
-    }
-
-    this.setState(newState);
-  }
+  // componentDidUpdate() {
+  //   const newState = this.state;
+  //
+  //   return;
+  // }
 
   handleHeardSelect = ( currentHerd ) => {
     return () => {
@@ -69,7 +65,8 @@ export default class RegisterCalf extends React.Component{
     return () => {
       const newState = this.state;
       newState.newCalf.mother = motherId;
-      newState.newCalf.identifier = Generate.newId();
+      newState.newCalf.identifier = Generate.newIdentifier();
+      newState.newCalf._id = Generate.newId();
       newState.motherSelected = true;
 
       this.setState(newState, () => console.log('=====>', this.state));
@@ -79,6 +76,10 @@ export default class RegisterCalf extends React.Component{
   handleSelectChange = name => event => {
     const newState = this.state;
     newState.newCalf[name] = event.target.value;
+    if(Object.values(newState.newCalf).every(item => item)) {
+      newState.readyToRegister = true;
+      this.setState(newState);
+    }
     this.setState(newState);
   }
 
@@ -179,7 +180,7 @@ export default class RegisterCalf extends React.Component{
             {this.state.newCalf.mother &&
               <Grid container>
                 <Grid item xs={12}>
-                  <p>New Calf: needs Ids her</p>
+                  <p>New Calf: {this.state.newCalf.identifier}</p>
                 </Grid>
                 <Grid item xs={6}><p>Category: </p>{this.state.newCalf.category}</Grid>
                 <Grid item xs={6}><p>D.O.B: </p>{this.state.newCalf.birthDate}</Grid>

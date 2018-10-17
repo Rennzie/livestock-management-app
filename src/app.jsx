@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 // COMPONENTS
-import AppMenu from './components/AppMenu.jsx';
+// import AppMenu from './components/AppMenu.jsx';
 
 import Dashboard from './components/Dashboard/index.jsx';
 import Herds from './components/Herd/index.jsx';
