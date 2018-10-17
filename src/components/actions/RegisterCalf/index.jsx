@@ -9,7 +9,8 @@ import {
   FormControl,
   InputLabel,
   Input,
-  TextField } from '@material-ui/core';
+  TextField,
+  Button } from '@material-ui/core';
 
 // components
 import HerdCard from '../../Herd/HerdCard.jsx';
@@ -71,6 +72,16 @@ export default class RegisterCalf extends React.Component{
     const newState = this.state;
     newState.newCalf[name] = event.target.value;
     this.setState(newState);
+  }
+
+  handleCalfRegister = () => {
+    //create a calf object
+    // get the calfs id for motherId
+    // submit 2 axios requests
+    // reset the state for the next calf
+    // add the mother in calf registerd array
+    // remove that mother from the cowHerds animals array
+    return null
   }
 
   render() {
@@ -206,12 +217,23 @@ export default class RegisterCalf extends React.Component{
                     />
                   </FormControl>
                 </Grid>
+
+                {this.state.readyToRegister &&
+                  <Grid item xs={12}>
+                    <Button
+                      onClick={this.RegisterCalf}
+                      variant='contained'
+                      color='secondary'
+                    >
+                      Register Calf
+                    </Button>
+                  </Grid>
+                }
+
               </Grid>
             }
 
-            {this.state.readyToRegister &&
-              <div>Lets register</div>
-            }
+
           </main>
         }
       </div>
