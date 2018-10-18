@@ -13,7 +13,8 @@ import {
   Input,
   TextField,
   Button,
-  Typography
+  Typography,
+  FormGroup
 } from '@material-ui/core';
 
 // utils
@@ -174,30 +175,51 @@ export default class RegisterCalf extends React.Component{
               </Grid>
             }
 
-            {this.state.newCalf.motherSelected &&
-              <Grid container>
+            {this.state.motherSelected &&
+              <Grid container spacing={16}>
                 <Grid item xs={12}>
-                  <p>New Calf: {this.state.newCalf.identifier}</p>
+                  <Typography variant='subtitle1'>
+                    New Calf: {this.state.newCalf.identifier}
+                  </Typography>
                 </Grid>
-                <Grid item xs={6}><p>Category: </p>{this.state.newCalf.category}</Grid>
-                <Grid item xs={6}><p>D.O.B: </p>{this.state.newCalf.birthDate}</Grid>
-                <Grid item xs={6}><p>Breed: </p>{this.state.newCalf.breed}</Grid>
-                <Grid item xs={6}><p>Mother: </p>{this.state.newCalf.mother}</Grid>
                 <Grid item xs={6}>
-                  <p>Weight: </p>
-                  {this.state.newCalf.weight} {this.state.newCalf.unit }
+                  <Typography variant='subtitle2' >
+                    Category: {this.state.newCalf.category}
+                  </Typography>
                 </Grid>
+                <Grid item xs={6}>
+                  <Typography variant='subtitle2' >
+                    D.O.B: {this.state.newCalf.birthDate}
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant='subtitle2' >
+                    Breed: {this.state.newCalf.breed}
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant='subtitle2' >
+                    Mother: {this.state.newCalf.mother}
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant='subtitle2' >
+                    Weight: {this.state.newCalf.weight} {this.state.newCalf.unit }
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12}><hr/></Grid>
 
               </Grid>
             }
 
             {this.state.motherSelected &&
-              <Grid container>
+              <Grid container spacing={16}>
                 <Grid item xs={6}>
                   <FormControl>
                     <InputLabel shrink htmlFor='breed'>Breed</InputLabel>
                     <NativeSelect
-                      fullWidth
+                      fullWidth={true}
                       value={this.state.newCalf.breed}
                       onChange={this.handleChange('breed')}
                       input={<Input name='breed' id='breed' />}
@@ -213,7 +235,7 @@ export default class RegisterCalf extends React.Component{
                   <FormControl>
                     <InputLabel shrink htmlFor='category'>Category</InputLabel>
                     <NativeSelect
-                      fullWidth
+                      fullWidth={true}
                       value={this.state.newCalf.category}
                       onChange={this.handleChange('category')}
                       input={<Input name='category' id='category' />}
@@ -225,31 +247,32 @@ export default class RegisterCalf extends React.Component{
                   </FormControl>
                 </Grid>
 
-                <Grid>
-                  <TextField
-                    id='weight'
-                    label='Weight'
-                    type='number'
-                    value={this.state.newCalf.weight}
-                    onChange={this.handleChange('weight')}
-                    placeholder='250'
-                    margin='normal'
-                  />
-                </Grid>
+                <Grid item xs={12}>
+                  <FormGroup row>
+                    <FormControl>
+                      <InputLabel shrink htmlFor='weight'>Weight</InputLabel>
+                      <Input
+                        type='number'
+                        name='weight'
+                        id='weight'
+                        value={this.state.newCalf.weight}
+                        onChange={this.handleChange('weight')}
+                      />
+                    </FormControl>
+                    <FormControl>
+                      <InputLabel shrink htmlFor='unit'>Units</InputLabel>
+                      <NativeSelect
+                        fullWidth={true}
+                        value={this.state.newCalf.unit}
+                        onChange={this.handleChange('unit')}
+                        input={<Input name='unit' id='unit' />}
+                      >
+                        <option value=''>None</option>
+                        <option value='kgs'>Kilograms</option>
+                      </NativeSelect>
+                    </FormControl>
 
-                <Grid item xs={6}>
-                  <FormControl>
-                    <InputLabel shrink htmlFor='unit'>Units</InputLabel>
-                    <NativeSelect
-                      fullWidth
-                      value={this.state.newCalf.unit}
-                      onChange={this.handleChange('unit')}
-                      input={<Input name='unit' id='unit' />}
-                    >
-                      <option value=''>None</option>
-                      <option value='kgs'>Kilograms</option>
-                    </NativeSelect>
-                  </FormControl>
+                  </FormGroup>
                 </Grid>
 
                 <Grid item xs={12}>
@@ -265,17 +288,14 @@ export default class RegisterCalf extends React.Component{
                   </FormControl>
                 </Grid>
 
-                {this.state.readyToRegister &&
-                  <Grid item xs={12}>
-                    <Button
-                      onClick={this.handleCalfRegister}
-                      variant='contained'
-                      color='secondary'
-                    >
-                      Register Calf
-                    </Button>
-                  </Grid>
-                }
+                <Button
+                  disabled={!this.state.readyToRegister}
+                  onClick={this.handleCalfRegister}
+                  variant='contained'
+                  color='secondary'
+                >
+                  Register Calf
+                </Button>
               </Grid>
             }
 

@@ -75,6 +75,47 @@ export default class WeanAnimals extends React.Component{
   handleWeanChange = name => event => {
     const newState = this.state;
     newState[name] = event.target.value;
+    newState.readyToRegister = true;
+    this.setState(newState);
+  }
+
+  // NOTE: might be worth holding animals in state until all are done, then updating each with one request.
+  handleWeanAnimal = () => {
+    // build the change herd category array
+    const updateAnimalsHerd = [this.state.selectedAnimal._id];
+    const updateAnimalsCategory = {
+      ids: [this.state.selectedAnimal._id],
+      newCategory: this.state.category
+    };
+
+    console.log('category array is ===> ', updateAnimalsCategory);
+    // axios to change the category of the animals
+    axios.patch('/api/bovines/categories', updateAnimalsCategory);
+    // axios to change the herd of the animal.
+    axios.patch(`/api/herds/${this.state.selectedWeanToHerd._id}/animals`, updateAnimalsHerd);
+
+    this.resetState();
+  }
+
+  resetState = () => {
+    const newState = this.state;
+    newState.registerdCalves.push(this.state.selectedAnimal._id);
+
+    //remove the animal from the parent array
+    newState.selectedHerd.animals = newState.selectedHerd.animals.filter(animal =>
+      animal._id.toString() !== this.state.selectedAnimal._id.toString()
+    );
+
+    //reset the state
+    newState.animalSelected = false;
+    newState.weanToHerdSelected = false;
+    newState.readyToRegister = false;
+    newState.newHerd = {
+      name: '',
+      category: ''
+    };
+    newState.category = '';
+
     this.setState(newState);
   }
 
@@ -159,7 +200,7 @@ export default class WeanAnimals extends React.Component{
               this.state.animalSelected &&
               !this.state.creatingNewHerd) &&
 
-              <Grid container>
+              <Grid container spacing={16}>
                 <Grid item xs={12}>
                   <Typography variant='subtitle1' gutterBottom>
                     Select a herd to wean into or create a new one:
@@ -184,7 +225,7 @@ export default class WeanAnimals extends React.Component{
             }
 
             {this.state.weanToHerdSelected &&
-              <Grid container direction='column'>
+              <Grid container spacing={16} direction='column'>
                 <Grid item xs={12}>
                   <Typography variant='subtitle1' gutterBottom>
                     Weaned into {this.state.selectedWeanToHerd.name}
@@ -213,7 +254,8 @@ export default class WeanAnimals extends React.Component{
                 {/* </Grid> */}
 
                 <Button
-                  onClick={this.toggleCreateNewHerd}
+                  disabled={!this.state.readyToRegister}
+                  onClick={this.handleWeanAnimal}
                   variant='contained'
                   color='secondary'
                 >
@@ -224,7 +266,7 @@ export default class WeanAnimals extends React.Component{
 
             {/*  this is basically the create new herd component */}
             {this.state.creatingNewHerd &&
-              <Grid container>
+              <Grid container spacing={16}>
                 <Grid item xs={12} >
                   <FormControl >
                     <InputLabel shrink htmlFor='name'>Herd Name</InputLabel>

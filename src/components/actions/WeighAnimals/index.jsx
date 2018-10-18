@@ -144,7 +144,7 @@ export default class WeighAnimals extends React.Component{
             }
 
             {(this.state.selectedHerd && !this.state.animalSelected) &&
-              <Grid container direction='column'>
+              <Grid container spacing={16} direction='column'>
                 <Typography variant='subtitle2'>Select Animal to weigh:</Typography>
                 {this.state.selectedHerd.animals.map( animal =>
                   <Grid item xs={12} key={animal._id}>
@@ -167,7 +167,7 @@ export default class WeighAnimals extends React.Component{
             }
 
             {this.state.animalSelected &&
-              <Grid container>
+              <Grid container spacing={16}>
                 <Grid item xs={12}>
                   <Typography variant='subtitle1' gutterBottom> Animal being weighed is: {this.state.selectedAnimal.identifier} </Typography>
                 </Grid>
@@ -203,7 +203,7 @@ export default class WeighAnimals extends React.Component{
             }
 
             {this.state.animalSelected &&
-              <Grid container>
+              <Grid container spacing={16}>
                 <Grid item xs={12}>
                   <FormGroup row>
                     <FormControl>
