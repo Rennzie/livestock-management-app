@@ -12,6 +12,7 @@ import HerdShow from './components/Herd/Show.jsx';
 // Actions
 import RegisterCalf from './components/actions/RegisterCalf/index.jsx';
 import WeighAnimals from './components/actions/WeighAnimals/index.jsx';
+import WeanAnimals from './components/actions/WeanAnimals/index.jsx';
 
 class App extends React.Component {
   render() {
@@ -25,6 +26,7 @@ class App extends React.Component {
           {/* Actions */}
           <Route path='/register/calf' component={RegisterCalf} />
           <Route path='/weighing' component={WeighAnimals} />
+          <Route path='/weaning' component={WeanAnimals} />
         </Switch>
         {/* <AppMenu /> */}
       </main>

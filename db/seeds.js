@@ -19,7 +19,8 @@ const today = 1539213325;
 
 const bovineIds = [
   '5b91752666708bc8b1622705', '5b91752666708bc8b1622706', '5b91752666708bc8b1622707', '5b91752666708bc8b1622708', '5b91752666708bc8b1622709',
-  '5b91752666708bc8b1622710', '5b91752666708bc8b162271a', '5b91752666708bc8b162271b', '5b91752666708bc8b162271c', '5b91752666708bc8b162271d'
+  '5b91752666708bc8b1622710', '5b91752666708bc8b162271a', '5b91752666708bc8b162271b', '5b91752666708bc8b162271c', '5b91752666708bc8b162271d',
+  '5b91752666708bc8b162271e', '5b91752666708bc8b162271f', '5b91752666708bc8b1622720', '5b91752666708bc8b1622721', '5b91752666708bc8b1622722'
 ];
 
 const herdIds = [
@@ -27,7 +28,7 @@ const herdIds = [
 ];
 
 //create two herds,
-//  1) cow herd with 5 animals
+//  1) cow herd with 5 cows and 3 calfs
 //  2) weaners herd with 5 animals
 
 const bovineData = [
@@ -107,11 +108,36 @@ const bovineData = [
       {timing: 'birth', weight: 250, unit: 'kgs'},
       {timing: 'other', weight: 400, unit: 'kgs'}
     ]
+  },{
+    _id: bovineIds[10],
+    identifier: 'RSA-PAL-2018-06',
+    birthDate: today,
+    herd: herdIds[0],
+    category: 'calf',
+    breed: 'Hereford',
+    weights: [ {timing: 'birth', weight: 250, unit: 'kgs'} ]
+  }, {
+    _id: bovineIds[11],
+    identifier: 'RSA-PAL-2018-07',
+    birthDate: today,
+    herd: herdIds[0],
+    category: 'calf',
+    breed: 'Hereford',
+    weights: [ {timing: 'birth', weight: 250, unit: 'kgs'} ]
+  }, {
+    _id: bovineIds[12],
+    identifier: 'RSA-PAL-2018-08',
+    birthDate: today,
+    herd: herdIds[0],
+    category: 'calf',
+    breed: 'Hereford',
+    weights: [ {timing: 'birth', weight: 250, unit: 'kgs'} ]
   },
 
   // weaners herd
   {
     _id: bovineIds[5],
+    identifier: 'RSA-PAL-2017-09',
     birthDate: today,
     herd: herdIds[1],
     category: 'ox',
@@ -126,6 +152,7 @@ const bovineData = [
     ]
   }, {
     _id: bovineIds[6],
+    identifier: 'RSA-PAL-2017-10',
     birthDate: today,
     herd: herdIds[1],
     category: 'ox',
@@ -140,6 +167,7 @@ const bovineData = [
     ]
   }, {
     _id: bovineIds[7],
+    identifier: 'RSA-PAL-2017-11',
     birthDate: today,
     herd: herdIds[1],
     category: 'ox',
@@ -154,6 +182,7 @@ const bovineData = [
     ]
   }, {
     _id: bovineIds[8],
+    identifier: 'RSA-PAL-2017-12',
     birthDate: today,
     herd: herdIds[1],
     category: 'ox',
@@ -168,6 +197,7 @@ const bovineData = [
     ]
   }, {
     _id: bovineIds[9],
+    identifier: 'RSA-PAL-2017-13',
     birthDate: today,
     herd: herdIds[1],
     category: 'ox',

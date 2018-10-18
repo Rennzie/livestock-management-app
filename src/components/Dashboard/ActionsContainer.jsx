@@ -9,7 +9,8 @@ export default class ActionsContainer extends React.Component{
     actions: [
       {name: 'Manage Herds', destination: '/herds'},
       {name: 'Register Calf', destination: '/register/calf'},
-      {name: 'Weigh Animals', destination: '/weighing'}
+      {name: 'Weigh Animals', destination: '/weighing'},
+      {name: 'Wean Animals', destination: '/weaning'}
     ]
   }
 

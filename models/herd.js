@@ -3,7 +3,10 @@ const mongoose = require('mongoose');
 
 const herdSchema = new mongoose.Schema({
   name: String,
-  category: {type: String, enum: ['cows', 'bull-calves', 'weaners', 'bulls', 'pasturelot', 'feedlot', 'grassland'] }
+  category: {
+    type: String,
+    enum: ['cows', 'bull-calves', 'weaners', 'bulls', 'pasturelot', 'feedlot', 'grassland', 'replacement-heifers']
+  }
 }, { timestamps: true });
 
 // make sure the virtuals get added
