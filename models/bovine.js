@@ -43,6 +43,7 @@ const bovineSchema = new mongoose.Schema({
 
     // NOTE: this will need to be set to false when a calf is born
     isPregnant: { type: Boolean, default: false },
+    notInCalf: { type: Boolean, deafalt: false },
     calvingPeriod: String,
     production: [{ type: ObjectId, ref: 'Bovine' }]
   },
@@ -95,9 +96,9 @@ bovineSchema.methods.addWeight = function(newWeightObj){
 };
 
 // NOTE: might not be necessary to toggle if only setting to false at calf registration
-bovineSchema.methods.togglePregnancy = function() {
-  this.breeding.isPregnant = !this.breeding.isPregnant;
-  return this.save();
+bovineSchema.methods.setPregnancy = function(key) {
+  this.breeding[key] = true;
+  this.save();
 };
 
 bovineSchema.methods.setBreedingStatus = function() {

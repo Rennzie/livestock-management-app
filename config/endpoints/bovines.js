@@ -20,7 +20,7 @@ Router.route('/bovines/categories')
   .patch(bovineController.updateCategory);
 
 Router.route('/bovines/pregnant')
-  .patch(bovineController.togglePregnancy);
+  .patch(bovineController.setPregnancy);
 
 Router.route('/bovines/breeding')
   .patch(bovineController.setBreedingStatus);

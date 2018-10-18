@@ -72,11 +72,11 @@ Primary model for collecting information all Cattle.
 
   - `patch()`
 
-    Used to toggle the pregnancy status of a group of animals.
+    Used to set the `breeding.isPregnant` or the `breeding.notInCalf` to `true`.
 
-    Request Requires: An array of animal ids.
+    Request Requires: An object with an array of animal `ids` and a `key` set to `notInCalf` or `isPregnant`.
 
-    The request makes use of the `togglePregnancy()` method and is not a direct setter. i.e if the current status is false it will become true and visa versa. It does not return anything.
+    The request makes use of the `setPregnancy()` method. 
 
 
 - `/bovines/breeding`

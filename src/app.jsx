@@ -13,6 +13,7 @@ import HerdShow from './components/Herd/Show.jsx';
 import RegisterCalf from './components/actions/RegisterCalf/index.jsx';
 import WeighAnimals from './components/actions/WeighAnimals/index.jsx';
 import WeanAnimals from './components/actions/WeanAnimals/index.jsx';
+import PregTest from './components/actions/PregTest/index.jsx';
 
 class App extends React.Component {
   render() {
@@ -27,6 +28,7 @@ class App extends React.Component {
           <Route path='/register/calf' component={RegisterCalf} />
           <Route path='/weighing' component={WeighAnimals} />
           <Route path='/weaning' component={WeanAnimals} />
+          <Route path='/pregtesting' component={PregTest} />
         </Switch>
         {/* <AppMenu /> */}
       </main>
