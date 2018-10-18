@@ -36,7 +36,7 @@ export default class RegisterCalf extends React.Component{
       mother: '',
       herd: '',
       weight: '',
-      units: ''
+      unit: ''
     }
   };
 
@@ -90,7 +90,7 @@ export default class RegisterCalf extends React.Component{
       herd: newCalf.herd,
       weights: [{
         weight: newCalf.weights,
-        units: newCalf.units,
+        unit: newCalf.unit,
         timing: 'birth'
       }]
     };
@@ -122,7 +122,7 @@ export default class RegisterCalf extends React.Component{
       mother: '',
       herd: '',
       weight: '',
-      units: ''
+      unit: ''
     };
     this.setState(newState, () => console.log('the reset state is', this.state));
   }
@@ -174,7 +174,7 @@ export default class RegisterCalf extends React.Component{
               </Grid>
             }
 
-            {this.state.newCalf.mother &&
+            {this.state.newCalf.motherSelected &&
               <Grid container>
                 <Grid item xs={12}>
                   <p>New Calf: {this.state.newCalf.identifier}</p>
@@ -185,7 +185,7 @@ export default class RegisterCalf extends React.Component{
                 <Grid item xs={6}><p>Mother: </p>{this.state.newCalf.mother}</Grid>
                 <Grid item xs={6}>
                   <p>Weight: </p>
-                  {this.state.newCalf.weight} {this.state.newCalf.units }
+                  {this.state.newCalf.weight} {this.state.newCalf.unit }
                 </Grid>
 
               </Grid>
@@ -239,12 +239,12 @@ export default class RegisterCalf extends React.Component{
 
                 <Grid item xs={6}>
                   <FormControl>
-                    <InputLabel shrink htmlFor='units'>Units</InputLabel>
+                    <InputLabel shrink htmlFor='unit'>Units</InputLabel>
                     <NativeSelect
                       fullWidth
-                      value={this.state.newCalf.units}
-                      onChange={this.handleChange('units')}
-                      input={<Input name='units' id='units' />}
+                      value={this.state.newCalf.unit}
+                      onChange={this.handleChange('unit')}
+                      input={<Input name='unit' id='unit' />}
                     >
                       <option value=''>None</option>
                       <option value='kgs'>Kilograms</option>

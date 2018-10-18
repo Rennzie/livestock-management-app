@@ -8,6 +8,23 @@ const moment = require('moment');
  *       Use mongo objectId for now as unique identifier which can be changed later
  */
 
+const weightsSchema = new mongoose.Schema({
+  timing: { type: String, enum: ['birth', 'sale', 'other']},
+  date: Number,
+  weight: Number,
+  unit: String
+}, {timestamps: true});
+
+// make sure the virtuals get added
+weightsSchema.set('toObject', { virtuals: true });
+weightsSchema.set('toJSON', { virtuals: true });
+
+weightsSchema.virtual('formattedWeighDate')
+  .get(function() {
+    const momentObj = moment(this.createdAt);
+    return moment(momentObj).format('DD/MM/YYYY');
+  });
+
 const bovineSchema = new mongoose.Schema({
   identifier: String,
   category: { type: String, enum: [ 'calf', 'weaner', 'ox', 'cow', 'bull', 'bull-calf', 'heifer' ] },
@@ -17,11 +34,7 @@ const bovineSchema = new mongoose.Schema({
   mother: { type: ObjectId, ref: 'Bovine' },
   herd: { type: ObjectId, ref: 'Herd', default: null },
 
-  weights: [{
-    timing: { type: String, enum: ['birth', 'sale', 'other']},
-    weight: Number,
-    unit: String
-  }],
+  weights: [ weightsSchema ],
 
   //--- BREEDING DETAILS ---///
   // NOTE: need answer about what is NB for mating period to track etc to see what else should be tracked

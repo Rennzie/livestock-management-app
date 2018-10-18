@@ -74,4 +74,15 @@ describe('SHOW herds/:id', () => {
       });
   });
 
+  xit('should return a formattedWeighDate virtual for the weights array.', done => {
+    api.get(`/api/herds/${herdIds[0]}`)
+      .end(( err, res ) => {
+        console.log('==========> ', res.body);
+        expect(res.body.weights[0]).to.have.property('formattedWeighDate');
+        expect(res.body.weights[0].formattedWeighDate).to.be.a('string');
+        expect(res.body.weights[0].formattedWeighDate).to.not.eq('Invalid Date');
+        done();
+      });
+  });
+
 });
