@@ -1,11 +1,9 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-const capitalizeFirstLetter = (string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-};
-
 import { Grid, Card, CardContent, Typography } from '@material-ui/core';
+
+import CapitalizeText from '../common/CapitalizeText.jsx';
 
 function HerdCard({ herd, onClick }) {
 
@@ -21,7 +19,9 @@ function HerdCard({ herd, onClick }) {
             <Grid container >
               <Grid item xs={12} >
                 <Typography variant='h6' align='center'> {herd.name} </Typography>
-                <Typography variant='subtitle1'> Category:  {capitalizeFirstLetter(herd.category)} </Typography>
+                <Typography variant='subtitle1'>
+                  Category:  <CapitalizeText>{herd.category}</CapitalizeText>
+                </Typography>
               </Grid>
               <Grid item xs={6} >
                 <Typography variant='subtitle2'>
@@ -47,7 +47,9 @@ function HerdCard({ herd, onClick }) {
             <Grid container >
               <Grid item xs={12} >
                 <Typography variant='h6' align='center'> {herd.name} </Typography>
-                <Typography variant='subtitle1'> Category:  {capitalizeFirstLetter(herd.category)} </Typography>
+                <Typography variant='subtitle1'>
+                  Category:  <CapitalizeText>{herd.category}</CapitalizeText>
+                </Typography>
               </Grid>
               <Grid item xs={6} >
                 <Typography variant='subtitle2'>
@@ -66,7 +68,9 @@ function HerdCard({ herd, onClick }) {
             <Grid container >
               <Grid item xs={12} >
                 <Typography variant='h6' align='center'> {herd.name} </Typography>
-                <Typography variant='subtitle1'> Category:  {capitalizeFirstLetter(herd.category)} </Typography>
+                <Typography variant='subtitle1'>
+                  Category:  <CapitalizeText>{herd.category}</CapitalizeText>
+                </Typography>
               </Grid>
               <Grid item xs={6} >
                 <Typography variant='subtitle2'>

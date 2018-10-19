@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Grid, Typography } from '@material-ui/core';
 
 import HerdCard from './HerdCard.jsx';
+import CapitalizeText from '../common/CapitalizeText.jsx';
 
 export default class Herds extends React.Component{
   state={};
@@ -40,7 +41,9 @@ export default class Herds extends React.Component{
             {categories.map( category =>
 
               <Grid container direction="column" justify="space-around" key={category}>
-                <Typography variant='h6' align='center'> {category} </Typography>
+                <Typography variant='h5' align='center'>
+                  <CapitalizeText>{category}</CapitalizeText>
+                </Typography>
                 {this.state[category].map(herd =>
                   <HerdCard key={herd._id} herd={herd} onClick={this.chooseHeard(herd._id)} />
                 )
@@ -50,15 +53,6 @@ export default class Herds extends React.Component{
           </main>
         }
 
-
-        {/* <h1>Pasture Lot</h1>
-        <Grid container direction="column" justify="space-around">
-          {this.state.pasturelot &&
-            this.state.pasturelot.map(herd =>
-              <HerdCard key={herd._id} herd={herd} onClick={this.chooseHeard(herd._id)} />
-            )
-          }
-        </Grid> */}
       </section>
     );
   }

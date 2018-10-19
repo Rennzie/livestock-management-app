@@ -27,7 +27,6 @@ export default class WeighAnimals extends React.Component{
   state={
     herdSelected: false,
     animalSelected: false,
-    weighingToday: true,
     readyToRegister: false,
     weighedAnimals: [],
     newWeight: {
@@ -107,7 +106,6 @@ export default class WeighAnimals extends React.Component{
     // newState.selectedAnimal = null;
     newState.animalSelected = false;
     newState.readyToRegister = false;
-    newState.weighingToday = true;
     newState.newWeight = {
       weight: 0,
       unit: 'kgs',
@@ -233,29 +231,16 @@ export default class WeighAnimals extends React.Component{
                 </Grid>
 
                 <Grid item xs={12}>
-                  <FormGroup>
-                    <FormControlLabel
-                      control={
-                        <Switch
-                          checked={this.state.weighingToday}
-                          onChange={this.handleSwitchChange('weighingToday')}
-                          value='weighingToday'
-                        />
-                      }
-                      label="Weighing Today"
+                  <FormControl >
+                    <InputLabel shrink htmlFor='date'>Date of Weigh In</InputLabel>
+                    <Input
+                      type='date'
+                      name='date'
+                      id='date'
+                      value={this.state.newWeight.date}
+                      onChange={this.handleChange('date')}
                     />
-
-                    <FormControl disabled={this.state.weighingToday}>
-                      <InputLabel shrink htmlFor='date'>Date of Weigh In</InputLabel>
-                      <Input
-                        type='date'
-                        name='date'
-                        id='date'
-                        value={this.state.newWeight.date}
-                        onChange={this.handleChange('date')}
-                      />
-                    </FormControl>
-                  </FormGroup>
+                  </FormControl>
                 </Grid>
 
                 <Grid item xs={12} >
