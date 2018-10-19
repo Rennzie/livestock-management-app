@@ -10,15 +10,11 @@ import {
   InputLabel,
   NativeSelect,
   Input,
-  Switch,
-  FormGroup,
-  FormControlLabel,
   Button
 } from '@material-ui/core'
 
 // dependancies
 import axios from 'axios';
-import moment from 'moment';
 
 // components
 import HerdCard from '../../Herd/HerdCard.jsx';
@@ -40,7 +36,10 @@ export default class WeanAnimals extends React.Component{
 
   componentDidMount() {
     axios.get('/api/herds')
-      .then(res => this.setState({herds: res.data}));
+      .then(res =>{
+        const herds = res.data.filter(herd => herd.category === 'cows');
+        this.setState({herds: herds, allHerds: res.data});
+      } );
   }
 
   handleHerdSelect = selectedHerd => () => {
@@ -133,7 +132,7 @@ export default class WeanAnimals extends React.Component{
     axios.post('/api/herds', this.state.newHerd)
       .then(res => {
         const newState = this.state;
-        newState.herds.push(res.data);
+        newState.allHerds.push(res.data);
         newState.creatingNewHerd = false;
         this.setState(newState);
       });
@@ -205,7 +204,7 @@ export default class WeanAnimals extends React.Component{
                   <Typography variant='subtitle1' gutterBottom>
                     Select a herd to wean into or create a new one:
                   </Typography>
-                  {this.state.herds.map(herd =>
+                  {this.state.allHerds.map(herd =>
                     <HerdCard
                       key={herd._id}
                       herd={herd}
