@@ -13,7 +13,10 @@ import {
   Switch,
   FormGroup,
   FormControlLabel,
-  Button
+  Button,
+  FormLabel,
+  Radio,
+  RadioGroup
 } from '@material-ui/core'
 
 // dependancies
@@ -31,15 +34,14 @@ export default class PregTest extends React.Component{
   state={
     herdSelected: false,
     animalSelected: false,
-    readyToRegister: false,
     testedAnimals: [],
-    isPregnant: '',
-    notInCalf: ''
+    value: ''
   };
 
   componentDidMount() {
     axios.get('/api/herds')
-      .then(res => this.setState({herds: res.data}));
+      .then(res => res.data.filter(herd => herd.category === 'cows'))
+      .then(herds => this.setState({ herds }));
   }
 
   handleHerdSelect = selectedHerd => () => {
@@ -47,6 +49,9 @@ export default class PregTest extends React.Component{
 
     newState.herdSelected = true;
     newState.selectedHerd = selectedHerd;
+    newState.selectedHerd.animals = newState.selectedHerd.animals.filter(animal =>
+      animal.category === 'cow' || animal.category === 'heifer'
+    );
 
     this.setState(newState);
   }
@@ -56,6 +61,51 @@ export default class PregTest extends React.Component{
 
     newState.animalSelected = true;
     newState.selectedAnimal = animal;
+
+    this.setState(newState);
+  }
+
+  handleChange = event => {
+    this.setState({value: event.target.value});
+  }
+
+  handlePregTested = () => {
+    //format an object to Submit
+    const pregTest = {
+      ids: [this.state.selectedAnimal._id],
+      key: this.state.value
+    };
+
+    // send axios to /bovine/pregnant
+    axios.patch('/api/bovines/pregnant', pregTest);
+
+    // set a heifers breeding.status to true and change its category to cow
+    if(this.state.selectedAnimal.category === 'heifer') {
+      const ids = [ this.state.selectedAnimal._id ];
+      axios.patch('/api/bovines/breeding', ids);
+
+      const newCategory = {
+        ids: ids,
+        newCategory: 'cow'
+      };
+
+      axios.patch('/api/bovines/categories', newCategory);
+    }
+
+    //reset the state
+    this.resetState();
+  }
+
+  resetState = () => {
+    const newState = this.state;
+    newState.testedAnimals.push(newState.selectedAnimal._id);
+
+    newState.selectedHerd.animals = newState.selectedHerd.animals.filter( animal =>
+      animal._id.toString() !== newState.selectedAnimal._id.toString()
+    );
+
+    newState.animalSelected = false;
+    newState.value = '';
 
     this.setState(newState);
   }
@@ -107,7 +157,30 @@ export default class PregTest extends React.Component{
               </Grid>
             }
 
-            
+            {this.state.animalSelected &&
+              <FormControl component="fieldset">
+                <FormLabel component="legend"> Pregnancy Status</FormLabel>
+                <RadioGroup
+                  name="pregnancy"
+                  value={this.state.value}
+                  onChange={this.handleChange}
+                >
+                  <FormControlLabel value="isPregnant" control={<Radio />} label="Is Pregnant" />
+                  <FormControlLabel value="notInCalf" control={<Radio />} label="Not In Calf" />
+                </RadioGroup>
+
+                <Button
+                  disabled={!this.state.value}
+                  onClick={this.handlePregTested}
+                  variant='contained'
+                  color='secondary'
+                >
+                    Submit
+                </Button>
+              </FormControl>
+            }
+
+
           </main>
         }
       </div>

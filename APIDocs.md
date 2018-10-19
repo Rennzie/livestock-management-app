@@ -72,11 +72,11 @@ Primary model for collecting information all Cattle.
 
   - `patch()`
 
-    Used to set the `breeding.isPregnant` or the `breeding.notInCalf` to `true`.
+    Used to set the `breeding.isPregnant` of the `breeding.notInCalf` to `true`.
 
     Request Requires: An object with an array of animal `ids` and a `key` set to `notInCalf` or `isPregnant`.
 
-    The request makes use of the `setPregnancy()` method. 
+    The request makes use of the `setPregnancy()` method which will set the selected `key` to `true` and the other `key` to `false`. i.e if the key is `isPregnant`, `isPregnant` will be set to `true` and `notInCalf` will be set to `false` and visa versa.
 
 
 - `/bovines/breeding`
