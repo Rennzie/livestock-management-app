@@ -113,7 +113,7 @@ export default class RegisterCalf extends React.Component{
     this.resetCalfRegister(newCalf.mother);
   }
 
-  resetCalfRegister = (mothersId) => {
+  resetCalfRegister = (mothersId) => {  
     const newState = this.state;
 
     newState.motherRegistrationComplete.push(mothersId);
@@ -136,18 +136,11 @@ export default class RegisterCalf extends React.Component{
     this.setState(newState, () => console.log('the reset state is', this.state));
   }
 
-  // handleNext = () => {
-  //   this.setState(state => ({
-  //     activeStep: state.activeStep + 1
-  //   }));
-  // };
-
   handleBack = () => {
-    //depending on the active step, reset the state to what it should be
     this.setState(state => {
       switch(state.activeStep){
         case 0:
-          break;
+          return this.props.history.push('/');
         case 1:
           return ({
             activeStep: state.activeStep - 1,
@@ -332,12 +325,12 @@ export default class RegisterCalf extends React.Component{
               activeStep={this.state.activeStep}
               nextButton={
                 <Button size="small" onClick={this.handleCalfRegister} disabled={!this.state.readyToRegister}>
-                  Submit
+                  Register
                   <KeyboardArrowRight />
                 </Button>
               }
               backButton={
-                <Button size="small" onClick={this.handleBack} disabled={this.state.activeStep === 0}>
+                <Button size="small" onClick={this.handleBack} >
                   <KeyboardArrowLeft />
                   Back
                 </Button>
