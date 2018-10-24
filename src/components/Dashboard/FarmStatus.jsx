@@ -2,7 +2,7 @@ import React from 'react';
 
 import axios from 'axios';
 
-import {Grid} from '@material-ui/core';
+import { Grid, CircularProgress } from '@material-ui/core';
 
 // NOTE: most of the methods here could be abstracted away to a farm model in the back end
 export default class FarmStatus extends React.Component{
@@ -30,7 +30,7 @@ export default class FarmStatus extends React.Component{
   render() {
     return (
       <main>
-        {this.state.herds &&
+        {this.state.herds ?
           <Grid container spacing={16} direction='column' justify='space-between'>
             <Grid item>
               <div>Farm Status: BREEDING</div>
@@ -41,6 +41,9 @@ export default class FarmStatus extends React.Component{
               <div>Pregnant Animals: {this.state.totalPregnant}</div>
             </Grid>
           </Grid>
+
+          :
+          <CircularProgress color="secondary" />
         }
       </main>
     );

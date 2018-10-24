@@ -4,17 +4,13 @@ import React from 'react';
 import {
   Typography,
   Grid,
-  Card,
-  CardContent,
   FormControl,
   InputLabel,
   NativeSelect,
   Input,
-  Switch,
   FormGroup,
-  FormControlLabel,
   Button
-} from '@material-ui/core'
+} from '@material-ui/core';
 
 // dependancies
 import axios from 'axios';
@@ -22,6 +18,7 @@ import moment from 'moment';
 
 // components
 import HerdCard from '../../Herd/HerdCard.jsx';
+import AnimalCard from '../../common/AnimalCard.jsx';
 
 export default class WeighAnimals extends React.Component{
   state={
@@ -56,6 +53,7 @@ export default class WeighAnimals extends React.Component{
 
     newState.animalSelected = true;
     newState.selectedAnimal = animal;
+    // BUG: weights is undefined
     newState.lastWeighIn = animal.weights[animal.weights.length - 1];
     newState.newWeight.date = moment().format('YYYY-MM-DD');
 
@@ -142,24 +140,14 @@ export default class WeighAnimals extends React.Component{
             }
 
             {(this.state.selectedHerd && !this.state.animalSelected) &&
-              <Grid container spacing={16} direction='column'>
-                <Typography variant='subtitle2'>Select Animal to weigh:</Typography>
+              <Grid container direction='column'>
+                <Typography variant='subtitle2'>Select mother:</Typography>
                 {this.state.selectedHerd.animals.map( animal =>
-                  <Grid item xs={12} key={animal._id}>
-                    <Card>
-                      <CardContent onClick={this.handleAnimalSelect(animal)}>
-                        <Grid container alignItems='center'>
-                          <Grid item xs={8} >
-                            <p> { animal.identifier } </p>
-                          </Grid>
-                          <Grid item xs={4} >
-                            <p> { animal.breed } </p>
-                            <p> { animal.category } </p>
-                          </Grid>
-                        </Grid>
-                      </CardContent>
-                    </Card>
-                  </Grid>
+                  <AnimalCard
+                    key={animal._id}
+                    handleClick={this.handleAnimalSelect(animal)}
+                    animal={animal}
+                  />
                 )}
               </Grid>
             }
