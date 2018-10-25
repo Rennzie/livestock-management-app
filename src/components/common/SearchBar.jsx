@@ -7,9 +7,9 @@ import{
   Input
 } from '@material-ui/core';
 
-const SearchBar = ({ handleChange, searchTerm, title }) => {
+const SearchBar = ({ handleChange, searchTerm, title, className }) => {
   return(
-    <FormControl>
+    <FormControl className={className}>
       <InputLabel shrink htmlFor='searchTerm'>{ title }</InputLabel>
       <Input
         fullWidth

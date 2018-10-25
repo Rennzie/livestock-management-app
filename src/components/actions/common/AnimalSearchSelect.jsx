@@ -6,11 +6,23 @@ import{
   Typography
 } from '@material-ui/core';
 
+import { withStyles } from '@material-ui/core/styles';
+
 // components
 import SearchBar from '../../common/SearchBar.jsx';
 import AnimalCard from '../../common/AnimalCard.jsx';
 
-export default class AnimalSearchSelect extends React.Component{
+const styles = () => ({
+  root: {
+    maxHeight: '70vh',
+    overflowY: 'scroll'
+  },
+  searchBar: {
+    margin: '0.5rem'
+  }
+});
+
+class AnimalSearchSelect extends React.Component{
   state={};
 
   componentDidMount = () => {
@@ -30,18 +42,22 @@ export default class AnimalSearchSelect extends React.Component{
   }
 
   render() {
+
+    const { classes } = this.props;
+
     return(
       <section>
         {this.state.allAnimals &&
           <Grid container direction='column'>
             <Typography variant='subtitle2'>{this.props.title}</Typography>
             <SearchBar
+              className={classes.searchBar}
               handleChange={this.handleSearchChange}
               searchTerm={this.state.searchTerm}
               title="Search by identifier"
             />
             {this.state.filteredAnimals ?
-              <div>
+              <div className={classes.root}>
                 {this.state.filteredAnimals.map( animal =>
                   <AnimalCard
                     key={animal._id}
@@ -51,7 +67,7 @@ export default class AnimalSearchSelect extends React.Component{
                 )}
               </div>
               :
-              <div>
+              <div className={classes.root}>
                 {this.state.allAnimals.map( animal =>
                   <AnimalCard
                     key={animal._id}
@@ -67,3 +83,5 @@ export default class AnimalSearchSelect extends React.Component{
     );
   }
 }
+
+export default withStyles(styles)(AnimalSearchSelect);

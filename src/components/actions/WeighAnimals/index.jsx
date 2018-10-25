@@ -141,6 +141,7 @@ export default class WeighAnimals extends React.Component{
   }
 
   render() {
+
     return(
       <div>
         {this.state.herds &&
