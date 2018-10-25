@@ -23,6 +23,7 @@ import axios from 'axios';
 // components
 import HerdCard from '../../Herd/HerdCard.jsx';
 import AnimalCard from '../../common/AnimalCard.jsx';
+import HerdNew from '../../Herd/New.jsx';
 
 export default class WeanAnimals extends React.Component{
   state={
@@ -33,10 +34,6 @@ export default class WeanAnimals extends React.Component{
     weanToHerdSelected: false,
     creatingNewHerd: false,
     registerdCalves: [],
-    newHerd: {
-      name: '',
-      category: ''
-    },
     category: ''
   };
 
@@ -48,6 +45,7 @@ export default class WeanAnimals extends React.Component{
       } );
   }
 
+  // step 0
   handleHerdSelect = selectedHerd => () => {
     const newState = this.state;
 
@@ -56,15 +54,18 @@ export default class WeanAnimals extends React.Component{
     newState.selectedHerd.animals = newState.selectedHerd.animals.filter(animal =>
       animal.category === 'calf' || animal.category === 'bull-calf'
     );
+    newState.activeStep = 1;
 
     this.setState(newState);
   }
 
+  // step 1
   handleAnimalSelect = animal => () => {
     const newState = this.state;
 
     newState.animalSelected = true;
     newState.selectedAnimal = animal;
+    newState.activeStep = 2;
 
     this.setState(newState);
   }
@@ -73,6 +74,7 @@ export default class WeanAnimals extends React.Component{
     const newState = this.state;
     newState.weanToHerdSelected = true;
     newState.selectedWeanToHerd = herd;
+    newState.activeStep = 3;
 
     this.setState(newState);
   }
@@ -93,7 +95,6 @@ export default class WeanAnimals extends React.Component{
       newCategory: this.state.category
     };
 
-    console.log('category array is ===> ', updateAnimalsCategory);
     // axios to change the category of the animals
     axios.patch('/api/bovines/categories', updateAnimalsCategory);
     // axios to change the herd of the animal.
@@ -101,6 +102,32 @@ export default class WeanAnimals extends React.Component{
 
     this.resetState();
   }
+
+  handleBack = () => {
+    this.setState(state => {
+      switch(state.activeStep){
+        case 0:
+          return this.props.history.push('/');
+        case 1:
+          return ({
+            activeStep: state.activeStep - 1,
+            herdSelected: false
+          });
+        case 2:
+          return ({
+            activeStep: state.activeStep - 1,
+            animalSelected: false
+          });
+        case 3:
+          return ({
+            activeStep: state.activeStep - 1,
+            weanToHerdSelected: false,
+            readyToRegister: false,
+            category: ''
+          });
+      }
+    });
+  };
 
   resetState = () => {
     const newState = this.state;
@@ -115,10 +142,6 @@ export default class WeanAnimals extends React.Component{
     newState.animalSelected = false;
     newState.weanToHerdSelected = false;
     newState.readyToRegister = false;
-    newState.newHerd = {
-      name: '',
-      category: ''
-    };
     newState.category = '';
 
     this.setState(newState);
@@ -128,20 +151,11 @@ export default class WeanAnimals extends React.Component{
     this.setState({ creatingNewHerd: true });
   }
 
-  handleNewHerdChange = name => event => {
+  handleCreateNewHerd = newHerd => {
     const newState = this.state;
-    newState.newHerd[name] = event.target.value;
+    newState.allHerds.push(newHerd);
+    newState.creatingNewHerd = false;
     this.setState(newState);
-  }
-
-  handleCreateNewHerd = () => {
-    axios.post('/api/herds', this.state.newHerd)
-      .then(res => {
-        const newState = this.state;
-        newState.allHerds.push(res.data);
-        newState.creatingNewHerd = false;
-        this.setState(newState);
-      });
   }
 
   render() {
@@ -149,13 +163,13 @@ export default class WeanAnimals extends React.Component{
       <div>
         {this.state.herds &&
           <main>
-            {!this.state.selectedHerd ?
+            {!this.state.herdSelected ?
               <Typography variant='h5'>Wean a herd</Typography>
               :
               <Typography variant='h5'>Weaning {this.state.selectedHerd.name}</Typography>
             }
 
-            {!this.state.selectedHerd  &&
+            {!this.state.herdSelected  &&
               <div>
                 <Typography variant='subtitle1'>Which heard is getting weaned?</Typography>
                 {this.state.herds.map(herd =>
@@ -168,9 +182,9 @@ export default class WeanAnimals extends React.Component{
               </div>
             }
 
-            {(this.state.selectedHerd && !this.state.animalSelected) &&
+            {(this.state.herdSelected && !this.state.animalSelected) &&
               <Grid container direction='column'>
-                <Typography variant='subtitle2'>Select mother:</Typography>
+                <Typography variant='subtitle2'>Select calf to wean:</Typography>
                 {this.state.selectedHerd.animals.map( animal =>
                   <AnimalCard
                     key={animal._id}
@@ -246,66 +260,32 @@ export default class WeanAnimals extends React.Component{
                     <option value='bull-calf'>Bull-Calf</option>
                   </NativeSelect>
                 </FormControl>
-                {/* </Grid> */}
-
-                <Button
-                  disabled={!this.state.readyToRegister}
-                  onClick={this.handleWeanAnimal}
-                  variant='contained'
-                  color='secondary'
-                >
-                  Wean Animal
-                </Button>
               </Grid>
             }
 
             {/*  this is basically the create new herd component */}
             {this.state.creatingNewHerd &&
-              <Grid container spacing={16}>
-                <Grid item xs={12} >
-                  <FormControl >
-                    <InputLabel shrink htmlFor='name'>Herd Name</InputLabel>
-                    <Input
-                      type='text'
-                      name='name'
-                      id='name'
-                      value={this.state.newHerd.name}
-                      onChange={this.handleNewHerdChange('name')}
-                    />
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} >
-                  <FormControl>
-                    <InputLabel shrink htmlFor='category'>Category</InputLabel>
-                    <NativeSelect
-                      fullWidth={true}
-                      value={this.state.newHerd.category}
-                      onChange={this.handleNewHerdChange('category')}
-                      input={<Input name='category' id='category' />}
-                    >
-                      <option value=''>None</option>
-                      <option value='bull-calves'>Bull Calves</option>
-                      <option value='weaners'>Weaners</option>
-                      <option value='replacement-heifers'>Replacement Heifers</option>
-                      <option value='cows'>Cows</option>
-                      <option value='bulls'>Bulls</option>
-                      <option value='pasturelot'>Pasturelot</option>
-                      <option value='feedlot'>Feedlot</option>
-                      <option value='grassland'>Grassland Fattening</option>
-                    </NativeSelect>
-                  </FormControl>
-                </Grid>
-
-                <Button
-                  onClick={this.handleCreateNewHerd}
-                  variant='contained'
-                  color='secondary'
-                >
-                  Create Herd
-                </Button>
-              </Grid>
+              <HerdNew handleOutsideCreate={this.handleCreateNewHerd}/>
             }
 
+            <MobileStepper
+              variant="dots"
+              steps={4}
+              position="static"
+              activeStep={this.state.activeStep}
+              nextButton={
+                <Button size="small" onClick={this.handleWeanAnimal} disabled={!this.state.readyToRegister}>
+                  Wean Animal
+                  <KeyboardArrowRight />
+                </Button>
+              }
+              backButton={
+                <Button size="small" onClick={this.handleBack} >
+                  <KeyboardArrowLeft />
+                  Back
+                </Button>
+              }
+            />
           </main>
         }
       </div>
