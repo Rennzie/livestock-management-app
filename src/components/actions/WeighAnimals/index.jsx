@@ -10,9 +10,7 @@ import {
   InputLabel,
   NativeSelect,
   Input,
-  Switch,
   FormGroup,
-  FormControlLabel,
   Button
 } from '@material-ui/core'
 
