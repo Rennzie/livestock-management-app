@@ -4,14 +4,18 @@ import React from 'react';
 import {
   Typography,
   Grid,
-  Card,
-  CardContent,
   FormControl,
   InputLabel,
   NativeSelect,
   Input,
-  Button
+  Button,
+  MobileStepper
 } from '@material-ui/core'
+
+import {
+  KeyboardArrowLeft,
+  KeyboardArrowRight
+} from '@material-ui/icons';
 
 // dependancies
 import axios from 'axios';
@@ -22,6 +26,7 @@ import AnimalCard from '../../common/AnimalCard.jsx';
 
 export default class WeanAnimals extends React.Component{
   state={
+    activeStep: 0,
     herdSelected: false,
     animalSelected: false,
     readyToRegister: false,
