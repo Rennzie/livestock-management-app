@@ -10,7 +10,7 @@ import {
   Radio,
   RadioGroup,
   MobileStepper
-} from '@material-ui/core'
+} from '@material-ui/core';
 
 import {
   KeyboardArrowLeft,
@@ -136,7 +136,7 @@ export default class PregTest extends React.Component{
             {!this.state.herdSelected ?
               <Typography variant='h5'>PregTest a herd</Typography>
               :
-              <Typography variant='h5'>PregTesting {this.state.selectedHerd.name}</Typography>
+              <Typography variant='h6'>PregTesting {this.state.selectedHerd.name}</Typography>
             }
 
             {!this.state.herdSelected  &&

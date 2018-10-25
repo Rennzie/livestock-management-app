@@ -19,25 +19,23 @@ function HerdCard({ herd, onClick }) {
             <Grid container >
               <Grid item xs={12} >
                 <Typography variant='h6' align='center'> {herd.name} </Typography>
-                <Typography variant='subtitle1'>
-                  Category:  <CapitalizeText>{herd.category}</CapitalizeText>
-                </Typography>
+                <CapitalizeText variant='subtitle1'>{herd.category}</CapitalizeText>
               </Grid>
-              <Grid item xs={6} >
+              <Grid item xs={4} >
                 <Typography variant='subtitle2'>
-                  Total Animals: {herd.totalAnimals}
+                  Animals: {herd.totalAnimals}
                 </Typography>
                 <Typography variant='subtitle2'>
-                  Total Cows: {herd.totalAnimals - herd.totalCalves}
+                  Cows: {herd.totalAnimals - herd.totalCalves}
                 </Typography>
                 <Typography variant='subtitle2'>
-                  Total Calves: {herd.totalCalves}
+                  Calves: {herd.totalCalves}
                 </Typography>
               </Grid>
 
-              <Grid item xs={6} >
+              <Grid item xs={8} >
                 <Typography variant='subtitle2'>
-                  Total Pregnant Cows: {herd.totalPregnant}
+                  Pregnant Cows: {herd.totalPregnant}
                 </Typography>
               </Grid>
             </Grid>
@@ -47,17 +45,15 @@ function HerdCard({ herd, onClick }) {
             <Grid container >
               <Grid item xs={12} >
                 <Typography variant='h6' align='center'> {herd.name} </Typography>
-                <Typography variant='subtitle1'>
-                  Category:  <CapitalizeText>{herd.category}</CapitalizeText>
-                </Typography>
+                <CapitalizeText variant='subtitle1'>{herd.category}</CapitalizeText>
               </Grid>
-              <Grid item xs={6} >
+              <Grid item xs={4} >
                 <Typography variant='subtitle2'>
-                  Total Animals: {herd.totalAnimals}
+                  Animals: {herd.totalAnimals}
                 </Typography>
               </Grid>
 
-              <Grid item xs={6} >
+              <Grid item xs={8} >
                 <Typography variant='subtitle2'>
                   Average Weight: {herd.averageWeight} /animal
                 </Typography>
@@ -68,17 +64,15 @@ function HerdCard({ herd, onClick }) {
             <Grid container >
               <Grid item xs={12} >
                 <Typography variant='h6' align='center'> {herd.name} </Typography>
-                <Typography variant='subtitle1'>
-                  Category:  <CapitalizeText>{herd.category}</CapitalizeText>
-                </Typography>
+                <CapitalizeText variant='subtitle1'>{herd.category}</CapitalizeText>
               </Grid>
-              <Grid item xs={6} >
+              <Grid item xs={4} >
                 <Typography variant='subtitle2'>
-                  Total Animals: {herd.totalAnimals}
+                  Animals: {herd.totalAnimals}
                 </Typography>
               </Grid>
 
-              <Grid item xs={6} >
+              <Grid item xs={8} >
                 <Typography variant='subtitle2'>
                   Average Weight: {herd.averageWeight} /animal
                 </Typography>
