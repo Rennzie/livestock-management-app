@@ -26,6 +26,7 @@ import moment from 'moment';
 // components
 import HerdCard from '../../Herd/HerdCard.jsx';
 import AnimalCard from '../../common/AnimalCard.jsx';
+import WeighForm from './WeighForm.jsx';
 
 export default class WeighAnimals extends React.Component{
   state={
@@ -62,7 +63,6 @@ export default class WeighAnimals extends React.Component{
 
     newState.animalSelected = true;
     newState.selectedAnimal = animal;
-    // BUG: weights is undefined
     newState.lastWeighIn = animal.weights[animal.weights.length - 1];
     newState.newWeight.date = moment().format('YYYY-MM-DD');
     newState.activeStep = 2;
@@ -225,65 +225,10 @@ export default class WeighAnimals extends React.Component{
             }
 
             {this.state.animalSelected &&
-              <Grid container spacing={16}>
-                <Grid item xs={12}>
-                  <FormGroup row>
-                    <FormControl>
-                      <InputLabel shrink htmlFor='weight'>Weight</InputLabel>
-                      <Input
-                        type='number'
-                        name='weight'
-                        id='weight'
-                        value={this.state.newWeight.weight}
-                        onChange={this.handleChange('weight')}
-                      />
-                    </FormControl>
-                    <FormControl>
-                      <InputLabel shrink htmlFor='unit'>Units</InputLabel>
-                      <NativeSelect
-                        fullWidth
-                        value={this.state.newWeight.unit}
-                        onChange={this.handleChange('unit')}
-                        input={<Input name='unit' id='unit' />}
-                      >
-                        <option value=''>None</option>
-                        <option value='kgs'>Kilograms</option>
-                      </NativeSelect>
-                    </FormControl>
-
-                  </FormGroup>
-                </Grid>
-
-                <Grid item xs={12}>
-                  <FormControl >
-                    <InputLabel shrink htmlFor='date'>Date of Weigh In</InputLabel>
-                    <Input
-                      type='date'
-                      name='date'
-                      id='date'
-                      value={this.state.newWeight.date}
-                      onChange={this.handleChange('date')}
-                    />
-                  </FormControl>
-                </Grid>
-
-                <Grid item xs={12} >
-                  <FormControl>
-                    <InputLabel shrink htmlFor='timing'>Timing</InputLabel>
-                    <NativeSelect
-                      fullWidth={true}
-                      value={this.state.newWeight.timing}
-                      onChange={this.handleChange('timing')}
-                      input={<Input name='timing' id='timing' />}
-                    >
-                      <option value=''>None</option>
-                      <option value='birth'>Birth</option>
-                      <option value='sale'>Sale</option>
-                      <option value='other'>Other</option>
-                    </NativeSelect>
-                  </FormControl>
-                </Grid>
-              </Grid>
+              <WeighForm
+                handleChange={this.handleChange}
+                newWeight={this.state.newWeight}
+              />
             }
 
             <MobileStepper
