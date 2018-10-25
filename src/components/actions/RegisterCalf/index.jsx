@@ -5,13 +5,8 @@ import axios from 'axios';
 import moment from 'moment';
 import {
   Grid,
-  NativeSelect,
-  FormControl,
-  InputLabel,
-  Input,
   Button,
   Typography,
-  FormGroup,
   MobileStepper
 } from '@material-ui/core';
 
@@ -26,6 +21,7 @@ import Generate from '../../../lib/Generate';
 // components
 import HerdCard from '../../Herd/HerdCard.jsx';
 import AnimalCard from '../../common/AnimalCard.jsx';
+import RegisterForm from './RegisterForm.jsx';
 
 export default class RegisterCalf extends React.Component{
   state={
@@ -113,7 +109,7 @@ export default class RegisterCalf extends React.Component{
     this.resetCalfRegister(newCalf.mother);
   }
 
-  resetCalfRegister = (mothersId) => {  
+  resetCalfRegister = (mothersId) => {
     const newState = this.state;
 
     newState.motherRegistrationComplete.push(mothersId);
@@ -242,80 +238,10 @@ export default class RegisterCalf extends React.Component{
 
             {/* New calf info collect */}
             {this.state.animalSelected &&
-              <Grid container spacing={16}>
-                <Grid item xs={6}>
-                  <FormControl>
-                    <InputLabel shrink htmlFor='breed'>Breed</InputLabel>
-                    <NativeSelect
-                      fullWidth={true}
-                      value={this.state.newCalf.breed}
-                      onChange={this.handleChange('breed')}
-                      input={<Input name='breed' id='breed' />}
-                    >
-                      <option value=''>None</option>
-                      <option value='Hereford'>Hereford</option>
-                      <option value='Brahman'>Brahman</option>
-                    </NativeSelect>
-                  </FormControl>
-                </Grid>
-
-                <Grid item xs={6}>
-                  <FormControl>
-                    <InputLabel shrink htmlFor='category'>Category</InputLabel>
-                    <NativeSelect
-                      fullWidth={true}
-                      value={this.state.newCalf.category}
-                      onChange={this.handleChange('category')}
-                      input={<Input name='category' id='category' />}
-                    >
-                      <option value=''>None</option>
-                      <option value='calf'>Calf</option>
-                      <option value='bull-calf'>Bull-Calf</option>
-                    </NativeSelect>
-                  </FormControl>
-                </Grid>
-
-                <Grid item xs={12}>
-                  <FormGroup row>
-                    <FormControl>
-                      <InputLabel shrink htmlFor='weight'>Weight</InputLabel>
-                      <Input
-                        type='number'
-                        name='weight'
-                        id='weight'
-                        value={this.state.newCalf.weight}
-                        onChange={this.handleChange('weight')}
-                      />
-                    </FormControl>
-                    <FormControl>
-                      <InputLabel shrink htmlFor='unit'>Units</InputLabel>
-                      <NativeSelect
-                        fullWidth={true}
-                        value={this.state.newCalf.unit}
-                        onChange={this.handleChange('unit')}
-                        input={<Input name='unit' id='unit' />}
-                      >
-                        <option value=''>None</option>
-                        <option value='kgs'>Kilograms</option>
-                      </NativeSelect>
-                    </FormControl>
-
-                  </FormGroup>
-                </Grid>
-
-                <Grid item xs={12}>
-                  <FormControl>
-                    <InputLabel shrink htmlFor='birthDate'>Date of Birth</InputLabel>
-                    <Input
-                      type='date'
-                      name='birthDate'
-                      id='birthDate'
-                      value={this.state.newCalf.birthDate}
-                      onChange={this.handleChange('birthDate')}
-                    />
-                  </FormControl>
-                </Grid>
-              </Grid>
+              <RegisterForm
+                handleChange={this.handleChange}
+                newCalf={this.state.newCalf}
+              />
             }
 
             <MobileStepper
