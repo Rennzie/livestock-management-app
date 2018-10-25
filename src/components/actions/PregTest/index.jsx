@@ -9,8 +9,14 @@ import {
   Button,
   FormLabel,
   Radio,
-  RadioGroup
+  RadioGroup,
+  MobileStepper
 } from '@material-ui/core'
+
+import {
+  KeyboardArrowLeft,
+  KeyboardArrowRight
+} from '@material-ui/icons';
 
 // dependancies
 import axios from 'axios';
@@ -19,12 +25,9 @@ import axios from 'axios';
 import HerdCard from '../../Herd/HerdCard.jsx';
 import AnimalCard from '../../common/AnimalCard.jsx';
 
-// select a herd to pregtest
-// select an animal to Pregtest
-//
-
 export default class PregTest extends React.Component{
   state={
+    activeStep: 0,
     herdSelected: false,
     animalSelected: false,
     testedAnimals: [],
@@ -45,6 +48,7 @@ export default class PregTest extends React.Component{
     newState.selectedHerd.animals = newState.selectedHerd.animals.filter(animal =>
       animal.category === 'cow' || animal.category === 'heifer'
     );
+    newState.activeStep = 1;
 
     this.setState(newState);
   }
@@ -54,6 +58,7 @@ export default class PregTest extends React.Component{
 
     newState.animalSelected = true;
     newState.selectedAnimal = animal;
+    newState.activeStep = 2;
 
     this.setState(newState);
   }
@@ -89,6 +94,27 @@ export default class PregTest extends React.Component{
     this.resetState();
   }
 
+  handleBack = () => {
+    this.setState(state => {
+      switch(state.activeStep){
+        case 0:
+          return this.props.history.push('/');
+        case 1:
+          return ({
+            activeStep: state.activeStep - 1,
+            herdSelected: false
+          });
+        case 2:
+          return ({
+            activeStep: state.activeStep - 1,
+            animalSelected: false,
+            readyToRegister: false,
+            value: ''
+          });
+      }
+    });
+  };
+
   resetState = () => {
     const newState = this.state;
     newState.testedAnimals.push(newState.selectedAnimal._id);
@@ -108,13 +134,13 @@ export default class PregTest extends React.Component{
       <div>
         {this.state.herds &&
           <main>
-            {!this.state.selectedHerd ?
+            {!this.state.herdSelected ?
               <Typography variant='h5'>PregTest a herd</Typography>
               :
               <Typography variant='h5'>PregTesting {this.state.selectedHerd.name}</Typography>
             }
 
-            {!this.state.selectedHerd  &&
+            {!this.state.herdSelected  &&
               <div>
                 <Typography variant='subtitle1'>Which heard is getting pregtested?</Typography>
                 {this.state.herds.map(herd =>
@@ -127,13 +153,13 @@ export default class PregTest extends React.Component{
               </div>
             }
 
-            {(this.state.selectedHerd && !this.state.animalSelected) &&
+            {(this.state.herdSelected && !this.state.animalSelected) &&
               <Grid container direction='column'>
                 <Typography variant='subtitle2'>Select mother:</Typography>
                 {this.state.selectedHerd.animals.map( animal =>
                   <AnimalCard
                     key={animal._id}
-                    handleClick={this.handleAnimalSelect(animal._id)}
+                    handleClick={this.handleAnimalSelect(animal)}
                     animal={animal}
                   />
                 )}
@@ -151,18 +177,27 @@ export default class PregTest extends React.Component{
                   <FormControlLabel value="isPregnant" control={<Radio />} label="Is Pregnant" />
                   <FormControlLabel value="notInCalf" control={<Radio />} label="Not In Calf" />
                 </RadioGroup>
-
-                <Button
-                  disabled={!this.state.value}
-                  onClick={this.handlePregTested}
-                  variant='contained'
-                  color='secondary'
-                >
-                    Submit
-                </Button>
               </FormControl>
             }
 
+            <MobileStepper
+              variant="dots"
+              steps={3}
+              position="static"
+              activeStep={this.state.activeStep}
+              nextButton={
+                <Button size="small" onClick={this.handlePregTested} disabled={!this.state.value}>
+                  Register
+                  <KeyboardArrowRight />
+                </Button>
+              }
+              backButton={
+                <Button size="small" onClick={this.handleBack} >
+                  <KeyboardArrowLeft />
+                  Back
+                </Button>
+              }
+            />
 
           </main>
         }

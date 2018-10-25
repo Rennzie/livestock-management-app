@@ -4,11 +4,6 @@ import React from 'react';
 import {
   Typography,
   Grid,
-  FormControl,
-  InputLabel,
-  NativeSelect,
-  Input,
-  FormGroup,
   Button,
   MobileStepper
 } from '@material-ui/core';
