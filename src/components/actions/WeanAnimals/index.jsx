@@ -10,7 +10,7 @@ import {
   Input,
   Button,
   MobileStepper
-} from '@material-ui/core'
+} from '@material-ui/core';
 
 import {
   KeyboardArrowLeft,
@@ -70,6 +70,7 @@ export default class WeanAnimals extends React.Component{
     this.setState(newState);
   }
 
+  // step 2
   handleWeanToSelect = herd => () => {
     const newState = this.state;
     newState.weanToHerdSelected = true;
@@ -79,6 +80,7 @@ export default class WeanAnimals extends React.Component{
     this.setState(newState);
   }
 
+  // step 3
   handleWeanChange = name => event => {
     const newState = this.state;
     newState[name] = event.target.value;
