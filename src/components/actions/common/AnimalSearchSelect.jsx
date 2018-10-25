@@ -34,11 +34,11 @@ export default class AnimalSearchSelect extends React.Component{
       <section>
         {this.state.allAnimals &&
           <Grid container direction='column'>
-            <Typography variant='subtitle2'>Select animal to weigh:</Typography>
+            <Typography variant='subtitle2'>{this.props.title}</Typography>
             <SearchBar
               handleChange={this.handleSearchChange}
               searchTerm={this.state.searchTerm}
-              title="Search Animal by identifier"
+              title="Search by identifier"
             />
             {this.state.filteredAnimals ?
               <div>

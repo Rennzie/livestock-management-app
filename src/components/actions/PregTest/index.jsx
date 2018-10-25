@@ -3,7 +3,6 @@ import React from 'react';
 // ui components
 import {
   Typography,
-  Grid,
   FormControl,
   FormControlLabel,
   Button,
@@ -23,7 +22,7 @@ import axios from 'axios';
 
 // components
 import HerdCard from '../../Herd/HerdCard.jsx';
-import AnimalCard from '../../common/AnimalCard.jsx';
+import AnimalSearchSelect from '../common/AnimalSearchSelect.jsx';
 
 export default class PregTest extends React.Component{
   state={
@@ -154,16 +153,11 @@ export default class PregTest extends React.Component{
             }
 
             {(this.state.herdSelected && !this.state.animalSelected) &&
-              <Grid container direction='column'>
-                <Typography variant='subtitle2'>Select mother:</Typography>
-                {this.state.selectedHerd.animals.map( animal =>
-                  <AnimalCard
-                    key={animal._id}
-                    handleClick={this.handleAnimalSelect(animal)}
-                    animal={animal}
-                  />
-                )}
-              </Grid>
+              <AnimalSearchSelect
+                title="Select animal to preg test:"
+                animals={this.state.selectedHerd.animals}
+                handleAnimalSelect={this.handleAnimalSelect}
+              />
             }
 
             {this.state.animalSelected &&

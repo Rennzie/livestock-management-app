@@ -20,7 +20,7 @@ import Generate from '../../../lib/Generate';
 
 // components
 import HerdCard from '../../Herd/HerdCard.jsx';
-import AnimalCard from '../../common/AnimalCard.jsx';
+import AnimalSearchSelect from '../common/AnimalSearchSelect.jsx';
 import RegisterForm from './RegisterForm.jsx';
 
 export default class RegisterCalf extends React.Component{
@@ -187,16 +187,11 @@ export default class RegisterCalf extends React.Component{
             }
 
             {(this.state.herdSelected && !this.state.animalSelected) &&
-              <Grid container direction='column'>
-                <Typography variant='subtitle2'>Select mother:</Typography>
-                {this.state.selectedHerd.animals.map( animal =>
-                  <AnimalCard
-                    key={animal._id}
-                    handleClick={this.handleAnimalSelect(animal._id)}
-                    animal={animal}
-                  />
-                )}
-              </Grid>
+              <AnimalSearchSelect
+                title="Select mother:"
+                animals={this.state.selectedHerd.animals}
+                handleAnimalSelect={this.handleAnimalSelect}
+              />
             }
 
             {/* New Calf info display */}
