@@ -20,8 +20,8 @@ import moment from 'moment';
 
 // components
 import HerdCard from '../../Herd/HerdCard.jsx';
-import AnimalCard from '../../common/AnimalCard.jsx';
 import WeighForm from './WeighForm.jsx';
+import AnimalSearchSelect from '../common/AnimalSearchSelect.jsx';
 
 export default class WeighAnimals extends React.Component{
   state={
@@ -72,12 +72,6 @@ export default class WeighAnimals extends React.Component{
       newState.readyToRegister = true;
       this.setState(newState);
     }
-    this.setState(newState);
-  }
-
-  handleSwitchChange = name => event => {
-    const newState = this.state;
-    newState[name] = event.target.checked;
     this.setState(newState);
   }
 
@@ -171,16 +165,11 @@ export default class WeighAnimals extends React.Component{
             }
 
             {(this.state.herdSelected && !this.state.animalSelected) &&
-              <Grid container direction='column'>
-                <Typography variant='subtitle2'>Select mother:</Typography>
-                {this.state.selectedHerd.animals.map( animal =>
-                  <AnimalCard
-                    key={animal._id}
-                    handleClick={this.handleAnimalSelect(animal)}
-                    animal={animal}
-                  />
-                )}
-              </Grid>
+              <AnimalSearchSelect
+                title="Select animal to weigh"
+                animals={this.state.selectedHerd.animals}
+                handleAnimalSelect={this.handleAnimalSelect}
+              />
             }
 
             {this.state.animalSelected &&
