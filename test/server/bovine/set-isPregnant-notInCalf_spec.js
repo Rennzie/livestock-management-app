@@ -4,50 +4,37 @@ const Bovine = require('../../../models/bovine');
 const bovineTestData = require('../testData/bovinesData');
 
 //--- TEST DATA ---//
-const bovineData = bovineTestData.currentMulti;
-const setPregnant = {
-  ids: bovineTestData.updatedCategories.ids,
-  key: 'isPregnant'
-};
-const setNotInCalf = {
-  ids: bovineTestData.updatedCategories.ids,
-  key: 'notInCalf'
+const bovineData = bovineTestData.currentSingle;
+const pregTest = {
+  date: 1539213325,
+  isPregnant: true
 };
 
-describe('PATCH /bovines/pregnancy', () => {
+
+describe('POST /bovines/:id/breeding/pregtest', () => {
   beforeEach(done => {
     Bovine.deleteMany({})
       .then(() => Bovine.create(bovineData))
       .then(() => done());
   });
 
-  it('should change isPregnant to be true', done => {
-    api.patch('/api/bovines/pregnant')
-      .send(setPregnant)
+  it('should update the correct data', done => {
+    api.post(`/api/bovines/${bovineData._id}/breeding/pregtest`)
+      .send(pregTest)
       .end(() => {
-        Bovine.find({_id: {$in: setPregnant.ids}})
-          .then(bovines => {
-            bovines.forEach(animal => expect(animal.breeding.isPregnant).to.be.true);
-            done();
-          });
-      });
-  });
-
-  it('should change notInCalf to be true', done => {
-    api.patch('/api/bovines/pregnant')
-      .send(setNotInCalf)
-      .end(() => {
-        Bovine.find({_id: {$in: setNotInCalf.ids}})
-          .then(bovines => {
-            bovines.forEach(animal => expect(animal.breeding.notInCalf).to.be.true);
+        Bovine.findById(bovineData._id)
+          .then(bovine => {
+            expect(bovine.breeding.isPregnant).to.eq(pregTest.isPregnant);
+            expect(bovine.breeding.pregTestingHistory[0].isPregnant).to.eq(pregTest.isPregnant);
+            expect(bovine.breeding.pregTestingHistory[0].date).to.eq(pregTest.date);
             done();
           });
       });
   });
 
   it('should return a 201 response', done => {
-    api.patch('/api/bovines/pregnant')
-      .send(setPregnant)
+    api.post(`/api/bovines/${bovineData._id}/breeding/pregtest`)
+      .send(pregTest)
       .end((err, res) => {
         expect(res.status).to.eq(201);
         done();

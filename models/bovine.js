@@ -25,6 +25,12 @@ weightsSchema.virtual('formattedWeighDate')
     return moment(momentObj).format('DD/MM/YYYY');
   });
 
+const pregTestSchema = new mongoose.Schema({
+  date: Number,
+  isPregnant: { type: Boolean, default: null },
+  testedBy: String
+}, { timestamps: true });
+
 const bovineSchema = new mongoose.Schema({
   identifier: String,
   category: { type: String, enum: [ 'calf', 'weaner', 'ox', 'cow', 'bull', 'bull-calf', 'heifer' ] },
@@ -41,11 +47,13 @@ const bovineSchema = new mongoose.Schema({
   breeding: {
     status: { type: Boolean, default: false },
 
-    // NOTE: this will need to be set to false when a calf is born
+    // NOTE: set to false when calf is born, leaving in for now until better understanding of the breeding flow
     isPregnant: { type: Boolean, default: false },
-    notInCalf: { type: Boolean, deafalt: false },
-    calvingPeriod: String,
-    production: [{ type: ObjectId, ref: 'Bovine' }]
+    pregTestingHistory: [ pregTestSchema ],
+
+    // notInCalf: { type: Boolean, default: false },
+    production: [{ type: ObjectId, ref: 'Bovine' }],
+    calvingPeriod: String
   },
 
   //--- FATTENING DETAILS ---///
@@ -96,14 +104,13 @@ bovineSchema.methods.addWeight = function(newWeightObj){
 };
 
 // NOTE: might not be necessary to toggle if only setting to false at calf registration
-bovineSchema.methods.setPregnancy = function(key) {
-  if(key === 'isPregnant'){
-    this.breeding.isPregnant = true;
-    this.breeding.notInCalf = false;
-  } else {
-    this.breeding.isPregnant = false;
-    this.breeding.notInCalf = true;
-  }
+bovineSchema.methods.addPregTest = function(pregTest) {
+
+  // add the test to the animals history
+  this.breeding.pregTestingHistory.push(pregTest);
+
+  // update the global isPregnant status
+  this.breeding.isPregnant = pregTest.isPregnant;
   this.save();
 };
 
@@ -119,6 +126,8 @@ bovineSchema.methods.setFatteningStatus = function() {
 
 // To add a newly registered calf to production array and set isPregnant to false
 bovineSchema.methods.addNewCalf = function(newCalfId) {
+
+  // resets the global isPregnant status to false after calf is registered
   this.breeding.isPregnant = false;
   this.breeding.production.push(newCalfId);
   this.save();

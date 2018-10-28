@@ -58,10 +58,10 @@ export default class RegisterCalf extends React.Component{
     this.setState(newState, () => console.log('=====>', this.state));
   };
 
-  handleAnimalSelect = ( motherId ) => {
+  handleAnimalSelect = ( mother ) => {
     return () => {
       const newState = this.state;
-      newState.newCalf.mother = motherId;
+      newState.newCalf.mother = mother;
       newState.newCalf.identifier = Generate.newIdentifier();
       newState.newCalf._id = Generate.newId();
       newState.animalSelected = true;
@@ -90,7 +90,7 @@ export default class RegisterCalf extends React.Component{
       category: newCalf.category,
       birthDate: unixBirthDate,
       breed: newCalf.breed,
-      mother: newCalf.mother,
+      mother: newCalf.mother._id,
       herd: newCalf.herd,
       weights: [{
         weight: newCalf.weights,
@@ -104,18 +104,18 @@ export default class RegisterCalf extends React.Component{
     };
 
     axios.post('/api/bovines', calf);
-    axios.post(`/api/bovines/${newCalf.mother}/breeding/production`, mothersProductionUpdate);
+    axios.post(`/api/bovines/${newCalf.mother._id}/breeding/production`, mothersProductionUpdate);
 
     this.resetCalfRegister(newCalf.mother);
   }
 
-  resetCalfRegister = (mothersId) => {
+  resetCalfRegister = (mother) => {
     const newState = this.state;
 
-    newState.motherRegistrationComplete.push(mothersId);
+    newState.motherRegistrationComplete.push(mother);
 
     newState.selectedHerd.animals = newState.selectedHerd.animals.filter(animal =>
-      animal._id.toString() !== mothersId
+      animal._id.toString() !== mother._id.toString()
     );
     newState.animalSelected = false;
     newState.readyToRegister = false;
@@ -219,7 +219,7 @@ export default class RegisterCalf extends React.Component{
                 </Grid>
                 <Grid item xs={6}>
                   <Typography variant='subtitle2' >
-                    Mother: {this.state.newCalf.mother}
+                    Mother: {this.state.newCalf.mother.identifier}
                   </Typography>
                 </Grid>
                 <Grid item xs={6}>

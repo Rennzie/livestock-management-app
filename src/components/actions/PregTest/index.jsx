@@ -7,6 +7,8 @@ import {
   FormControlLabel,
   Button,
   FormLabel,
+  InputLabel,
+  Input,
   Radio,
   RadioGroup,
   MobileStepper
@@ -19,6 +21,7 @@ import {
 
 // dependancies
 import axios from 'axios';
+import moment from 'moment';
 
 // components
 import HerdCard from '../../Herd/HerdCard.jsx';
@@ -30,7 +33,7 @@ export default class PregTest extends React.Component{
     herdSelected: false,
     animalSelected: false,
     testedAnimals: [],
-    value: ''
+    pregnant: ''
   };
 
   componentDidMount() {
@@ -57,24 +60,36 @@ export default class PregTest extends React.Component{
 
     newState.animalSelected = true;
     newState.selectedAnimal = animal;
+    newState.testDate = moment().format('YYYY-MM-DD');
     newState.activeStep = 2;
 
     this.setState(newState);
   }
 
-  handleChange = event => {
-    this.setState({value: event.target.value});
+  handleChange = name => event => {
+    this.setState({[name]: event.target.value});
   }
 
   handlePregTested = () => {
+
     //format an object to Submit
+    const isPregnant = false;
+    if(this.state.pregnant === 'isPregnant') {
+      isPregnant === true;
+    } 
+
+    const unixDate = moment(this.state.testDate).unix();
+
     const pregTest = {
-      ids: [this.state.selectedAnimal._id],
-      key: this.state.value
+      date: unixDate,
+      isPregnant: isPregnant,
+      testedBy: ''
     };
 
+    console.log('the pregTest object sent is ', pregTest);
+
     // send axios to /bovine/pregnant
-    axios.patch('/api/bovines/pregnant', pregTest);
+    axios.post(`/api/bovines/${this.state.selectedAnimal._id}/breeding/pregtest`, pregTest);
 
     // set a heifers breeding.status to true and change its category to cow
     if(this.state.selectedAnimal.category === 'heifer') {
@@ -108,7 +123,8 @@ export default class PregTest extends React.Component{
             activeStep: state.activeStep - 1,
             animalSelected: false,
             readyToRegister: false,
-            value: ''
+            testDate: '',
+            pregnant: ''
           });
       }
     });
@@ -123,7 +139,8 @@ export default class PregTest extends React.Component{
     );
 
     newState.animalSelected = false;
-    newState.value = '';
+    newState.testDate = '';
+    newState.pregnant = '';
 
     this.setState(newState);
   }
@@ -161,17 +178,30 @@ export default class PregTest extends React.Component{
             }
 
             {this.state.animalSelected &&
-              <FormControl component="fieldset">
-                <FormLabel component="legend"> Pregnancy Status</FormLabel>
-                <RadioGroup
-                  name="pregnancy"
-                  value={this.state.value}
-                  onChange={this.handleChange}
-                >
-                  <FormControlLabel value="isPregnant" control={<Radio />} label="Is Pregnant" />
-                  <FormControlLabel value="notInCalf" control={<Radio />} label="Not In Calf" />
-                </RadioGroup>
-              </FormControl>
+              <section>
+                <FormControl >
+                  <InputLabel shrink htmlFor='testDate'>Date of Preg Test</InputLabel>
+                  <Input
+                    type='testDate'
+                    name='date'
+                    id='testDate'
+                    value={this.state.testDate}
+                    onChange={this.handleChange('testDate')}
+                  />
+                </FormControl>
+
+                <FormControl component="fieldset">
+                  <FormLabel component="legend"> Pregnancy Status</FormLabel>
+                  <RadioGroup
+                    name="pregnant"
+                    value={this.state.pregnant}
+                    onChange={this.handleChange('pregnant')}
+                  >
+                    <FormControlLabel value="isPregnant" control={<Radio />} label="Is Pregnant" />
+                    <FormControlLabel value="notInCalf" control={<Radio />} label="Not In Calf" />
+                  </RadioGroup>
+                </FormControl>
+              </section>
             }
 
             <MobileStepper
@@ -180,7 +210,7 @@ export default class PregTest extends React.Component{
               position="static"
               activeStep={this.state.activeStep}
               nextButton={
-                <Button size="small" onClick={this.handlePregTested} disabled={!this.state.value}>
+                <Button size="small" onClick={this.handlePregTested} disabled={!this.state.pregnant}>
                   Register
                   <KeyboardArrowRight />
                 </Button>

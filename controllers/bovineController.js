@@ -55,10 +55,10 @@ function bovineCategoryUpdate( req, res, next ){
 }
 
 // to set the status of a cow to pregnant or notInCalf to true
-function bovinePregnancy( req, res, next ){
+function bovinePregTest( req, res, next ){
   Bovine
-    .find({_id: {$in: req.body.ids}})
-    .then(bovines => bovines.forEach(bovine => bovine.setPregnancy(req.body.key)))
+    .findById(req.params.id)
+    .then(bovine => bovine.addPregTest(req.body))
     .then(() => res.sendStatus(201))
     .catch(next);
 }
@@ -142,9 +142,9 @@ module.exports = {
 
   //updates and changes
   updateCategory: bovineCategoryUpdate,
-  setPregnancy: bovinePregnancy,
   setBreedingStatus: bovineBreedingTrue,
   setFatteningStatus: bovineFattengingTrue,
+  updatePregTest: bovinePregTest,
   updateProduction: updateProduction,
 
   //sub-documents

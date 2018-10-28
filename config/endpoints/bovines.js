@@ -19,11 +19,11 @@ Router.route('/bovines/:id')
 Router.route('/bovines/categories')
   .patch(bovineController.updateCategory);
 
-Router.route('/bovines/pregnant')
-  .patch(bovineController.setPregnancy);
-
 Router.route('/bovines/breeding')
   .patch(bovineController.setBreedingStatus);
+
+Router.route('/bovines/:id/breeding/pregtest')
+  .post(bovineController.updatePregTest);
 
 Router.route('/bovines/:id/breeding/production')
   .post(bovineController.updateProduction);

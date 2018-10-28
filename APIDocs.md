@@ -68,15 +68,15 @@ Primary model for collecting information all Cattle.
   The request returns an array containing all the updated animals.
 
 
-- `/bovines/pregnant`
+- `/bovines/:id/breeding/pregtest`
 
-  - `patch()`
+  - `post()`
 
-    Used to set the `breeding.isPregnant` of the `breeding.notInCalf` to `true`.
+    Used to add a new `pregTest` for an animal.
 
-    Request Requires: An object with an array of animal `ids` and a `key` set to `notInCalf` or `isPregnant`.
+    Request Requires: An object with `date` as a unix number, `isPregnant` as a boolean. Optionally it can include a `testedBy` string with the name of the vet who performed the test.
 
-    The request makes use of the `setPregnancy()` method which will set the selected `key` to `true` and the other `key` to `false`. i.e if the key is `isPregnant`, `isPregnant` will be set to `true` and `notInCalf` will be set to `false` and visa versa.
+    The request makes use of the `addPregTest` method with pushes the `req.body` object into the `breeding.pregTestingHistory` sub-document and additional sets the `breeding.isPregnant` to `true` or `false` depending on the result of the test.
 
 
 - `/bovines/breeding`
