@@ -28,6 +28,9 @@ Router.route('/bovines/:id/breeding/pregtest')
 Router.route('/bovines/:id/breeding/production')
   .post(bovineController.updateProduction);
 
+Router.route('/bovines/:id/archive')
+  .patch(bovineController.archive);
+
 Router.route('/bovines/fattening')
   .patch(bovineController.setFatteningStatus);
 

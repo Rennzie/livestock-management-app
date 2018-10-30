@@ -73,10 +73,10 @@ export default class PregTest extends React.Component{
   handlePregTested = () => {
 
     //format an object to Submit
-    const isPregnant = false;
+    let isPregnant = false;
     if(this.state.pregnant === 'isPregnant') {
-      isPregnant === true;
-    } 
+      isPregnant = true;
+    }
 
     const unixDate = moment(this.state.testDate).unix();
 

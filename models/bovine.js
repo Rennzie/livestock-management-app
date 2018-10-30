@@ -65,13 +65,18 @@ const bovineSchema = new mongoose.Schema({
 
   },
 
-  // When archived
+  //--- ARCHIVING ---///
   // NOTE: once transfered, what happens to this bovines archived status
   isArchived: {type: Boolean, default: false},
-  methodOfRemoval: {type: String, enum: ['sale', 'death', 'theft']},
-  removalDate: Number,
+  // methodOfRemoval: {type: String, enum: ['sale', 'death', 'theft']},
+  deathDate: Number,
   causeOfDeath: String,
+  archivingComments: String,
 
+  // Ultimately this will contain x-y data and be mappable.
+  locationOfDeath: String,
+
+  //--- SALE DETAILS ---///
   sale: {
     saleRevenue: Number,
     revenueCurrency: String,

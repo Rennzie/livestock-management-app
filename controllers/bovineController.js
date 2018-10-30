@@ -99,6 +99,15 @@ function  bovineWeightAdd( req, res, next ){
     .catch(next);
 }
 
+function bovineArchive( req, res, next ){
+  Bovine
+    .findById( req.params.id )
+    .then(bovine => bovine.set(req.body))
+    .then(bovine => bovine.save())
+    .then(() => res.sendStatus(201))
+    .catch(next);
+}
+
 function  bovineWeightsBatchUpload( req, res, next ){
   const csvOptions = {headers: ['_id', 'weight', 'unit'], renameHeaders: true, ignoreEmpty: true};
   const fileRows = [];
@@ -146,6 +155,7 @@ module.exports = {
   setFatteningStatus: bovineFattengingTrue,
   updatePregTest: bovinePregTest,
   updateProduction: updateProduction,
+  archive: bovineArchive,
 
   //sub-documents
   addWeight: bovineWeightAdd,

@@ -4,7 +4,7 @@ import React from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import {
-  Grid,
+  Paper,
   Button,
   Typography,
   MobileStepper
@@ -22,6 +22,7 @@ import Generate from '../../../lib/Generate';
 import HerdCard from '../../Herd/HerdCard.jsx';
 import AnimalSearchSelect from '../common/AnimalSearchSelect.jsx';
 import RegisterForm from './RegisterForm.jsx';
+import NewCalfInfoDisplay from './InfoDisplay.jsx';
 
 export default class RegisterCalf extends React.Component{
   state={
@@ -167,6 +168,12 @@ export default class RegisterCalf extends React.Component{
       <div>
         {this.state.cowHerds &&
           <main>
+            <Paper position="static" elevation={0} square>
+              <Typography variant="h6" color="inherit">
+                Calf Registration
+              </Typography>
+            </Paper>
+
             {!this.state.herdSelected ?
               <Typography variant='h5'>Register new Calf</Typography>
               :
@@ -196,39 +203,7 @@ export default class RegisterCalf extends React.Component{
 
             {/* New Calf info display */}
             {this.state.animalSelected &&
-              <Grid container spacing={16}>
-                <Grid item xs={12}>
-                  <Typography variant='subtitle1'>
-                    New Calf: {this.state.newCalf.identifier}
-                  </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography variant='subtitle2' >
-                    Category: {this.state.newCalf.category}
-                  </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography variant='subtitle2' >
-                    D.O.B: {this.state.newCalf.birthDate}
-                  </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography variant='subtitle2' >
-                    Breed: {this.state.newCalf.breed}
-                  </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography variant='subtitle2' >
-                    Mother: {this.state.newCalf.mother.identifier}
-                  </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography variant='subtitle2' >
-                    Weight: {this.state.newCalf.weight} {this.state.newCalf.unit }
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}><hr/></Grid>
-              </Grid>
+              <NewCalfInfoDisplay displayInfo={this.state.newCalf}/>
             }
 
             {/* New calf info collect */}

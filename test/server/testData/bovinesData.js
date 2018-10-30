@@ -24,6 +24,7 @@ module.exports = {
     _id: bovineIds[0],
     birthDate: oneYearAgo,
     // purchaseDate: ,
+    herd: herdIds[0],
     category: 'calf',
     breed: 'Hereford',
     weights: [{_id: bovineIds[1], timing: 'birth', weight: 250, unit: 'kgs'}]
