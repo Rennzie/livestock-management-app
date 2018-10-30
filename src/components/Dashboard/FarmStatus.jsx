@@ -10,7 +10,8 @@ export default class FarmStatus extends React.Component{
 
   componentDidMount(){
     axios.get('/api/herds')
-      .then( res => this.setState({ herds: res.data }))
+      .then(res => res.data.filter(herd => herd.category !== 'archive'))
+      .then(herds => this.setState({ herds }))
       .then(() => this.countAnimals())
       .then(() => this.countPregnant());
   }

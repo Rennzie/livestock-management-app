@@ -182,7 +182,7 @@ export default class PregTest extends React.Component{
                 <FormControl >
                   <InputLabel shrink htmlFor='testDate'>Date of Preg Test</InputLabel>
                   <Input
-                    type='testDate'
+                    type='date'
                     name='date'
                     id='testDate'
                     value={this.state.testDate}

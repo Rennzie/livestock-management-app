@@ -24,7 +24,7 @@ const bovineIds = [
 ];
 
 const herdIds = [
-  '5b91752666708bc8b1622821', '5b91752666708bc8b1622806'
+  '5b91752666708bc8b1622821', '5b91752666708bc8b1622806', '5b91752666708bc8b1622807'
 ];
 
 //create two herds,
@@ -222,6 +222,10 @@ const herdData = [
     _id: herdIds[1],
     name: 'Hereford Fattening Group A',
     category: 'pasturelot'
+  },{
+    _id: herdIds[2],
+    name: 'ARCHIVE',
+    category: 'archive'
   }
 ];
 

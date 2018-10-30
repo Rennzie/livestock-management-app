@@ -5,7 +5,7 @@ const herdSchema = new mongoose.Schema({
   name: String,
   category: {
     type: String,
-    enum: ['cows', 'bull-calves', 'weaners', 'bulls', 'pasturelot', 'feedlot', 'grassland', 'replacement-heifers']
+    enum: ['archive', 'cows', 'bull-calves', 'weaners', 'bulls', 'pasturelot', 'feedlot', 'grassland', 'replacement-heifers']
   }
 }, { timestamps: true });
 

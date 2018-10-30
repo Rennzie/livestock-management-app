@@ -40,7 +40,8 @@ export default class WeighAnimals extends React.Component{
 
   componentDidMount() {
     axios.get('/api/herds')
-      .then(res => this.setState({herds: res.data}));
+      .then(res => res.data.filter(herd => herd.category !== 'archive'))
+      .then(herds => this.setState({ herds }));
   }
 
   handleHerdSelect = selectedHerd => () => {
