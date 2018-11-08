@@ -42,14 +42,13 @@ function herdDelete(req, res, next){
 }
 
 //--- SUB-DOCUMENTS ---//
-function changeHerds(req, res, next){
+function herdChangeNew(req, res, next){
   Bovine
-    .update(
-      {_id: {$in: req.body}},
-      {herd: req.params.herdId },
-      {multi: true})
-    .then(() => res.sendStatus(201))
+    .findById( req.params.herdId )
+    .then(herd => herd.newChange(req.body))
+    .then(herd => res.status(201).json(herd))
     .catch(next);
+
 }
 
 module.exports ={
@@ -60,5 +59,5 @@ module.exports ={
   delete: herdDelete,
 
   // Sub-Document
-  changeHerd: changeHerds
+  newChange: herdChangeNew
 };

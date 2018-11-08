@@ -36,7 +36,7 @@ describe('POST /api/herds', () => {
       .send(herdData)
       .end(( err, res ) => {
         expect(res.body.name).to.eq(herdData.name);
-        expect(res.body.category).to.eq(herdData.category);
+        expect(res.body.class).to.eq(herdData.class);
         done();
       });
   });

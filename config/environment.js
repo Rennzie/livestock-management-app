@@ -1,9 +1,10 @@
-const port = process.env.PORT || 4000;
-const env =  process.env.NODE_ENV || 'dev';
-const dbUri = process.env.MONGODB_URI || `mongodb://localhost/stockman-${env}`;
+const PORT = process.env.PORT || 4000;
+const ENV =  process.env.NODE_ENV || 'dev';
+const DB_URI = process.env.MONGODB_URI || `mongodb://localhost/stockman-${ENV}`;
+// const VERSION = 0.0.1;
 
 module.exports = {
-  port,
-  env,
-  dbUri
+  PORT,
+  ENV,
+  DB_URI
 };

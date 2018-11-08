@@ -2,7 +2,7 @@ import React from 'react';
 
 import axios from 'axios';
 
-import { Grid, CircularProgress } from '@material-ui/core';
+import { Grid, LinearProgress } from '@material-ui/core';
 
 // NOTE: most of the methods here could be abstracted away to a farm model in the back end
 export default class FarmStatus extends React.Component{
@@ -44,7 +44,7 @@ export default class FarmStatus extends React.Component{
           </Grid>
 
           :
-          <CircularProgress color="secondary" />
+          <LinearProgress color="secondary" />
         }
       </main>
     );

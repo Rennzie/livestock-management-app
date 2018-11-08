@@ -1,4 +1,4 @@
-/* globals describe, it, api expect beforeEach */
+/* globals describe, it, xit, api expect beforeEach */
 
 const Herd = require('../../../models/herd');
 const Bovine = require('../../../models/bovine');
@@ -40,32 +40,13 @@ describe('SHOW herds/:id', () => {
       .end(( err, res ) => {
         expect(res.body._id).to.eq(herdData._id);
         expect(res.body.name).to.eq(herdData.name);
-        expect(res.body.category).to.eq(herdData.category);
+        expect(res.body.class).to.eq(herdData.class);
         done();
       });
   });
 
-  it('should return a populated array of animals', done => {
-    api.get(`/api/herds/${herdIds[0]}`)
-      .end(( err, res ) => {
-        expect(res.body).to.have.property('animals');
-        expect(res.body.animals).to.be.an('array');
-        expect(res.body.animals[0]).to.be.an('object');
-        expect(res.body.animals[0]).to.have.property('breed');
-        done();
-      });
-  });
 
-  it('should return an averageBirth virtual', done => {
-    api.get(`/api/herds/${herdIds[0]}`)
-      .end(( err, res ) => {
-        expect(res.body).to.have.property('averageBirth');
-        expect(res.body.averageBirth).to.be.a('number');
-        done();
-      });
-  });
-
-  it('should return an averageWeight virtual that is a number', done => {
+  xit('should return an averageWeight virtual that is a number', done => {
     api.get(`/api/herds/${herdIds[0]}`)
       .end(( err, res ) => {
         expect(res.body).to.have.property('averageWeight');

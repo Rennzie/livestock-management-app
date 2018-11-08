@@ -12,7 +12,7 @@ Router.route('/herds/:id')
   .put(herdController.update)
   .delete(herdController.delete);
 
-Router.route('/herds/:herdId/animals')
-  .patch(herdController.changeHerd);
+Router.route('/herds/:herdId/changes')
+  .post(herdController.newChange);
 
 module.exports = Router;

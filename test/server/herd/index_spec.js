@@ -37,7 +37,7 @@ describe('GET /herds', () => {
         res.body.forEach( herd => {
           const testHerd = herdData.filter( herdTest => herd._id.toString() === herdTest._id )[0];
           expect(herd.name).to.be.eq(testHerd.name);
-          expect(herd.category).to.eq(testHerd.category);
+          expect(herd.class).to.eq(testHerd.class);
         });
         done();
       });

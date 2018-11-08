@@ -10,11 +10,11 @@ import Herds from './components/Herd/index.jsx';
 import HerdShow from './components/Herd/Show.jsx';
 
 // Actions
-import RegisterCalf from './components/actions/RegisterCalf/index.jsx';
-import WeighAnimals from './components/actions/WeighAnimals/index.jsx';
-import WeanAnimals from './components/actions/WeanAnimals/index.jsx';
-import PregTest from './components/actions/PregTest/index.jsx';
-import ArchiveAnimal from './components/actions/ArchiveAnimal/index.jsx';
+// import RegisterCalf from './components/actions/RegisterCalf/index.jsx';
+// import WeighAnimals from './components/actions/WeighAnimals/index.jsx';
+// import WeanAnimals from './components/actions/WeanAnimals/index.jsx';
+// import PregTest from './components/actions/PregTest/index.jsx';
+// import ArchiveAnimal from './components/actions/ArchiveAnimal/index.jsx';
 
 class App extends React.Component {
   render() {
@@ -26,11 +26,6 @@ class App extends React.Component {
           <Route path='/herds/:id' component={HerdShow} />
 
           {/* Actions */}
-          <Route path='/register/calf' component={RegisterCalf} />
-          <Route path='/weighing' component={WeighAnimals} />
-          <Route path='/weaning' component={WeanAnimals} />
-          <Route path='/pregtesting' component={PregTest} />
-          <Route path='/archive' component={ArchiveAnimal} />
         </Switch>
         {/* <AppMenu /> */}
       </main>
@@ -44,3 +39,10 @@ ReactDOM.render(
   </BrowserRouter>,
   document.getElementById('root')
 );
+
+
+// <Route path='/register/calf' component={RegisterCalf} />
+// <Route path='/weighing' component={WeighAnimals} />
+// <Route path='/weaning' component={WeanAnimals} />
+// <Route path='/pregtesting' component={PregTest} />
+// <Route path='/archive' component={ArchiveAnimal} />

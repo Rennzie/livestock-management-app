@@ -45,15 +45,4 @@ describe('PUT /bovines/:id/archive', () => {
       })
       .then(() => done());
   });
-
-  it('should remove the animal from its current herd', done => {
-    api.patch(`/api/bovines/${bovineData._id}/archive`)
-      .send(archiveData)
-      .then(() => Herd.findById(herdData._id))
-      .then(herd =>{
-        console.log('=======>', herd.animals);
-        expect(herd.animals).to.be.null;
-        done();
-      } );
-  });
 });

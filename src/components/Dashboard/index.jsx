@@ -1,26 +1,28 @@
 import React from 'react';
+import { Fragment } from 'react';
 
-import Grid from '@material-ui/core/Grid';
+import { Typography } from '@material-ui/core';
 
 // Components
 import FarmStatus from './FarmStatus.jsx';
 import ActionsContainer from './ActionsContainer.jsx';
 
 export default class Dashboard extends React.Component{
+
+  state = {
+    actions: [
+      { name: 'Class Manager', destination: '/herds' },
+      { name: 'Animal Manager', destination: '/animals/manage' }
+    ]
+  }
+
   render(){
     return(
-      <div>
-        <Grid container direction='column'>
-          <h1>Welcome to your farm dashboard</h1>
-          <Grid item xs={12}>
-            <FarmStatus />
-          </Grid>
-          <Grid item xs={12}>
-            <h1>What do you want to do?</h1>
-            <ActionsContainer />
-          </Grid>
-        </Grid>
-      </div>
+      <Fragment>
+        <Typography variant='h5' align='center'>Palmiet Farm</Typography >
+        <FarmStatus />
+        <ActionsContainer actions={this.state.actions} />
+      </Fragment>
     );
   }
 }

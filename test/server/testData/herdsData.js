@@ -6,14 +6,14 @@ module.exports = {
   herdIds: herdIds,
   single: {
     _id: herdIds[0],
-    name: 'Braford Breeding Group A',
-    category: 'cows'
+    name: 'Whitefaced Breeding Herd',
+    class: 'cows'
   },
-  
+
   single2: {
     _id: herdIds[1],
     name: 'Braford Breeding Group A',
-    category: 'cows'
+    class: 'cows'
   },
 
   updateSingle: {
@@ -24,11 +24,11 @@ module.exports = {
     {
       _id: herdIds[0],
       name: 'Braford Breeding Group A',
-      category: 'cows'
+      class: 'cows'
     },{
       _id: herdIds[1],
       name: 'Hereford Fattening Group A',
-      category: 'pasturelot'
+      class: 'pasturelot'
     }
   ]
 };

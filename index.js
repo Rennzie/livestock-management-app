@@ -8,10 +8,10 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
 
-const { port, dbUri } = require('./config/environment');
+const { PORT, DB_URI } = require('./config/environment');
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
-mongoose.connect(dbUri, { useNewUrlParser: true });
+mongoose.connect(DB_URI, { useNewUrlParser: true });
 
 app.use(express.static(`${__dirname}/public`));
 
@@ -23,6 +23,6 @@ app.get('/*', (req, res) => res.sendFile(`${__dirname}/public/index.html`));
 
 app.use(errorHandler);
 
-app.listen(port, () => console.log(`Express is running on port ${port}`));
+app.listen(PORT, () => console.log(`Express is running on PORT ${PORT}`));
 
 module.exports = app;
