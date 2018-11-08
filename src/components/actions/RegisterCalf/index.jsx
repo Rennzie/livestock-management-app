@@ -165,76 +165,77 @@ export default class RegisterCalf extends React.Component{
   render() {
 
     return (
-      <div>
-        {this.state.cowHerds &&
-          <main>
-            <Paper position="static" elevation={0} square>
-              <Typography variant="h6" color="inherit">
-                Calf Registration
-              </Typography>
-            </Paper>
-
-            {!this.state.herdSelected ?
-              <Typography variant='h5'>Register new Calf</Typography>
-              :
-              <Typography variant='h5'>Registering calfs to {this.state.selectedHerd.name}</Typography>
-            }
-
-            {!this.state.herdSelected  &&
-              <div>
-                <Typography variant='subtitle1'>Which heard is registering calves?</Typography>
-                {this.state.cowHerds.map(herd =>
-                  <HerdCard
-                    key={herd._id}
-                    herd={herd}
-                    onClick={this.handleHerdSelect(herd)}
-                  />
-                )}
-              </div>
-            }
-
-            {(this.state.herdSelected && !this.state.animalSelected) &&
-              <AnimalSearchSelect
-                title="Select mother:"
-                animals={this.state.selectedHerd.animals}
-                handleAnimalSelect={this.handleAnimalSelect}
-              />
-            }
-
-            {/* New Calf info display */}
-            {this.state.animalSelected &&
-              <NewCalfInfoDisplay displayInfo={this.state.newCalf}/>
-            }
-
-            {/* New calf info collect */}
-            {this.state.animalSelected &&
-              <RegisterForm
-                handleChange={this.handleChange}
-                newCalf={this.state.newCalf}
-              />
-            }
-
-            <MobileStepper
-              variant="dots"
-              steps={3}
-              position="static"
-              activeStep={this.state.activeStep}
-              nextButton={
-                <Button size="small" onClick={this.handleCalfRegister} disabled={!this.state.readyToRegister}>
-                  Register
-                  <KeyboardArrowRight />
-                </Button>
-              }
-              backButton={
-                <Button size="small" onClick={this.handleBack} >
-                  <KeyboardArrowLeft />
-                  Back
-                </Button>
-              }
-            />
-          </main>
-        }
-      </div>
+      <div>Hello from calf register</div>
+    //   <div>
+    //     {this.state.cowHerds &&
+    //       <main>
+    //         <Paper position="static" elevation={0} square>
+    //           <Typography variant="h6" color="inherit">
+    //             Calf Registration
+    //           </Typography>
+    //         </Paper>
+    //
+    //         {!this.state.herdSelected ?
+    //           <Typography variant='h5'>Register new Calf</Typography>
+    //           :
+    //           <Typography variant='h5'>Registering calfs to {this.state.selectedHerd.name}</Typography>
+    //         }
+    //
+    //         {!this.state.herdSelected  &&
+    //           <div>
+    //             <Typography variant='subtitle1'>Which heard is registering calves?</Typography>
+    //             {this.state.cowHerds.map(herd =>
+    //               <HerdCard
+    //                 key={herd._id}
+    //                 herd={herd}
+    //                 onClick={this.handleHerdSelect(herd)}
+    //               />
+    //             )}
+    //           </div>
+    //         }
+    //
+    //         {(this.state.herdSelected && !this.state.animalSelected) &&
+    //           <AnimalSearchSelect
+    //             title="Select mother:"
+    //             animals={this.state.selectedHerd.animals}
+    //             handleAnimalSelect={this.handleAnimalSelect}
+    //           />
+    //         }
+    //
+    //         {/* New Calf info display */}
+    //         {this.state.animalSelected &&
+    //           <NewCalfInfoDisplay displayInfo={this.state.newCalf}/>
+    //         }
+    //
+    //         {/* New calf info collect */}
+    //         {this.state.animalSelected &&
+    //           <RegisterForm
+    //             handleChange={this.handleChange}
+    //             newCalf={this.state.newCalf}
+    //           />
+    //         }
+    //
+    //         <MobileStepper
+    //           variant="dots"
+    //           steps={3}
+    //           position="static"
+    //           activeStep={this.state.activeStep}
+    //           nextButton={
+    //             <Button size="small" onClick={this.handleCalfRegister} disabled={!this.state.readyToRegister}>
+    //               Register
+    //               <KeyboardArrowRight />
+    //             </Button>
+    //           }
+    //           backButton={
+    //             <Button size="small" onClick={this.handleBack} >
+    //               <KeyboardArrowLeft />
+    //               Back
+    //             </Button>
+    //           }
+    //         />
+    //       </main>
+    //     }
+    //   </div>
     );
   }
 }

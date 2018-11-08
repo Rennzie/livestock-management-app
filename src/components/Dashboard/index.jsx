@@ -5,14 +5,14 @@ import { Typography } from '@material-ui/core';
 
 // Components
 import FarmStatus from './FarmStatus.jsx';
-import ActionsContainer from './ActionsContainer.jsx';
+import ActionsContainer from '../common/ActionsContainer.jsx';
 
 export default class Dashboard extends React.Component{
 
   state = {
     actions: [
       { name: 'Class Manager', destination: '/herds' },
-      { name: 'Animal Manager', destination: '/animals/manage' }
+      { name: 'Animal Manager', destination: '/manage-animals' }
     ]
   }
 

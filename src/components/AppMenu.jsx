@@ -1,18 +1,31 @@
 import React from 'react';
 import { AppBar, Toolbar, IconButton } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+import { withStyles } from '@material-ui/core/styles';
+import HomeIcon from '@material-ui/icons/Menu';
 
-
-export default class AppMenu extends React.Component{
-  render() {
-    return(
-      <AppBar position='static' color='primary' >
-        <Toolbar>
-          <IconButton>
-            <MenuIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-    );
+const styles = () => ({
+  appBar: {
+    position: 'absolute',
+    top: 'auto',
+    bottom: 0,
+    margin: 0
+  },
+  toolbar: {
+    alignItems: 'center',
+    justifyContent: 'space-between'
   }
+});
+
+function AppMenu({ classes }) {
+  return(
+    <AppBar className={classes.appBar} position='static' color='primary' >
+      <Toolbar className={classes.toolbar}>
+        <IconButton>
+          <HomeIcon />
+        </IconButton>
+      </Toolbar>
+    </AppBar>
+  );
 }
+
+export default withStyles(styles)(AppMenu);
