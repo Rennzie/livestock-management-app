@@ -84,7 +84,7 @@ export default class WeighAnimals extends React.Component{
     this.setState(state => {
       switch(state.activeStep){
         case 0:
-          return this.props.history.push('/');
+          return this.props.history.push('/manage-animals');
         case 1:
           return ({
             activeStep: state.activeStep - 1,

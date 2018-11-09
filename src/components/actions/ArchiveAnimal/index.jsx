@@ -21,29 +21,17 @@ import moment from 'moment';
 
 
 // components
-import HerdCard from '../../Herd/HerdCard.jsx';
 import AnimalSearchSelect from '../common/AnimalSearchSelect.jsx';
 
 export default class ArchiveAnimal extends React.Component{
   state={
     activeStep: 0,
-    herdSelected: false,
     animalSelected: false
   };
 
   componentDidMount() {
-    axios.get('/api/herds')
-      .then(res => res.data.filter(herd => herd.category !== 'archive'))
-      .then(herds => this.setState({ herds }));
-  }
-
-  handleHerdSelect = selectedHerd => () => {
-    const newState = this.state;
-    newState.herdSelected = true;
-    newState.selectedHerd = selectedHerd;
-    newState.activeStep = 1;
-
-    this.setState(newState);
+    axios.get('/api/bovines')
+      .then(res => this.setState({ animals: res.data }));
   }
 
   handleAnimalSelect = animal => () => {
@@ -72,27 +60,23 @@ export default class ArchiveAnimal extends React.Component{
       causeOfDeath: this.state.causeOfDeath,
       archivingComments: this.state.archivingComments
     };
-    // send axios request to /bovines/:id/archive
 
+    // send axios request to /bovines/:id/archive
     axios.patch(`/api/bovines/${this.state.selectedAnimal._id}/archive`, archiveObj);
     axios.patch('/api/herds/5b91752666708bc8b1622807/animals', animalIds);
+
     // re-route to bovine show page
 
-    // NOTE: this will re-direct to the animals show page agtr being archived
-    this.props.history.push('/');
+    // NOTE: this will eventually re-direct to the animals show page after being archived
+    this.props.history.push('/manage-animals');
   }
 
   handleBack = () => {
     this.setState(state => {
       switch(state.activeStep){
         case 0:
-          return this.props.history.push('/');
+          return this.props.history.push('/manage-animals');
         case 1:
-          return ({
-            activeStep: state.activeStep - 1,
-            herdSelected: false
-          });
-        case 2:
           return ({
             activeStep: state.activeStep - 1,
             animalSelected: false,
@@ -114,27 +98,14 @@ export default class ArchiveAnimal extends React.Component{
 
     return(
       <div>
-        {this.state.herds &&
+        {this.state.animals &&
           <main>
             <Typography variant='h5'>Archive Animal</Typography>
 
-            {!this.state.herdSelected  &&
-              <div>
-                <Typography variant='subtitle1'>Select herd?</Typography>
-                {this.state.herds.map(herd =>
-                  <HerdCard
-                    key={herd._id}
-                    herd={herd}
-                    onClick={this.handleHerdSelect(herd)}
-                  />
-                )}
-              </div>
-            }
-
-            {(this.state.herdSelected && !this.state.animalSelected) &&
+            {!this.state.animalSelected &&
               <AnimalSearchSelect
                 title="Select animal to be archived:"
-                animals={this.state.selectedHerd.animals}
+                animals={this.state.animals}
                 handleAnimalSelect={this.handleAnimalSelect}
               />
             }
@@ -194,7 +165,7 @@ export default class ArchiveAnimal extends React.Component{
 
             <MobileStepper
               variant="dots"
-              steps={3}
+              steps={2}
               position="static"
               activeStep={this.state.activeStep}
               nextButton={

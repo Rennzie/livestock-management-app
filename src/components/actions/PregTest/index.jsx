@@ -1,4 +1,5 @@
 import React from 'react';
+import { Fragment } from 'react';
 
 // ui components
 import {
@@ -24,35 +25,18 @@ import axios from 'axios';
 import moment from 'moment';
 
 // components
-import HerdCard from '../../Herd/HerdCard.jsx';
 import AnimalSearchSelect from '../common/AnimalSearchSelect.jsx';
 
 export default class PregTest extends React.Component{
   state={
     activeStep: 0,
-    herdSelected: false,
     animalSelected: false,
-    testedAnimals: [],
     pregnant: ''
   };
 
   componentDidMount() {
-    axios.get('/api/herds')
-      .then(res => res.data.filter(herd => herd.category === 'cows'))
-      .then(herds => this.setState({ herds }));
-  }
-
-  handleHerdSelect = selectedHerd => () => {
-    const newState = this.state;
-
-    newState.herdSelected = true;
-    newState.selectedHerd = selectedHerd;
-    newState.selectedHerd.animals = newState.selectedHerd.animals.filter(animal =>
-      animal.category === 'cow' || animal.category === 'heifer'
-    );
-    newState.activeStep = 1;
-
-    this.setState(newState);
+    axios.get('/api/bovines')
+      .then(res => this.setState({ animals: res.data }));
   }
 
   handleAnimalSelect = animal => () => {
@@ -61,7 +45,7 @@ export default class PregTest extends React.Component{
     newState.animalSelected = true;
     newState.selectedAnimal = animal;
     newState.testDate = moment().format('YYYY-MM-DD');
-    newState.activeStep = 2;
+    newState.activeStep = 1;
 
     this.setState(newState);
   }
@@ -112,13 +96,8 @@ export default class PregTest extends React.Component{
     this.setState(state => {
       switch(state.activeStep){
         case 0:
-          return this.props.history.push('/');
+          return this.props.history.push('/manage-animals');
         case 1:
-          return ({
-            activeStep: state.activeStep - 1,
-            herdSelected: false
-          });
-        case 2:
           return ({
             activeStep: state.activeStep - 1,
             animalSelected: false,
@@ -132,13 +111,9 @@ export default class PregTest extends React.Component{
 
   resetState = () => {
     const newState = this.state;
-    newState.testedAnimals.push(newState.selectedAnimal._id);
-
-    newState.selectedHerd.animals = newState.selectedHerd.animals.filter( animal =>
-      animal._id.toString() !== newState.selectedAnimal._id.toString()
-    );
 
     newState.animalSelected = false;
+    newState.activeStep = 0;
     newState.testDate = '';
     newState.pregnant = '';
 
@@ -147,32 +122,15 @@ export default class PregTest extends React.Component{
 
   render() {
     return(
-      <div>
-        {this.state.herds &&
+      <Fragment>
+        {this.state.animals &&
           <main>
-            {!this.state.herdSelected ?
-              <Typography variant='h5'>PregTest a herd</Typography>
-              :
-              <Typography variant='h6'>PregTesting {this.state.selectedHerd.name}</Typography>
-            }
+            <Typography align='center' variant='h5'>Preg Test</Typography>
 
-            {!this.state.herdSelected  &&
-              <div>
-                <Typography variant='subtitle1'>Which heard is getting pregtested?</Typography>
-                {this.state.herds.map(herd =>
-                  <HerdCard
-                    key={herd._id}
-                    herd={herd}
-                    onClick={this.handleHerdSelect(herd)}
-                  />
-                )}
-              </div>
-            }
-
-            {(this.state.herdSelected && !this.state.animalSelected) &&
+            {!this.state.animalSelected &&
               <AnimalSearchSelect
                 title="Select animal to preg test:"
-                animals={this.state.selectedHerd.animals}
+                animals={this.state.animals}
                 handleAnimalSelect={this.handleAnimalSelect}
               />
             }
@@ -206,7 +164,7 @@ export default class PregTest extends React.Component{
 
             <MobileStepper
               variant="dots"
-              steps={3}
+              steps={2}
               position="static"
               activeStep={this.state.activeStep}
               nextButton={
@@ -225,7 +183,7 @@ export default class PregTest extends React.Component{
 
           </main>
         }
-      </div>
+      </Fragment>
     );
   }
 }
