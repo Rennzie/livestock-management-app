@@ -1,4 +1,5 @@
 import React from 'react';
+import { Fragment } from 'react';
 
 // dependancies
 import axios from 'axios';
@@ -19,7 +20,6 @@ import {
 import Generate from '../../../lib/Generate';
 
 // components
-import HerdCard from '../../Herd/HerdCard.jsx';
 import AnimalSearchSelect from '../common/AnimalSearchSelect.jsx';
 import RegisterForm from './RegisterForm.jsx';
 import NewCalfInfoDisplay from './InfoDisplay.jsx';
@@ -27,37 +27,23 @@ import NewCalfInfoDisplay from './InfoDisplay.jsx';
 export default class RegisterCalf extends React.Component{
   state={
     activeStep: 0,
-    herdSelected: false,
     animalSelected: false,
     readyToRegister: false,
-    motherRegistrationComplete: [],
     newCalf: {
       identifier: '',
       category: '',
       birthDate: '',
       breed: '',
       mother: '',
-      herd: '',
       weight: '',
       unit: ''
     }
   };
 
   componentDidMount() {
-    axios.get('/api/herds')
-      .then(res => res.data.filter( herd => herd.category === 'cows'))
-      .then(cowHerds => this.setState({cowHerds}));
+    axios.get('/api/bovines')
+      .then(res => this.setState({animals: res.data}));
   }
-
-  handleHerdSelect = ( selectedHerd )=> () => {
-    const newState = this.state;
-    newState.herdSelected = true;
-    newState.selectedHerd = selectedHerd;
-    newState.selectedHerd.animals = newState.selectedHerd.animals.filter(animal => animal.category === 'cow' && animal.breeding.isPregnant);
-    newState.newCalf.herd = selectedHerd._id;
-    newState.activeStep = 1;
-    this.setState(newState, () => console.log('=====>', this.state));
-  };
 
   handleAnimalSelect = ( mother ) => {
     return () => {
@@ -66,7 +52,7 @@ export default class RegisterCalf extends React.Component{
       newState.newCalf.identifier = Generate.newIdentifier();
       newState.newCalf._id = Generate.newId();
       newState.animalSelected = true;
-      newState.activeStep = 2;
+      newState.activeStep = 1;
 
       this.setState(newState, () => console.log('=====>', this.state));
     };
@@ -92,9 +78,8 @@ export default class RegisterCalf extends React.Component{
       birthDate: unixBirthDate,
       breed: newCalf.breed,
       mother: newCalf.mother._id,
-      herd: newCalf.herd,
       weights: [{
-        weight: newCalf.weights,
+        weight: newCalf.weight,
         unit: newCalf.unit,
         timing: 'birth'
       }]
@@ -104,23 +89,21 @@ export default class RegisterCalf extends React.Component{
       calfId: newCalf._id
     };
 
+    // creates a new calf bovine
     axios.post('/api/bovines', calf);
+
+    // adds the new calf to its mother production array
     axios.post(`/api/bovines/${newCalf.mother._id}/breeding/production`, mothersProductionUpdate);
 
-    this.resetCalfRegister(newCalf.mother);
+    this.resetCalfRegister();
   }
 
-  resetCalfRegister = (mother) => {
+  resetCalfRegister = () => {
     const newState = this.state;
 
-    newState.motherRegistrationComplete.push(mother);
-
-    newState.selectedHerd.animals = newState.selectedHerd.animals.filter(animal =>
-      animal._id.toString() !== mother._id.toString()
-    );
     newState.animalSelected = false;
     newState.readyToRegister = false;
-    newState.activeStep = 1;
+    newState.activeStep = 0;
     newState.newCalf = {
       category: '',
       birthDate: '',
@@ -137,13 +120,8 @@ export default class RegisterCalf extends React.Component{
     this.setState(state => {
       switch(state.activeStep){
         case 0:
-          return this.props.history.push('/');
+          return this.props.history.push('/manage-animals');
         case 1:
-          return ({
-            activeStep: state.activeStep - 1,
-            herdSelected: false
-          });
-        case 2:
           return ({
             activeStep: state.activeStep - 1,
             animalSelected: false,
@@ -165,77 +143,57 @@ export default class RegisterCalf extends React.Component{
   render() {
 
     return (
-      <div>Hello from calf register</div>
-    //   <div>
-    //     {this.state.cowHerds &&
-    //       <main>
-    //         <Paper position="static" elevation={0} square>
-    //           <Typography variant="h6" color="inherit">
-    //             Calf Registration
-    //           </Typography>
-    //         </Paper>
-    //
-    //         {!this.state.herdSelected ?
-    //           <Typography variant='h5'>Register new Calf</Typography>
-    //           :
-    //           <Typography variant='h5'>Registering calfs to {this.state.selectedHerd.name}</Typography>
-    //         }
-    //
-    //         {!this.state.herdSelected  &&
-    //           <div>
-    //             <Typography variant='subtitle1'>Which heard is registering calves?</Typography>
-    //             {this.state.cowHerds.map(herd =>
-    //               <HerdCard
-    //                 key={herd._id}
-    //                 herd={herd}
-    //                 onClick={this.handleHerdSelect(herd)}
-    //               />
-    //             )}
-    //           </div>
-    //         }
-    //
-    //         {(this.state.herdSelected && !this.state.animalSelected) &&
-    //           <AnimalSearchSelect
-    //             title="Select mother:"
-    //             animals={this.state.selectedHerd.animals}
-    //             handleAnimalSelect={this.handleAnimalSelect}
-    //           />
-    //         }
-    //
-    //         {/* New Calf info display */}
-    //         {this.state.animalSelected &&
-    //           <NewCalfInfoDisplay displayInfo={this.state.newCalf}/>
-    //         }
-    //
-    //         {/* New calf info collect */}
-    //         {this.state.animalSelected &&
-    //           <RegisterForm
-    //             handleChange={this.handleChange}
-    //             newCalf={this.state.newCalf}
-    //           />
-    //         }
-    //
-    //         <MobileStepper
-    //           variant="dots"
-    //           steps={3}
-    //           position="static"
-    //           activeStep={this.state.activeStep}
-    //           nextButton={
-    //             <Button size="small" onClick={this.handleCalfRegister} disabled={!this.state.readyToRegister}>
-    //               Register
-    //               <KeyboardArrowRight />
-    //             </Button>
-    //           }
-    //           backButton={
-    //             <Button size="small" onClick={this.handleBack} >
-    //               <KeyboardArrowLeft />
-    //               Back
-    //             </Button>
-    //           }
-    //         />
-    //       </main>
-    //     }
-    //   </div>
+      <Fragment>
+        {this.state.animals &&
+          <main>
+            <Paper position="static" elevation={0} square>
+              <Typography align='center' variant="h5" color="inherit">
+                Calf Registration
+              </Typography>
+            </Paper>
+
+            {!this.state.animalSelected &&
+              <AnimalSearchSelect
+                title="Select mother:"
+                animals={this.state.animals}
+                handleAnimalSelect={this.handleAnimalSelect}
+              />
+            }
+
+            {/* New Calf info display */}
+            {this.state.animalSelected &&
+              <NewCalfInfoDisplay displayInfo={this.state.newCalf}/>
+            }
+
+            {/* New calf info collect */}
+            {this.state.animalSelected &&
+              <RegisterForm
+                handleChange={this.handleChange}
+                newCalf={this.state.newCalf}
+              />
+            }
+
+            <MobileStepper
+              variant="dots"
+              steps={2}
+              position="static"
+              activeStep={this.state.activeStep}
+              nextButton={
+                <Button size="small" onClick={this.handleCalfRegister} disabled={!this.state.readyToRegister}>
+                  Register
+                  <KeyboardArrowRight />
+                </Button>
+              }
+              backButton={
+                <Button size="small" onClick={this.handleBack} >
+                  <KeyboardArrowLeft />
+                  Back
+                </Button>
+              }
+            />
+          </main>
+        }
+      </Fragment>
     );
   }
 }

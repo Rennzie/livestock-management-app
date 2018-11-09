@@ -1,4 +1,5 @@
 import React from 'react';
+import { Fragment } from 'react';
 
 // ui components
 import {
@@ -19,17 +20,14 @@ import axios from 'axios';
 import moment from 'moment';
 
 // components
-import HerdCard from '../../Herd/HerdCard.jsx';
 import WeighForm from './WeighForm.jsx';
 import AnimalSearchSelect from '../common/AnimalSearchSelect.jsx';
 
 export default class WeighAnimals extends React.Component{
   state={
     activeStep: 0,
-    herdSelected: false,
     animalSelected: false,
     readyToRegister: false,
-    weighedAnimals: [],
     newWeight: {
       weight: 0,
       unit: 'kgs',
@@ -39,19 +37,8 @@ export default class WeighAnimals extends React.Component{
   };
 
   componentDidMount() {
-    axios.get('/api/herds')
-      .then(res => res.data.filter(herd => herd.category !== 'archive'))
-      .then(herds => this.setState({ herds }));
-  }
-
-  handleHerdSelect = selectedHerd => () => {
-    const newState = this.state;
-
-    newState.herdSelected = true;
-    newState.selectedHerd = selectedHerd;
-    newState.activeStep = 1;
-
-    this.setState(newState);
+    axios.get('/api/bovines')
+      .then(res => this.setState({ animals: res.data }));
   }
 
   handleAnimalSelect = animal => () => {
@@ -61,7 +48,7 @@ export default class WeighAnimals extends React.Component{
     newState.selectedAnimal = animal;
     newState.lastWeighIn = animal.weights[animal.weights.length - 1];
     newState.newWeight.date = moment().format('YYYY-MM-DD');
-    newState.activeStep = 2;
+    newState.activeStep = 1;
 
     this.setState(newState);
   }
@@ -86,6 +73,7 @@ export default class WeighAnimals extends React.Component{
       date: unixDate,
       timing: newWeight.timing
     };
+
     //send axios request to /bovines/:id/weights
     axios.post(`/api/bovines/${selectedAnimal._id}/weights`, weight);
 
@@ -98,11 +86,6 @@ export default class WeighAnimals extends React.Component{
         case 0:
           return this.props.history.push('/');
         case 1:
-          return ({
-            activeStep: state.activeStep - 1,
-            herdSelected: false
-          });
-        case 2:
           return ({
             activeStep: state.activeStep - 1,
             animalSelected: false,
@@ -119,14 +102,8 @@ export default class WeighAnimals extends React.Component{
   };
 
   resetState = () => {
-    //add the weighed animal to the weighed animals array
     const newState = this.state;
-    newState.weighedAnimals.push(newState.selectedAnimal._id);
 
-    //filter the selectedHerd animals
-    newState.selectedHerd.animals = newState.selectedHerd.animals.filter( animal =>
-      animal._id.toString() !== newState.selectedAnimal._id.toString()
-    );
     // newState.selectedAnimal = null;
     newState.animalSelected = false;
     newState.readyToRegister = false;
@@ -144,32 +121,15 @@ export default class WeighAnimals extends React.Component{
   render() {
 
     return(
-      <div>
-        {this.state.herds &&
+      <Fragment>
+        {this.state.animals &&
           <main>
-            {!this.state.herdSelected ?
-              <Typography variant='h5'>Weigh a herd</Typography>
-              :
-              <Typography variant='h5'>Weighing {this.state.selectedHerd.name}</Typography>
-            }
+            <Typography align='center' variant='h5'>Weigh Animal</Typography>
 
-            {!this.state.herdSelected  &&
-              <div>
-                <Typography variant='subtitle1'>Which heard is getting weighed?</Typography>
-                {this.state.herds.map(herd =>
-                  <HerdCard
-                    key={herd._id}
-                    herd={herd}
-                    onClick={this.handleHerdSelect(herd)}
-                  />
-                )}
-              </div>
-            }
-
-            {(this.state.herdSelected && !this.state.animalSelected) &&
+            { !this.state.animalSelected &&
               <AnimalSearchSelect
                 title="Select animal to weigh"
-                animals={this.state.selectedHerd.animals}
+                animals={this.state.animals}
                 handleAnimalSelect={this.handleAnimalSelect}
               />
             }
@@ -207,6 +167,9 @@ export default class WeighAnimals extends React.Component{
                     Timing: {this.state.newWeight.timing}
                   </Typography>
                 </Grid>
+                <Grid item xs={12}>
+                  <hr/>
+                </Grid>
               </Grid>
             }
 
@@ -219,7 +182,7 @@ export default class WeighAnimals extends React.Component{
 
             <MobileStepper
               variant="dots"
-              steps={3}
+              steps={2}
               position="static"
               activeStep={this.state.activeStep}
               nextButton={
@@ -237,7 +200,7 @@ export default class WeighAnimals extends React.Component{
             />
           </main>
         }
-      </div>
+      </Fragment>
     );
   }
 }

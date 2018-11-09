@@ -12,10 +12,10 @@ import AnimalManager from './components/AnimalManager/index.jsx';
 
 // Actions
 import RegisterCalf from './components/actions/RegisterCalf/index.jsx';
-// import WeighAnimals from './components/actions/WeighAnimals/index.jsx';
+import WeighAnimals from './components/actions/WeighAnimals/index.jsx';
 // import WeanAnimals from './components/actions/WeanAnimals/index.jsx';
-// import PregTest from './components/actions/PregTest/index.jsx';
-// import ArchiveAnimal from './components/actions/ArchiveAnimal/index.jsx';
+import PregTest from './components/actions/PregTest/index.jsx';
+import ArchiveAnimal from './components/actions/ArchiveAnimal/index.jsx';
 
 class App extends React.Component {
   render() {
@@ -26,8 +26,12 @@ class App extends React.Component {
           <Route exact path='/herds' component={Herds} />
           <Route path='/herds/:id' component={HerdShow} />
 
+          {/* Manage Animals */}
           <Route exact path='/manage-animals' component={AnimalManager} />
-          {/* Actions */}
+          <Route path='/manage-animals/register-calf' component={RegisterCalf} />
+          <Route path='/manage-animals/weigh' component={WeighAnimals} />
+          <Route path='/manage-animals/preg-test' component={PregTest} />
+          <Route path='/manage-animals/archive' component={ArchiveAnimal} />
 
         </Switch>
         <AppMenu />
@@ -35,7 +39,6 @@ class App extends React.Component {
     );
   }
 }
-// <Route path='/manage-animals/register-calf' component={RegisterCalf} />
 
 ReactDOM.render(
   <BrowserRouter>
@@ -43,9 +46,3 @@ ReactDOM.render(
   </BrowserRouter>,
   document.getElementById('root')
 );
-
-
-// <Route path='/weighing' component={WeighAnimals} />
-// <Route path='/weaning' component={WeanAnimals} />
-// <Route path='/pregtesting' component={PregTest} />
-// <Route path='/archive' component={ArchiveAnimal} />
