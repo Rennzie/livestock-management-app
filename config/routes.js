@@ -7,7 +7,7 @@ const userController = require('../controllers/userController');
 
 // end points
 const bovines = require('./endpoints/bovines.js');
-const herds = require('./endpoints/herds.js');
+const classes = require('./endpoints/classes.js');
 
 //--- Auth Routes ---//
 Router.route('/register')
@@ -21,6 +21,6 @@ Router.route('/users/:id')
 
 //--- End Points ---//
 Router.use(bovines);
-Router.use(herds);
+Router.use(classes);
 
 module.exports = Router;

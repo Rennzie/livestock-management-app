@@ -11,7 +11,7 @@ const morgan = require('morgan');
 const { PORT, DB_URI } = require('./config/environment');
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
-mongoose.connect(DB_URI, { useNewUrlParser: true });
+mongoose.connect(DB_URI, { useCreateIndex: true, useNewUrlParser: true });
 
 app.use(express.static(`${__dirname}/public`));
 

@@ -1,15 +1,12 @@
 /* globals describe, it, api expect beforeEach */
 
 const Bovine = require('../../../models/bovine');
-const Herd = require('../../../models/herd');
 const bovineTestData = require('../testData/bovinesData');
-const herdTestData = require('../testData/herdsData');
 
 // date as unix 11/10/2018 DD/MM/YYYY
 const today = 1539213325;
 
 const bovineData = bovineTestData.currentSingle;
-const herdData = herdTestData.single;
 const archiveData = {
   isArchived: true,
   deathDate: today,
@@ -20,8 +17,6 @@ describe('PUT /bovines/:id/archive', () => {
   beforeEach(done => {
     Bovine.deleteMany({})
       .then(() => Bovine.create(bovineData))
-      .then(() => Herd.deleteMany({}))
-      .then(() => Herd.create(herdData))
       .then(() => done());
   });
 
