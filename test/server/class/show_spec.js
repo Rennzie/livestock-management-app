@@ -21,16 +21,6 @@ describe('GET /api/classes/:classId', () => {
       });
   });
 
-  it('should return a total animals virtual', done => {
-    api.get(`/api/classes/${classData._id}`)
-      .end(( err, res ) => {
-        console.log('========> ', res.body)
-        expect(res.body).to.have.property('totalAnimals');
-        expect(res.body.totalAnimals).to.be.a('number');
-        done();
-      });
-  });
-
   xit('should return the correct data', done => {
 
   });

@@ -2,15 +2,6 @@ const mongoose = require('mongoose');
 const moment = require('moment');
 // const ObjectId = mongoose.Schema.Types.ObjectId;
 
-/**
- *  - Class should track the number of animals in it on a monthly basis
- *  - Be able to add or remove an animal to the total
- *  - Track what the reasons for animal movements was.
- *  - Maintain this total for each month
- *  - Be able to reconcile for the whole year
- *  - Be able to archive the whole herd when all animals are removed, sold etc
-**/
-
 //=== SUB-DOCUMENTS ===//
 const ChangeTrackerSchema = new mongoose.Schema({
 
@@ -81,14 +72,6 @@ ClassSchema.pre('save', function(next){
 
 //--- VIRTUALS ---//
 
-// dont need this while the pre save is working well
-// ClassSchema.virtual('totalAnimals')
-//   .get(function() {
-//     return this.changes.reduce( ( accum, item ) => {
-//       return accum += item.animalsMoved;
-//     }, 0);
-//   });
-
 //--- METHODS ---//
 
 ClassSchema.methods.newChange = function( changeObj ) {
@@ -96,15 +79,22 @@ ClassSchema.methods.newChange = function( changeObj ) {
   //  --> if it is then add it to current month array
   //  --> if its not then archive the current month array into an object with a key of MMM-YYYY
 
-  const period = moment().format('MMM-YYYY');
-  if(moment(changeObj.createdAt).format('MMM-YYYY') !== period){
-    const prevMonthPeriod = moment().subtract(1, 'month').format('MMM-YYYY');
+  const lastMonth = moment().subtract(1, 'month').format('MMM-YYYY');
+  console.log('last month is:', lastMonth);
+  console.log('period of the change is ', moment(changeObj.createdAt).format('MMM-YYYY'));
+
+  if(moment(changeObj.createdAt).format('MMM-YYYY') !== lastMonth){
+    console.log('running successfully!');
+    // const prevMonthPeriod = moment().subtract(1, 'month').format('MMM-YYYY');
     // archive currentMonthChanges to detail archie object with key of period
 
     // NOTE: this is un tested as yet.
-    this.changesArchive[prevMonthPeriod] = [];
-    this.currentMonthChanges.forEach( change => this.changesArchive[change.period.format('MMM-YYYY')].push(change));
+    this.changesArchive[lastMonth] = [...this.currentMonthChanges];
+
+    // this.currentMonthChanges.forEach( change => this.changesArchive[change.period.format('MMM-YYYY')].push(change));
     this.currentMonthChanges = [];
+    this.currentMonthChanges.push(changeObj);
+    return this.save();
   }
 
   this.currentMonthChanges.push(changeObj);

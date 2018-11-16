@@ -42,10 +42,71 @@ module.exports = {
       }
     ]
   },
+
   trackedChange: {
     _id: ids[2],
     createdAt: moment(),
     reasonForChange: 'death',
     animalsMoved: -10
+  },
+
+  singleLastMonth: {
+    _id: ids[0],
+    name: 'Breeding Cows',
+    class: 'cows',
+    currentMonthDetail: {
+      openingTotal: 0,
+      period: 'Oct-2018',
+      changes: {
+        add: 100,
+        death: -2,
+        sale: -10
+      },
+      closingTotal: 111
+    },
+    currentMonthChanges: [
+      {
+        createdAt: moment().set({'year': 2018, 'month': 9, 'date': 1}),
+        reasonForChange: 'add',
+        animalsMoved: 50
+      }, {
+        createdAt: moment().set({'year': 2018, 'month': 9, 'date': 7}),
+        reasonForChange: 'theft',
+        animalsMoved: -2
+      }, {
+        createdAt: moment().set({'year': 2018, 'month': 9, 'date': 10}),
+        reasonForChange: 'sale',
+        animalsMoved: -10
+      }, {
+        createdAt: moment().set({'year': 2018, 'month': 9, 'date': 12}),
+        reasonForChange: 'add',
+        animalsMoved: 10
+      }, {
+        createdAt: moment().set({'year': 2018, 'month': 9, 'date': 15}),
+        reasonForChange: 'theft',
+        animalsMoved: -1
+      }
+    ],
+    changesArchive: {
+      'Sep-2018': [
+        {
+          createdAt: moment().set({'year': 2018, 'month': 8, 'date': 1}),
+          reasonForChange: 'add',
+          animalsMoved: 100
+        }, {
+          createdAt: moment().set({'year': 2018, 'month': 8, 'date': 10}),
+          reasonForChange: 'sale',
+          animalsMoved: -10
+        }, {
+          createdAt: moment().set({'year': 2018, 'month': 8, 'date': 20}),
+          reasonForChange: 'death',
+          animalsMoved: -2
+        }, {
+          createdAt: moment().set({'year': 2018, 'month': 8, 'date': 28}),
+          reasonForChange: 'add',
+          animalsMoved: 23
+        }
+      ]
+    }
   }
 };

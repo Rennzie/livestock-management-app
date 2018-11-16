@@ -27,9 +27,8 @@ describe('POST /api/class/:classId/changes', () => {
     api.post(`/api/classes/${classData._id}/changes`)
       .send(trackedChange)
       .end(( err, res ) => {
-        console.log('========> ', res.body);
         expect(res.body._id).to.eq(classData._id);
-        expect(res.body.changes.pop()._id).to.eq(trackedChange._id);
+        expect(res.body.currentMonthChanges.pop()._id).to.eq(trackedChange._id);
         done();
       });
   });
