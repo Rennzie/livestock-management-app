@@ -11,7 +11,7 @@ export default class Dashboard extends React.Component{
 
   state = {
     actions: [
-      { name: 'Class Manager', destination: '/herds' },
+      { name: 'Class Manager', destination: '/manage-classes' },
       { name: 'Animal Manager', destination: '/manage-animals' }
     ]
   }
@@ -19,8 +19,8 @@ export default class Dashboard extends React.Component{
   render(){
     return(
       <Fragment>
-        <Typography variant='h5' align='center'>Palmiet Farm</Typography >
-        <FarmStatus />
+        <Typography variant='h5' align='center'>Palmiet Farm </Typography >
+        {/*<FarmStatus />*/}
         <ActionsContainer actions={this.state.actions} />
       </Fragment>
     );

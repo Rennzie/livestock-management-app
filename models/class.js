@@ -45,6 +45,10 @@ ClassSchema.set('toJSON', { virtuals: true });
  *    If month has not changed then recalculate the closing total and update the changes sumamry object
  *
  *  IDEA: this pre save could be run for month, week, day etc
+ *
+ *  EDGE: if a change is set retrospectively and the month has already changed
+ *        then this will create problems with the current set up.
+ *        A more robust solution would be to create change summary from the monthly detail archive??
  */
 
 ClassSchema.pre('save', function(next){
@@ -80,18 +84,11 @@ ClassSchema.methods.newChange = function( changeObj ) {
   //  --> if its not then archive the current month array into an object with a key of MMM-YYYY
 
   const lastMonth = moment().subtract(1, 'month').format('MMM-YYYY');
-  console.log('last month is:', lastMonth);
-  console.log('period of the change is ', moment(changeObj.createdAt).format('MMM-YYYY'));
 
   if(moment(changeObj.createdAt).format('MMM-YYYY') !== lastMonth){
     console.log('running successfully!');
-    // const prevMonthPeriod = moment().subtract(1, 'month').format('MMM-YYYY');
-    // archive currentMonthChanges to detail archie object with key of period
-
-    // NOTE: this is un tested as yet.
     this.changesArchive[lastMonth] = [...this.currentMonthChanges];
 
-    // this.currentMonthChanges.forEach( change => this.changesArchive[change.period.format('MMM-YYYY')].push(change));
     this.currentMonthChanges = [];
     this.currentMonthChanges.push(changeObj);
     return this.save();

@@ -1,13 +1,17 @@
-import React from 'react';
+import React, {Component, Fragment} from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
+import { CssBaseline } from '@material-ui/core';
+
 // COMPONENTS
-import AppMenu from './components/AppMenu.jsx';
+import BottomNav from './components/BottomNav.jsx';
 
 import Dashboard from './components/Dashboard/index.jsx';
-import Herds from './components/Herd/index.jsx';
-import HerdShow from './components/Herd/Show.jsx';
+import ClassManager from './components/ClassManager/index.jsx';
+import ClassChange from './components/actions/ClassChange/index.jsx';
+// import HerdShow from './components/Herd/Show.jsx';
+
 import AnimalManager from './components/AnimalManager/index.jsx';
 
 // Actions
@@ -17,14 +21,17 @@ import WeighAnimals from './components/actions/WeighAnimals/index.jsx';
 import PregTest from './components/actions/PregTest/index.jsx';
 import ArchiveAnimal from './components/actions/ArchiveAnimal/index.jsx';
 
-class App extends React.Component {
+class App extends Component {
   render() {
     return(
-      <main>
+      <Fragment>
+        <CssBaseline />
         <Switch>
           <Route exact path='/' component={Dashboard} />
-          <Route exact path='/herds' component={Herds} />
-          <Route path='/herds/:id' component={HerdShow} />
+
+          {/* Manage Classes */}
+          <Route exact path='/manage-classes' component={ClassManager} />
+          <Route path='/manage-classes/changes' component={ClassChange} />
 
           {/* Manage Animals */}
           <Route exact path='/manage-animals' component={AnimalManager} />
@@ -34,8 +41,8 @@ class App extends React.Component {
           <Route path='/manage-animals/archive' component={ArchiveAnimal} />
 
         </Switch>
-        <AppMenu />
-      </main>
+        <BottomNav />
+      </Fragment>
     );
   }
 }
