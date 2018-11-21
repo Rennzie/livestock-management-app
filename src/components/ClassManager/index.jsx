@@ -9,12 +9,9 @@ import {
   Button,
   ExpansionPanel,
   ExpansionPanelDetails,
-  ExpansionPanelSummary
+  ExpansionPanelSummary,
+  ExpansionPanelActions
 } from '@material-ui/core';
-
-// import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-// import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-// import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddIcon from '@material-ui/icons/Add';
@@ -23,7 +20,6 @@ import AddIcon from '@material-ui/icons/Add';
 import axios from 'axios';
 
 // Components
-// import NewChangeModalWrapped from './NewChangeModal.jsx';
 
 export default class ClassManager extends Component{
   state={
@@ -42,8 +38,8 @@ export default class ClassManager extends Component{
     this.setState({expanded: expanded ? panel : false });
   };
 
-  handleClassChange = () => {
-    this.props.history.push('/manage-classe/changes');
+  handleClassChange = category => () => {
+    this.props.history.push('/manage-classes/changes', { category });
   };
 
   render() {
@@ -99,14 +95,18 @@ export default class ClassManager extends Component{
                     </List>
 
                   </ExpansionPanelDetails>
+                  <Divider/>
+                  <ExpansionPanelActions>
+                    <Button onClick={this.handleClassChange(category)}> Add Change </Button>
+                  </ExpansionPanelActions>
                 </ExpansionPanel>
               )}
             </Fragment>
         }
 
-        <Button onClick={this.handleNewChange} variant="fab" color="secondary" aria-label="Add">
+        { /* <Button onClick={this.handleClassChange} variant="fab" color="secondary" aria-label="Add">
           <AddIcon />
-        </Button>
+        </Button>*/}
       </Fragment>
     );
   }

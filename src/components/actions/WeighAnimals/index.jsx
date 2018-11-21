@@ -56,6 +56,7 @@ export default class WeighAnimals extends React.Component{
   handleChange = name => event => {
     const newState = this.state;
     newState.newWeight[name] = event.target.value;
+    
     if(Object.values(newState.newWeight).every(item => item)) {
       newState.readyToRegister = true;
       this.setState(newState);

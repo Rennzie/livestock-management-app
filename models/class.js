@@ -7,7 +7,7 @@ const ChangeTrackerSchema = new mongoose.Schema({
 
   // this will be a moment date.
   createdAt: Date,
-  reasonForChange: { type: String, enum: [ 'add', 'death', 'theft', 'sale']},
+  reasonForChange: { type: String, enum: [ 'add', 'purchase', 'death', 'theft', 'sale', 'other']},
   animalsMoved: Number,
   notes: String
 });
