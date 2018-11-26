@@ -85,8 +85,8 @@ ClassSchema.methods.newChange = function( changeObj ) {
 
   const lastMonth = moment().subtract(1, 'month').format('MMM-YYYY');
 
-  if(moment(changeObj.createdAt).format('MMM-YYYY') !== lastMonth){
-    console.log('running successfully!');
+  // if the new changes is in a the next month then start archiving things
+  if(moment(changeObj.createdAt).format('MMM-YYYY') !== this.currentMonthDetail.period){
     this.changesArchive[lastMonth] = [...this.currentMonthChanges];
 
     this.currentMonthChanges = [];

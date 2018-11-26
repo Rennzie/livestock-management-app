@@ -10,7 +10,7 @@ import BottomNav from './components/BottomNav.jsx';
 import Dashboard from './components/Dashboard/index.jsx';
 import ClassManager from './components/ClassManager/index.jsx';
 import ClassChange from './components/actions/ClassChange/index.jsx';
-// import HerdShow from './components/Herd/Show.jsx';
+import ClassHistory from './components/Class/ClassHistory.jsx';
 
 import AnimalManager from './components/AnimalManager/index.jsx';
 
@@ -31,7 +31,8 @@ class App extends Component {
 
           {/* Manage Classes */}
           <Route exact path='/manage-classes' component={ClassManager} />
-          <Route path='/manage-classes/changes' component={ClassChange} />
+          <Route path='/manage-classes/:className/changes' component={ClassChange} />
+          <Route path='/manage-classes/:className/history' component={ClassHistory} />
 
           {/* Manage Animals */}
           <Route exact path='/manage-animals' component={AnimalManager} />

@@ -1,4 +1,4 @@
-import React, {Component, Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 
 import {
   Typography,
@@ -13,8 +13,8 @@ import {
 import moment from 'moment';
 import axios from 'axios';
 
-export default class ClassChange extends Component{
-  state={
+export default class ClassChange extends Component {
+  state = {
     newChange: {
       createdAt: '',
       reasonForChange: '',
@@ -23,27 +23,18 @@ export default class ClassChange extends Component{
   };
 
   componentDidMount() {
+    // NOTE: will end up as an if depending on what route gets user here.
+
     this.setState((prevState, props) => {
-      console.log('before ===> ', prevState );
       prevState.category = props.location.state.category;
       prevState.newChange.createdAt = moment().format('YYYY-MM-DD');
       return prevState;
-    }, () => console.log('after ======>', this.state));
+    });
   }
-  // recieve the category to update from props
-  // select date of change, reason for change, and
-  // show simple form for adding or removing animals
-  // complete the form
-  // send axios request at /api/classes/:id/changes
-  // return to /classes-manager
 
   handleChange = name => event => {
-    // const newState = this.state;
-    // newState.newChange[name] = event.target.value;
-    //
-    // this.setState(newState);
     const value = event.target.value;
-    this.setState((prevState) => {
+    this.setState(prevState => {
       const newState = prevState;
       newState.newChange[name] = value;
       return newState;
@@ -60,61 +51,78 @@ export default class ClassChange extends Component{
     changeObj.reasonForChange = newChange.reasonForChange;
     changeObj.animalsMoved = newChange.animalsMoved;
 
-    axios.post(`/api/classes/${this.state.category._id}/changes`, changeObj)
+    axios
+      .post(`/api/classes/${this.state.category._id}/changes`, changeObj)
       .then(() => this.props.history.push('/manage-classes'));
-  }
+  };
 
   render() {
+    const { newChange, category } = this.state;
 
-    const { newChange } = this.state;
-
-    return(
+    return (
       <Fragment>
-        <Typography align='center' variant='h5'>Log Change</Typography>
+        {category && (
+          <Fragment>
+            <Typography align="center" variant="h5">
+              Log Change
+            </Typography>
+            <Typography align="left" variant="subtitle2">
+              {category.class}
+            </Typography>
 
-        <FormControl >
-          <InputLabel shrink htmlFor='createdAt'>Date</InputLabel>
-          <Input
-            type='date'
-            max={newChange.createdAt}
-            name='createdAt'
-            id='createdAt'
-            value={newChange.createdAt}
-            onChange={this.handleChange('createdAt')}
-          />
-        </FormControl>
+            <FormControl>
+              <InputLabel shrink htmlFor="createdAt">
+                Date
+              </InputLabel>
+              <Input
+                type="date"
+                max={newChange.createdAt}
+                name="createdAt"
+                id="createdAt"
+                value={newChange.createdAt}
+                onChange={this.handleChange('createdAt')}
+              />
+            </FormControl>
 
-        <FormControl>
-          <InputLabel shrink htmlFor='reasonForChange'>Reason For Change</InputLabel>
-          <NativeSelect
-            fullWidth={true}
-            value={newChange.reasonForChange}
-            onChange={this.handleChange('reasonForChange')}
-            input={<Input name='reasonForChange' id='reasonForChange' />}
-          >
-            <option value=''>None</option>
-            <option value='add'>Add</option>
-            <option value='purchase'>Purchase</option>
-            <option value='death'>death</option>
-            <option value='theft'>Theft</option>
-            <option value='sale'>Sale</option>
-            <option value='other'>Other</option>
-          </NativeSelect>
-        </FormControl>
+            <FormControl>
+              <InputLabel shrink htmlFor="reasonForChange">
+                Reason For Change
+              </InputLabel>
+              <NativeSelect
+                fullWidth={true}
+                value={newChange.reasonForChange}
+                onChange={this.handleChange('reasonForChange')}
+                input={<Input name="reasonForChange" id="reasonForChange" />}
+              >
+                <option value="">None</option>
+                <option value="add">Add</option>
+                <option value="purchase">Purchase</option>
+                <option value="death">Death</option>
+                <option value="theft">Theft</option>
+                <option value="sale">Sale</option>
+                <option value="other">Other</option>
+              </NativeSelect>
+            </FormControl>
 
-        <FormControl>
-          <InputLabel shrink htmlFor='animalsMoved'>Animals Moved</InputLabel>
-          <Input
-            type='number'
-            name='animalsMoved'
-            id='animalsMoved'
-            value={newChange.animalsMoved}
-            onChange={this.handleChange('animalsMoved')}
-          />
-        </FormControl>
+            <FormControl>
+              <InputLabel shrink htmlFor="animalsMoved">
+                Animals Moved
+              </InputLabel>
+              <Input
+                type="number"
+                name="animalsMoved"
+                id="animalsMoved"
+                value={newChange.animalsMoved}
+                onChange={this.handleChange('animalsMoved')}
+              />
+            </FormControl>
 
-        <Button color="secondary" onClick={this.handleChangeLog}>  Log Change </Button>
-
+            <Button color="secondary" onClick={this.handleChangeLog}>
+              {' '}
+              Log Change{' '}
+            </Button>
+          </Fragment>
+        )}
       </Fragment>
     );
   }
