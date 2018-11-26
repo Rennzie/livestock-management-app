@@ -24,8 +24,8 @@ const styles = theme => ({
   form: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'spaceBetween',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    justifyContent: 'spaceAround',
     margin: theme.spacing.unit
   },
   button: {
@@ -180,6 +180,7 @@ class ClassChange extends Component {
               </FormControl>
 
               <Button
+                disabled={!newChange.reasonForChange}
                 variant="contained"
                 className={classes.margin}
                 color="secondary"

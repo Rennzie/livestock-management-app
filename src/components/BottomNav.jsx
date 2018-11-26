@@ -9,7 +9,9 @@ import AnimalIcon from '@material-ui/icons/Pets';
 
 const styles = {
   root: {
-    width: '100%'
+    width: '100%',
+    position: 'fixed',
+    bottom: 0
   }
 };
 
@@ -23,9 +25,9 @@ class BottomNav extends React.Component {
     this.setState({ value });
   };
 
-  handleClick = (destination) => () => {
+  handleClick = destination => () => {
     this.props.history.push(destination);
-  }
+  };
 
   render() {
     const { classes } = this.props;
@@ -39,8 +41,16 @@ class BottomNav extends React.Component {
         className={classes.root}
       >
         <BottomNavigationAction onClick={this.handleClick('/')} label="Home" icon={<Home />} />
-        <BottomNavigationAction onClick={this.handleClick('/manage-classes')} label="Categories" icon={<CategoryIcon />} />
-        <BottomNavigationAction onClick={this.handleClick('/manage-animals')} label="Animals" icon={<AnimalIcon />} />
+        <BottomNavigationAction
+          onClick={this.handleClick('/manage-classes')}
+          label="Categories"
+          icon={<CategoryIcon />}
+        />
+        <BottomNavigationAction
+          onClick={this.handleClick('/manage-animals')}
+          label="Animals"
+          icon={<AnimalIcon />}
+        />
       </BottomNavigation>
     );
   }

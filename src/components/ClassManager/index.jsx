@@ -26,6 +26,8 @@ export default class ClassManager extends Component {
     expanded: null
   };
 
+  // BUG: when the user completes logging a change the history is one call behind
+
   componentDidMount() {
     console.log('component is mounting');
     axios.get('/api/classes').then(res =>
