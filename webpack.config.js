@@ -9,11 +9,9 @@ const HtmlWebpack = new HtmlWebpackPlugin({
 });
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const CopyWebpack = new CopyWebpackPlugin([
-  { from: './src/assets', to: 'assets' }
-]);
+const CopyWebpack = new CopyWebpackPlugin([{ from: './src/assets', to: 'assets' }]);
 
-const HotModuleReplcement = new webpack.HotModuleReplacementPlugin();
+const HotModuleReplacement = new webpack.HotModuleReplacementPlugin();
 
 module.exports = {
   mode: 'development',
@@ -30,8 +28,14 @@ module.exports = {
       { test: /\.scss$/, loader: ['style-loader', 'css-loader', 'sass-loader'] },
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader' },
       { test: /\.(woff|woff2)$/, loader: 'url-loader?prefix=font/&limit=5000' },
-      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=application/octet-stream' },
-      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=image/svg+xml' }
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url-loader?limit=10000&mimetype=application/octet-stream'
+      },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
+      }
     ]
   },
   devServer: {
@@ -50,5 +54,5 @@ module.exports = {
   // resolve: {
   //   extensions: ["", ".jsx", ".webpack.js", ".web.js", ".js", ".json"]
   // },
-  plugins: [HotModuleReplcement, HtmlWebpack, CopyWebpack]
+  plugins: [HotModuleReplacement, HtmlWebpack, CopyWebpack]
 };
