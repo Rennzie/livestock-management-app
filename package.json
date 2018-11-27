@@ -10,7 +10,7 @@
     ]
   },
   "scripts": {
-    "start:client": "webpack-dev-server --config src/config/webpack.dev.config.js --open --hot --env.PLATFORM=local --env.VERSION=0.0.1",
+    "start:client": "webpack-dev-server --config config/webpack.dev.config.js --open --hot --env.PLATFORM=local --env.VERSION=0.0.1",
     "start:server": "nodemon",
     "seed": "node db/seeds",
     "build": "webpack",
