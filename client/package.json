@@ -1,0 +1,67 @@
+{
+  "name": "stockman",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "sean rennie",
+  "license": "MIT",
+  "nodemonConfig": {
+    "ignore": [
+      "src/*"
+    ]
+  },
+  "scripts": {
+    "start:client": "webpack-dev-server --config config/webpack.dev.config.js --open --hot --env.PLATFORM=local --env.VERSION=0.0.1",
+    "start:server": "nodemon",
+    "seed": "node db/seeds",
+    "build": "webpack",
+    "start": "yarn build && node index",
+    "test:server": "nyc mocha test/server/**/*_spec.js --require test/server/spec_helper --recursive --exit"
+  },
+  "engines": {
+    "node": "9.10.0"
+  },
+  "dependencies": {
+    "@material-ui/core": "^3.6.0",
+    "@material-ui/icons": "^3.0.1",
+    "axios": "^0.18.0",
+    "chart.js": "^2.7.3",
+    "lodash": "^4.17.10",
+    "moment": "^2.22.2",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-router-dom": "^4.3.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/plugin-proposal-throw-expressions": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/polyfill": "^7.0.0-beta.51",
+    "@babel/preset-env": "^7.0.0-beta.51",
+    "@babel/preset-react": "^7.0.0-beta.51",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.0-beta.0",
+    "copy-webpack-plugin": "^4.5.1",
+    "css-loader": "^1.0.1",
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-import": "^2.14.0",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.4.3",
+    "node-sass": "^4.8.3",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "prettier": "^1.15.2",
+    "sass-loader": "^7.0.3",
+    "style-loader": "^0.23.1",
+    "uglifyjs-webpack-plugin": "^2.0.1",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.12.0",
+    "webpack-cli": "^3.0.8",
+    "webpack-dev-server": "^3.1.4",
+    "webpack-merge": "^4.1.3",
+    "webpack-visualizer-plugin": "^0.1.11"
+  }
+}
