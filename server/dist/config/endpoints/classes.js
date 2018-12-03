@@ -1,0 +1,1 @@
+"use strict";var express=require("express"),Router=express.Router(),classController=require("../../controllers/classController");Router.route("/classes").post(classController.create).get(classController.index),Router.route("/classes/:id").get(classController.show),Router.route("/classes/:classId/changes").post(classController.createChange),module.exports=Router;

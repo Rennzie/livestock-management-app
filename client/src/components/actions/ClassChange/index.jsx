@@ -7,7 +7,7 @@ import {
   NativeSelect,
   Input,
   Button,
-  FormHelperText
+  Fab
 } from '@material-ui/core';
 
 import AddIcon from '@material-ui/icons/Add';
@@ -56,8 +56,6 @@ class ClassChange extends Component {
   };
 
   componentDidMount() {
-    // NOTE: will end up as an if depending on what route gets user here.
-
     this.setState((prevState, props) => {
       prevState.category = props.location.state.category;
       prevState.newChange.createdAt = moment().format('YYYY-MM-DD');
@@ -66,7 +64,7 @@ class ClassChange extends Component {
   }
 
   handleChange = name => event => {
-    const value = event.target.value;
+    const { value } = event.target;
     this.setState(prevState => {
       const newState = prevState;
       newState.newChange[name] = value;
@@ -76,14 +74,15 @@ class ClassChange extends Component {
 
   handleChangeLog = () => {
     const { newChange } = this.state;
-
-    // NOTE: need to validate that submitting correct negative numbers
+    const change = this.state.newChange.reasonForChange;
 
     const changeObj = {};
     changeObj.createdAt = moment(newChange.createdAt);
     changeObj.reasonForChange = newChange.reasonForChange;
     changeObj.animalsMoved = newChange.animalsMoved;
-
+    if (change === 'death' || change === 'theft' || change === 'sale') {
+      changeObj.animalsMoved = newChange.animalsMoved * -1;
+    }
     axios
       .post(`/api/classes/${this.state.category._id}/changes`, changeObj)
       .then(() => this.props.history.push('/manage-classes'));
@@ -100,6 +99,9 @@ class ClassChange extends Component {
   handleRemove = () => {
     this.setState(prevState => {
       const newState = prevState;
+      if (newState.newChange.animalsMoved === 0) {
+        return newState;
+      }
       newState.newChange.animalsMoved = prevState.newChange.animalsMoved - 1;
       return newState;
     });
@@ -126,7 +128,7 @@ class ClassChange extends Component {
                   Reason For Change
                 </InputLabel>
                 <NativeSelect
-                  fullWidth={true}
+                  fullWidth
                   value={newChange.reasonForChange}
                   onChange={this.handleChange('reasonForChange')}
                   input={<Input name="reasonForChange" id="reasonForChange" />}
@@ -137,7 +139,6 @@ class ClassChange extends Component {
                   <option value="death">Death</option>
                   <option value="theft">Theft</option>
                   <option value="sale">Sale</option>
-                  <option value="other">Other</option>
                 </NativeSelect>
               </FormControl>
 
@@ -148,21 +149,22 @@ class ClassChange extends Component {
                 </Typography>
 
                 <div className={classes.buttonContainer}>
-                  <Button
+                  <Fab
                     onClick={this.handleAdd}
                     className={(classes.buttonGreen, classes.button)}
-                    variant="fab"
+                    variant="round"
                   >
                     <AddIcon />
-                  </Button>
+                  </Fab>
 
-                  <Button
+                  <Fab
+                    disabled={newChange.animalsMoved === 0}
                     onClick={this.handleRemove}
                     className={classNames(classes.buttonRed, classes.button)}
-                    variant="fab"
+                    variant="round"
                   >
                     <SubtractIcon />
-                  </Button>
+                  </Fab>
                 </div>
               </div>
 

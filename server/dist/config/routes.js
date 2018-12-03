@@ -1,0 +1,4 @@
+"use strict";var express=require("express"),Router=express.Router(),authController=require("../controllers/authController"),userController=require("../controllers/userController"),bovines=require("./endpoints/bovines.js"),classes=require("./endpoints/classes.js");// --- Auth Routes ---//
+// --- User Model Routes ---//
+// --- End Points ---//
+Router.route("/register").post(authController.register),Router.route("/login").post(authController.login),Router.route("/users/:id").get(userController.show).put(userController.update).delete(userController.delete),Router.use(bovines),Router.use(classes),module.exports=Router;

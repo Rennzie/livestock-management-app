@@ -1,6 +1,6 @@
 /* globals describe, it, api expect beforeEach */
 
-const Bovine = require('../../../models/bovine');
+const Bovine = require('../../../src/models/bovine');
 const bovineTestData = require('../testData/bovinesData');
 
 // date as unix 11/10/2018 DD/MM/YYYY
@@ -21,16 +21,18 @@ describe('PUT /bovines/:id/archive', () => {
   });
 
   it('should return a 201 response', done => {
-    api.patch(`/api/bovines/${bovineData._id}/archive`)
+    api
+      .patch(`/api/bovines/${bovineData._id}/archive`)
       .send(archiveData)
-      .end(( err, res) => {
+      .end((err, res) => {
         expect(res.status).to.eq(201);
         done();
       });
   });
 
   it('should correctly update the animals data', done => {
-    api.patch(`/api/bovines/${bovineData._id}/archive`)
+    api
+      .patch(`/api/bovines/${bovineData._id}/archive`)
       .send(archiveData)
       .then(() => Bovine.findById(bovineData._id))
       .then(bovine => {

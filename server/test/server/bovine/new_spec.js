@@ -1,19 +1,18 @@
 /* globals describe, it, api expect beforeEach */
 
-const Bovine = require('../../../models/bovine');
+const Bovine = require('../../../src/models/bovine');
 const bovineTestData = require('../testData/bovinesData');
 
 const bovineData = bovineTestData.currentSingle;
 
 describe('POST /bovines', () => {
-
   beforeEach(done => {
-    Bovine.deleteMany({})
-      .then(() => done());
+    Bovine.deleteMany({}).then(() => done());
   });
 
   it('should return a 201 response', done => {
-    api.post('/api/bovines')
+    api
+      .post('/api/bovines')
       .send(bovineData)
       .end((err, res) => {
         expect(res.status).to.eq(201);
@@ -22,7 +21,8 @@ describe('POST /bovines', () => {
   });
 
   it('should return an object', done => {
-    api.post('/api/bovines')
+    api
+      .post('/api/bovines')
       .send(bovineData)
       .end((err, res) => {
         expect(res.body).to.be.an('object');
@@ -31,7 +31,8 @@ describe('POST /bovines', () => {
   });
 
   it('should return the correct data', done => {
-    api.post('/api/bovines')
+    api
+      .post('/api/bovines')
       .send(bovineData)
       .end((err, res) => {
         expect(res.body.category).to.eq(bovineData.category);

@@ -1,11 +1,11 @@
 /* globals describe, it, api expect beforeEach */
 
-const Bovine = require('../../../models/bovine');
+const Bovine = require('../../../src/models/bovine');
 const bovineTestData = require('../testData/bovinesData');
 
-//--- TEST DATA ---//
+// --- TEST DATA ---//
 const bovineData = bovineTestData.currentMulti;
-const updatedCategories = bovineTestData.updatedCategories;
+const { updatedCategories } = bovineTestData;
 
 describe('PATCH /bovines/categories', () => {
   beforeEach(done => {
@@ -15,7 +15,8 @@ describe('PATCH /bovines/categories', () => {
   });
 
   it('should return a 201 response status', done => {
-    api.patch('/api/bovines/categories')
+    api
+      .patch('/api/bovines/categories')
       .send(updatedCategories)
       .end((err, res) => {
         expect(res.status).to.eq(201);
@@ -24,7 +25,8 @@ describe('PATCH /bovines/categories', () => {
   });
 
   it('should update the status of each animal to the new category', done => {
-    api.patch('/api/bovines/categories')
+    api
+      .patch('/api/bovines/categories')
       .send(updatedCategories)
       .end((err, res) => {
         res.body.forEach(animal => {
@@ -33,5 +35,4 @@ describe('PATCH /bovines/categories', () => {
         done();
       });
   });
-
 });

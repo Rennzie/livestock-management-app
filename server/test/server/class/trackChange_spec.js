@@ -1,11 +1,11 @@
 /* globals describe, it, api expect beforeEach  */
 
-const Class = require('../../../models/class');
+const Class = require('../../../src/models/class');
 const classTestData = require('../testData/classData');
 
-//--- TEST DATA ---//
+// --- TEST DATA ---//
 const classData = classTestData.single;
-const trackedChange = classTestData.trackedChange;
+const { trackedChange } = classTestData;
 
 describe('POST /api/class/:classId/changes', () => {
   beforeEach(done => {
@@ -15,22 +15,23 @@ describe('POST /api/class/:classId/changes', () => {
   });
 
   it('should return a 201 response', done => {
-    api.post(`/api/classes/${classData._id}/changes`)
+    api
+      .post(`/api/classes/${classData._id}/changes`)
       .send(trackedChange)
-      .end(( err, res ) => {
+      .end((err, res) => {
         expect(res.status).to.eq(201);
         done();
       });
   });
 
   it('should add the correct data to the correct class', done => {
-    api.post(`/api/classes/${classData._id}/changes`)
+    api
+      .post(`/api/classes/${classData._id}/changes`)
       .send(trackedChange)
-      .end(( err, res ) => {
+      .end((err, res) => {
         expect(res.body._id).to.eq(classData._id);
         expect(res.body.currentMonthChanges.pop()._id).to.eq(trackedChange._id);
         done();
       });
   });
-
 });

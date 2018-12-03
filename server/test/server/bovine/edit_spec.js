@@ -1,6 +1,6 @@
 /* globals describe, it, api expect beforeEach */
 
-const Bovine = require('../../../models/bovine');
+const Bovine = require('../../../src/models/bovine');
 const bovineTestData = require('../testData/bovinesData');
 
 const testIds = bovineTestData.bovineIds;
@@ -15,31 +15,33 @@ describe('PUT /bovines/:id', () => {
   });
 
   it('should return a 201 response', done => {
-    api.put(`/api/bovines/${testIds[0]}`)
+    api
+      .put(`/api/bovines/${testIds[0]}`)
       .send(updateData)
-      .end(( err, res ) => {
+      .end((err, res) => {
         expect(res.status).to.eq(201);
         done();
       });
   });
 
   it('should return an object', done => {
-    api.put(`/api/bovines/${testIds[0]}`)
+    api
+      .put(`/api/bovines/${testIds[0]}`)
       .send(updateData)
-      .end(( err, res ) => {
+      .end((err, res) => {
         expect(res.body).to.be.an('object');
         done();
       });
   });
 
   it('should return the correct data', done => {
-    api.put(`/api/bovines/${testIds[0]}`)
+    api
+      .put(`/api/bovines/${testIds[0]}`)
       .send(updateData)
-      .end(( err, res ) => {
+      .end((err, res) => {
         expect(res.body.category).to.eq(updateData.category);
         expect(res.body.breed).to.eq(updateData.breed);
         done();
       });
-
   });
 });

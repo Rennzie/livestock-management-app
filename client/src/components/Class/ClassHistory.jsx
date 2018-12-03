@@ -10,38 +10,47 @@ import {
   TableBody
 } from '@material-ui/core';
 
-import CapitalizeText from '../common/CapitalizeText.jsx';
-
 // Dependancies
 import moment from 'moment';
+import axios from 'axios';
 
-export default class ClassHistory extends Component{
-  state={};
+// Components
+import CapitalizeText from '../common/CapitalizeText';
+
+export default class ClassHistory extends Component {
+  state = {};
 
   componentDidMount() {
+    const { location } = this.props;
+    axios
+      .get(`/api/classes/${location.state.id}`)
+      .then(res => this.setState({ category: res.data }));
 
-    // NOTE: will end up as an if depending on what route gets user here.
-    this.setState((prevState, props) => {
-      prevState.category = props.location.state.category;
-      return prevState;
-    }, () => console.log(this.state));
+    // // NOTE: will end up as an if depending on what route gets user here.
+    // this.setState((prevState, props) => {
+    //   prevState.category = props.location.state.category;
+    //   return prevState;
+    // }, () => console.log(this.state));
   }
 
   render() {
-    return(
+    const { category } = this.state;
+    return (
       <Fragment>
-        { this.state.category &&
+        {category && (
           <Fragment>
-            <Typography align='center' variant='h5'>History</Typography>
-            <Typography align='center' variant='subtitle2'>
-              <CapitalizeText>{this.state.category.class}</CapitalizeText>
+            <Typography align="center" variant="h5">
+              History
             </Typography>
-            <Typography align='center' variant='subtitle2'>
-              <CapitalizeText>{this.state.category.currentMonthDetail.period}</CapitalizeText>
+            <Typography align="center" variant="subtitle2">
+              <CapitalizeText>{category.class}</CapitalizeText>
+            </Typography>
+            <Typography align="center" variant="subtitle2">
+              <CapitalizeText>{category.currentMonthDetail.period}</CapitalizeText>
             </Typography>
 
-            <Paper >
-              <Table >
+            <Paper>
+              <Table>
                 <TableHead>
                   <TableRow>
                     <TableCell>Date</TableCell>
@@ -50,26 +59,22 @@ export default class ClassHistory extends Component{
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {this.state.category.currentMonthChanges.map(row => {
-                    return (
-                      <TableRow key={row._id}>
-                        <TableCell component="th" scope="row">
-                          {moment(row.createdAt).format( 'DD MMM YYYY')}
-                        </TableCell>
-                        <TableCell>
-                          <CapitalizeText>
-                            {row.reasonForChange}
-                          </CapitalizeText>
-                        </TableCell>
-                        <TableCell numeric>{row.animalsMoved}</TableCell>
-                      </TableRow>
-                    );
-                  })}
+                  {category.currentMonthChanges.map(row => (
+                    <TableRow key={row._id}>
+                      <TableCell component="th" scope="row">
+                        {moment(row.createdAt).format('DD MMM YYYY')}
+                      </TableCell>
+                      <TableCell>
+                        <CapitalizeText>{row.reasonForChange}</CapitalizeText>
+                      </TableCell>
+                      <TableCell numeric>{row.animalsMoved}</TableCell>
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             </Paper>
           </Fragment>
-        }
+        )}
       </Fragment>
     );
   }

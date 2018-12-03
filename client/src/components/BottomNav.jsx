@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -21,12 +21,12 @@ class BottomNav extends React.Component {
   };
 
   handleChange = (event, value) => {
-    console.log('======>', value);
     this.setState({ value });
   };
 
   handleClick = destination => () => {
-    this.props.history.push(destination);
+    const { history } = this.props;
+    history.push(destination);
   };
 
   render() {

@@ -1,6 +1,8 @@
-
 const bovineIds = [
-  '5b91752666708bc8b1622721', '5b91752666708bc8b1622706', '5b91752666708bc8b1622707', '5b91752666708bc8b1622708'
+  '5b91752666708bc8b1622721',
+  '5b91752666708bc8b1622706',
+  '5b91752666708bc8b1622707',
+  '5b91752666708bc8b1622708'
 ];
 
 // const userIds = [
@@ -14,7 +16,7 @@ const oneYearAgo = 1507564800;
 const today = 1539213325;
 
 module.exports = {
-  bovineIds: bovineIds,
+  bovineIds,
 
   currentSingle: {
     _id: bovineIds[0],
@@ -22,7 +24,7 @@ module.exports = {
     // purchaseDate: ,
     category: 'calf',
     breed: 'Hereford',
-    weights: [{_id: bovineIds[1], timing: 'birth', weight: 250, unit: 'kgs'}]
+    weights: [{ _id: bovineIds[1], timing: 'birth', weight: 250, unit: 'kgs' }]
   },
   motherCow: {
     _id: bovineIds[0],
@@ -32,11 +34,11 @@ module.exports = {
     breeding: {
       status: true,
       isPregnant: true,
-      production: [ bovineIds[1], bovineIds[2] ]
+      production: [bovineIds[1], bovineIds[2]]
     },
     weights: [
-      {timing: 'birth', weight: 250, unit: 'kgs'},
-      {timing: 'other', weight: 500, unit: 'kgs'}
+      { timing: 'birth', weight: 250, unit: 'kgs' },
+      { timing: 'other', weight: 500, unit: 'kgs' }
     ]
   },
 
@@ -55,33 +57,36 @@ module.exports = {
       // purchaseDate: ,
       category: 'calf',
       breed: 'Hereford',
-      weights: [{timing: 'birth', weight: 250, unit: 'kgs'}]
-    }, {
+      weights: [{ timing: 'birth', weight: 250, unit: 'kgs' }]
+    },
+    {
       _id: bovineIds[1],
       birthDate: oneYearAgo,
       // purchaseDate: ,
       category: 'calf',
       breed: 'Hereford',
-      weights: [{timing: 'birth', weight: 250, unit: 'kgs'}]
-    }, {
+      weights: [{ timing: 'birth', weight: 250, unit: 'kgs' }]
+    },
+    {
       _id: bovineIds[2],
       birthDate: oneYearAgo,
       // purchaseDate: ,
       category: 'calf',
       breed: 'Hereford',
-      weights: [{timing: 'birth', weight: 250, unit: 'kgs'}]
-    }, {
+      weights: [{ timing: 'birth', weight: 250, unit: 'kgs' }]
+    },
+    {
       _id: bovineIds[3],
       birthDate: oneYearAgo,
       // purchaseDate: ,
       category: 'calf',
       breed: 'Hereford',
-      weights: [{timing: 'birth', weight: 250, unit: 'kgs'}]
+      weights: [{ timing: 'birth', weight: 250, unit: 'kgs' }]
     }
   ],
 
   updatedCategories: {
-    ids: [ bovineIds[0], bovineIds[1], bovineIds[2], bovineIds[3] ],
+    ids: [bovineIds[0], bovineIds[1], bovineIds[2], bovineIds[3]],
     newCategory: 'ox'
   },
 
@@ -100,8 +105,8 @@ module.exports = {
       saleDate: today
     },
     weights: [
-      {timing: 'birth', weight: 500, unit: 'kgs'},
-      {timing: 'sale', weight: 500, unit: 'kgs'}
+      { timing: 'birth', weight: 500, unit: 'kgs' },
+      { timing: 'sale', weight: 500, unit: 'kgs' }
     ]
   },
 
@@ -117,10 +122,11 @@ module.exports = {
         saleDate: today
       },
       weights: [
-        {timing: 'birth', weight: 500, unit: 'kgs'},
-        {timing: 'sale', weight: 500, unit: 'kgs'}
+        { timing: 'birth', weight: 500, unit: 'kgs' },
+        { timing: 'sale', weight: 500, unit: 'kgs' }
       ]
-    },{
+    },
+    {
       _id: bovineIds[1],
       category: 'ox',
       methodOfRemoval: 'sale',
@@ -131,8 +137,8 @@ module.exports = {
         saleDate: today
       },
       weights: [
-        {timing: 'birth', weight: 500, unit: 'kgs'},
-        {timing: 'sale', weight: 500, unit: 'kgs'}
+        { timing: 'birth', weight: 500, unit: 'kgs' },
+        { timing: 'sale', weight: 500, unit: 'kgs' }
       ]
     }
   ],
@@ -143,5 +149,4 @@ module.exports = {
     weight: 350,
     unit: 'kgs'
   }
-
 };

@@ -9,15 +9,27 @@ module.exports = {
       experimentalObjectRestSpread: true
     }
   },
-  extends: ['plugin:prettier/recommended', 'airbnb'],
-  plugins: ['react', 'jsx-a11y', 'import', 'prettier'],
+  extends: ['airbnb', 'prettier', 'prettier/react'],
+  plugins: ['react', 'prettier', 'jsx-a11y', 'import'],
   env: {
     es6: true,
     browser: true,
-    node: true,
-    jest: true
+    node: true
   },
   rules: {
-    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }]
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    'prettier/prettier': 'error',
+    'react/prop-types': 0,
+    // 'comma-dangle': 0,
+    'object-curly-newline': 0,
+    'arrow-parens': 0,
+    'no-underscore-dangle': 0
+  },
+  settings: {
+    'import/resolver': {
+      webpack: {
+        config: './config/webpack-common-config.js'
+      }
+    }
   }
 };

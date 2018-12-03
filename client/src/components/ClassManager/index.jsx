@@ -29,15 +29,7 @@ export default class ClassManager extends Component {
   // BUG: when the user completes logging a change the history is one call behind
 
   componentDidMount() {
-    console.log('component is mounting');
-    axios.get('/api/classes').then(res =>
-      this.setState(
-        () => {
-          return { classes: res.data };
-        },
-        () => console.log('=======>', this.state)
-      )
-    );
+    axios.get('/api/classes').then(res => this.setState(() => ({ classes: res.data })));
   }
 
   handleChange = panel => (event, expanded) => {
@@ -49,7 +41,8 @@ export default class ClassManager extends Component {
   };
 
   handleGoToHistory = category => () => {
-    this.props.history.push(`/manage-classes/${category.class}/history`, { category });
+    const id = category._id;
+    this.props.history.push(`/manage-classes/${category.class}/history`, { id });
   };
 
   render() {
@@ -133,15 +126,6 @@ export default class ClassManager extends Component {
                         primary={`Sale: ${
                           category.currentMonthDetail.changes.sale
                             ? category.currentMonthDetail.changes.sale
-                            : 0
-                        }`}
-                      />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText
-                        primary={`Other: ${
-                          category.currentMonthDetail.changes.other
-                            ? category.currentMonthDetail.changes.other
                             : 0
                         }`}
                       />

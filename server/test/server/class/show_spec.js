@@ -1,9 +1,9 @@
 /* globals describe, it, api expect beforeEach  */
 
-const Class = require('../../../models/class');
+const Class = require('../../../src/models/class');
 const classTestData = require('../testData/classData');
 
-//--- TEST DATA ---//
+// --- TEST DATA ---//
 const classData = classTestData.single;
 
 describe('GET /api/classes/:classId', () => {
@@ -14,15 +14,11 @@ describe('GET /api/classes/:classId', () => {
   });
 
   it('should return a 200 status', done => {
-    api.get(`/api/classes/${classData._id}`)
-      .end(( err, res ) => {
-        expect(res.status).to.eq(200);
-        done();
-      });
+    api.get(`/api/classes/${classData._id}`).end((err, res) => {
+      expect(res.status).to.eq(200);
+      done();
+    });
   });
 
-  xit('should return the correct data', done => {
-
-  });
-
+  // xit('should return the correct data', done => {});
 });

@@ -4,20 +4,24 @@ module.exports = {
     ecmaVersion: 6,
     sourceType: 'module',
     ecmaFeatures: {
-      jsx: true,
       modules: true,
       experimentalObjectRestSpread: true
     }
   },
-  extends: ['plugin:prettier/recommended', 'airbnb'],
-  plugins: ['react', 'jsx-a11y', 'import', 'prettier'],
+  extends: ['airbnb', 'prettier'],
+  plugins: ['prettier', 'import'],
   env: {
     es6: true,
     browser: true,
-    node: true,
-    jest: true
+    node: true
   },
   rules: {
-    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }]
+    'prettier/prettier': 'error',
+    'comma-dangle': 0,
+    'object-curly-newline': 0,
+    'arrow-parens': 0,
+    'no-underscore-dangle': 0,
+    'no-use-before-define': 0,
+    'func-names': 0
   }
 };
