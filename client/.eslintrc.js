@@ -10,7 +10,7 @@ module.exports = {
     }
   },
   extends: ['airbnb', 'prettier', 'prettier/react'],
-  plugins: ['react', 'prettier', 'jsx-a11y', 'import'],
+  plugins: ['react', 'react-hooks', 'prettier', 'jsx-a11y', 'import'],
   env: {
     es6: true,
     browser: true,
@@ -18,6 +18,7 @@ module.exports = {
   },
   rules: {
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    'react-hooks/rules-of-hooks': 'error',
     'prettier/prettier': 'error',
     'react/prop-types': 0,
     // 'comma-dangle': 0,

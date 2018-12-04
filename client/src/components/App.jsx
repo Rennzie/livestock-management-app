@@ -74,3 +74,5 @@ export default function App() {
     </Fragment>
   );
 }
+
+// Note: next up is to build the animal model and reference it to the user
