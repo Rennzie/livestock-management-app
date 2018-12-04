@@ -1,22 +1,19 @@
-const mongoose = require('mongoose');
-const moment = require('moment');
+import mongoose from 'mongoose';
+import moment from 'moment';
+import { DB_URI } from '../config/environment';
+
+// Import all the models
+import Bovine from '../models/bovine';
+import Class from '../models/class';
+import User from '../models/user';
 
 // User bluebird to make promises easier
 mongoose.Promise = require('bluebird');
-
-// connect to Mongo using our dbURI
-const { DB_URI } = require('../config/environment');
 
 mongoose.connect(
   DB_URI,
   { useCreateIndex: true, useNewUrlParser: true }
 );
-
-// Import all the models
-
-const Bovine = require('../models/bovine');
-const Class = require('../models/class');
-const User = require('../models/user');
 
 // date as unix 10/10/2017 DD/MM/YYY
 const oneYearAgo = 1507564800;
@@ -55,6 +52,12 @@ const userIds = [
   '5b91752666718bc8b1632707',
   '5b91752666718bc8b1632708'
 ];
+const farmIds = [
+  '5b26752666718bc8b1632705',
+  '5b26752666718bc8b1632706',
+  '5b26752666718bc8b1632707',
+  '5b26752666718bc8b1632708'
+];
 
 const userData = [
   {
@@ -65,8 +68,7 @@ const userData = [
     passwordConfirmation: 'pass',
     firstName: 'Sean',
     surname: 'Rennie',
-    dateOfBirth: moment().set({ year: 1989, month: 9, date: 30 }),
-    farmName: 'Palmiet'
+    dateOfBirth: moment().set({ year: 1989, month: 9, date: 30 })
   }
 ];
 
@@ -253,6 +255,7 @@ const bovineData = [
 const classesData = [
   {
     _id: classIds[0],
+    farm: farmIds[0],
     name: 'Breeding Cows',
     class: 'cows',
     currentMonthDetail: {
@@ -320,6 +323,7 @@ const classesData = [
   {
     _id: classIds[1],
     name: 'Old Heifers',
+    farm: farmIds[0],
     class: 'heifers-2-3',
     currentMonthDetail: {
       openingTotal: 0,
@@ -386,6 +390,7 @@ const classesData = [
   {
     _id: classIds[2],
     name: 'Young Heifers',
+    farm: farmIds[0],
     class: 'heifers-1-2',
     currentMonthDetail: {
       openingTotal: 0,
@@ -452,6 +457,7 @@ const classesData = [
   {
     _id: classIds[3],
     name: 'Fattening Group A',
+    farm: farmIds[0],
     class: 'oxen',
     currentMonthDetail: {
       openingTotal: 0,
@@ -514,6 +520,14 @@ const classesData = [
         }
       ]
     }
+  }
+];
+
+const farmData = [
+  {
+    _id: farmIds[0],
+    name: 'Palmiet',
+    farmOwner: userIds[0]
   }
 ];
 

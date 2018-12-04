@@ -1,34 +1,47 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+import { Schema, model } from 'mongoose';
+import { compareSync, hashSync } from 'bcrypt';
 
-const userSchema = new mongoose.Schema({
-  username: { type: String, unique: true },
-  email: { type: String, unique: true },
-  password: { type: String, require: true },
-  firstName: String,
-  surname: String,
-  farmName: String,
-  dateOfBirth: Date
+const UserSchema = new Schema(
+  {
+    username: { type: String, unique: true },
+    email: { type: String, unique: true },
+    password: { type: String, require: true },
+    firstName: String,
+    surname: String,
+    dateOfBirth: Date
+  },
+  { timestamps: true }
+);
+
+// make sure the virtuals get added
+UserSchema.set('toObject', { virtuals: true });
+UserSchema.set('toJSON', { virtuals: true });
+
+// --- PLUGINS ---//
+// throw validation error when duplicate emails are created
+UserSchema.plugin(require('mongoose-unique-validator'));
+
+// --- VIRTUALS ---//
+UserSchema.virtual('farms', {
+  ref: 'Farm',
+  localField: '_id',
+  foreignField: 'farmOwner'
 });
 
-// PLUGINS
-// throw validation error when duplicate emails are created
-userSchema.plugin(require('mongoose-unique-validator'));
-
-// METHODS
+// --- METHODS ---//
 // password validation
-userSchema.methods.validatePassword = function(password) {
-  return bcrypt.compareSync(password, this.password);
+UserSchema.methods.validatePassword = function(password) {
+  return compareSync(password, this.password);
 };
 
-// LIFECYCLE HOOKS
+// --- LIFECYCLE HOOKS ---//
 // hash a password if it is updated
-userSchema.pre('save', function hashPassword(next) {
+UserSchema.pre('save', function hashPassword(next) {
   if (this.isModified('password')) {
     // check if the password is one of the things going to be modified
-    this.password = bcrypt.hashSync(this.password, 8);
+    this.password = hashSync(this.password, 8);
   }
   next();
 });
 
-module.exports = mongoose.model('User', userSchema);
+export default model('User', UserSchema);

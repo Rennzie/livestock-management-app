@@ -12,7 +12,7 @@
   "scripts": {
     "start:server": "nodemon --exec babel-node src/index.js",
     "clean": "rm -rf dist && mkdir dist",
-    "seed": "node src/db/seeds",
+    "seed": "babel-node src/db/seeds",
     "build": "yarn clean && babel src --preset minify --out-dir dist",
     "serve": "node dist/index.js",
     "eslint-check": "eslint --print-config . | eslint-config-prettier-check",

@@ -1,9 +1,10 @@
-const mongoose = require('mongoose');
-const moment = require('moment');
-// const ObjectId = mongoose.Schema.Types.ObjectId;
+import { Schema, model } from 'mongoose';
+import moment from 'moment';
 
-//= == SUB-DOCUMENTS ===//
-const ChangeTrackerSchema = new mongoose.Schema({
+const { ObjectId } = Schema.Types;
+
+// === SUB-DOCUMENTS ===//
+const ChangeTrackerSchema = new Schema({
   // this will be a moment date.
   createdAt: Date,
   reasonForChange: { type: String, enum: ['add', 'purchase', 'death', 'theft', 'sale', 'other'] },
@@ -11,9 +12,10 @@ const ChangeTrackerSchema = new mongoose.Schema({
   notes: String
 });
 
-//= == DOCUMENTS ===//
-const ClassSchema = new mongoose.Schema({
+// === DOCUMENTS ===//
+const ClassSchema = new Schema({
   name: String,
+  farm: { type: ObjectId, ref: 'Farm' },
   class: {
     type: String,
     enum: [
@@ -115,7 +117,7 @@ ClassSchema.methods.newChange = function(changeObj) {
   return this.save();
 };
 
-module.exports = mongoose.model('Class', ClassSchema);
+export default model('Class', ClassSchema);
 
 //  === INTERNAL FUNCTION ===//
 function startNewMonth(lastMonthClosing, period) {

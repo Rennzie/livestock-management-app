@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
+import moment, { unix } from 'moment';
 
-const { ObjectId } = mongoose.Schema.Types;
-const moment = require('moment');
+const { ObjectId } = Schema.Types;
 
 /**
  * NOTE: Ids on palmiet are not always unique and not applied early on.
@@ -9,7 +9,7 @@ const moment = require('moment');
  *       Use mongo objectId for now as unique identifier which can be changed later
  */
 
-const weightsSchema = new mongoose.Schema(
+const weightsSchema = new Schema(
   {
     timing: { type: String, enum: ['birth', 'sale', 'other'] },
     date: Number,
@@ -28,7 +28,7 @@ weightsSchema.virtual('formattedWeighDate').get(function() {
   return moment(momentObj).format('DD/MM/YYYY');
 });
 
-const pregTestSchema = new mongoose.Schema(
+const pregTestSchema = new Schema(
   {
     date: Number,
     isPregnant: { type: Boolean, default: null },
@@ -37,7 +37,7 @@ const pregTestSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const bovineSchema = new mongoose.Schema(
+const bovineSchema = new Schema(
   {
     identifier: String,
     category: {
@@ -103,7 +103,7 @@ bovineSchema.set('toJSON', { virtuals: true });
 
 // --- VIRTUALS ---//
 bovineSchema.virtual('formattedBirthDate').get(function() {
-  const momentObj = moment.unix(this.birthDate);
+  const momentObj = unix(this.birthDate);
   return moment(momentObj).format('DD/MM/YYYY');
 });
 
@@ -151,4 +151,4 @@ bovineSchema.methods.addNewCalf = function(newCalfId) {
 //   return moment(momentObj).format('DD/MM/YYYY');
 // }
 
-module.exports = mongoose.model('Bovine', bovineSchema);
+export default model('Bovine', bovineSchema);
