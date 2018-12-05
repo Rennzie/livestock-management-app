@@ -7,6 +7,7 @@ import userController from '../controllers/userController';
 // end points
 import bovines from './endpoints/bovines';
 import classes from './endpoints/classes';
+import farms from './endpoints/farms';
 
 const Router = express.Router();
 
@@ -24,5 +25,6 @@ Router.route('/users/:id')
 // --- End Points ---//
 Router.use(bovines);
 Router.use(classes);
+Router.use(farms);
 
 export default Router;
