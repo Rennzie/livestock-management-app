@@ -1,4 +1,4 @@
-const Class = require('../models/class');
+import Class from '../models/class';
 
 function newClass(req, res, next) {
   Class.create(req.body)
@@ -25,7 +25,7 @@ function newTrackedChange(req, res, next) {
     .catch(next);
 }
 
-module.exports = {
+export default {
   create: newClass,
   index: indexClasses,
   show: showClass,

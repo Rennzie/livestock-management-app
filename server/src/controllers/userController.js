@@ -1,4 +1,4 @@
-const User = require('../models/user');
+import User from '../models/user';
 
 function userShowPage(req, res, next) {
   User.findById(req.params.id)
@@ -21,7 +21,7 @@ function userDelete(req, res, next) {
     .catch(next);
 }
 
-module.exports = {
+export default {
   show: userShowPage,
   update: userEdit,
   delete: userDelete

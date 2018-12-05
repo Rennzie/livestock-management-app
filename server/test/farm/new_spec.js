@@ -1,9 +1,9 @@
 /* globals describe, it, api expect beforeEach  */
 
-const Farm = require('../../src/models/farm');
-const User = require('../../src/models/user');
-const farmTestData = require('../testData/farmData');
-const userTestData = require('../testData/usersData');
+import Farm from '../../src/models/farm';
+import User from '../../src/models/user';
+import farmTestData from '../testData/farmData';
+import userTestData from '../testData/usersData';
 
 // --- TEST DATA ---//
 const farmData = farmTestData.single;

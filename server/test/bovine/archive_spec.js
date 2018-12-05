@@ -1,7 +1,7 @@
 /* globals describe, it, api expect beforeEach */
 
-const Bovine = require('../../src/models/bovine');
-const bovineTestData = require('../testData/bovinesData');
+import Bovine from '../../src/models/bovine';
+import bovineTestData from '../testData/bovinesData';
 
 // date as unix 11/10/2018 DD/MM/YYYY
 const today = 1539213325;

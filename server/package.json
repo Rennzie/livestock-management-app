@@ -16,7 +16,7 @@
     "build": "yarn clean && babel src --preset minify --out-dir dist",
     "serve": "node dist/index.js",
     "eslint-check": "eslint --print-config . | eslint-config-prettier-check",
-    "test": "nyc mocha --require @babel/register test/auth/login_spec.js --require test/spec_helper"
+    "test": "nyc mocha --require @babel/register test/**/*_spec.js --require test/spec_helper --recursive --exit"
   },
   "engines": {
     "node": "9.10.0"

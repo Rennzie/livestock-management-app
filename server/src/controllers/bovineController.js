@@ -1,6 +1,6 @@
-const csv = require('fast-csv');
-const fs = require('fs');
-const Bovine = require('../models/bovine');
+import csv from 'fast-csv';
+import fs from 'fs';
+import Bovine from '../models/bovine';
 
 function bovineCreate(req, res, next) {
   Bovine.create(req.body)
@@ -124,7 +124,7 @@ function bovineWeightsBatchUpload(req, res, next) {
     });
 }
 
-module.exports = {
+export default {
   create: bovineCreate,
   show: bovineShow,
   index: bovineIndex,

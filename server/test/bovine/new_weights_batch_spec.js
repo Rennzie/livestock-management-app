@@ -1,7 +1,7 @@
 /* globals describe, xit, api expect beforeEach */
 
-const Bovine = require('../../src/models/bovine');
-const bovineTestData = require('../testData/bovinesData');
+import Bovine from '../../src/models/bovine';
+import bovineTestData from '../testData/bovinesData';
 
 // const fs = require('fs');
 

@@ -1,6 +1,6 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/user');
-const { SECRET } = require('../config/environment');
+import jwt from 'jsonwebtoken';
+import User from '../models/user';
+import { SECRET } from '../config/environment';
 
 function createAndSendToken(user, res, message) {
   const payload = {
@@ -38,7 +38,7 @@ function register(req, res, next) {
 //     .catch(next);
 // }
 
-module.exports = {
+export default {
   login,
   register
 };

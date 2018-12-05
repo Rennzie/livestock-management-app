@@ -1,12 +1,9 @@
-const express = require('express');
+import express from 'express';
+import multer from 'multer';
+import bovineController from '../../controllers/bovineController';
 
 const Router = express.Router();
-
-const multer = require('multer');
-
 const upload = multer({ dest: 'temp/csv' }); // saves uploaded files to destination
-
-const bovineController = require('../../controllers/bovineController');
 
 Router.route('/bovines')
   .post(bovineController.create)
@@ -35,4 +32,4 @@ Router.route('/bovines/:bovineId/weights').post(bovineController.addWeight);
 
 Router.route('/bovines/weights').post(upload.single('file'), bovineController.addWeights);
 
-module.exports = Router;
+export default Router;

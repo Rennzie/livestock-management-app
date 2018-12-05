@@ -1,14 +1,13 @@
-const express = require('express');
+import express from 'express';
+import bodyParser from 'body-parser';
+import morgan from 'morgan';
+import mongoose from 'mongoose';
+import Router from './config/routes';
+
+import errorHandler from './lib/errorHandler';
+import { PORT, DB_URI } from './config/environment';
 
 const app = express();
-const bodyParser = require('body-parser');
-const morgan = require('morgan');
-const mongoose = require('mongoose');
-const Router = require('./config/routes');
-
-const errorHandler = require('./lib/errorHandler');
-
-const { PORT, DB_URI } = require('./config/environment');
 
 mongoose.Promise = require('bluebird');
 
@@ -29,4 +28,4 @@ app.use(errorHandler);
 
 app.listen(PORT, () => console.log(`Express is running on PORT ${PORT}`));
 
-module.exports = app;
+export default app;

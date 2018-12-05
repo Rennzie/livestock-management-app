@@ -1,15 +1,15 @@
-const express = require('express');
+import express from 'express';
+
+import categoryController from '../../controllers/classController';
 
 const Router = express.Router();
 
-const classController = require('../../controllers/classController');
-
 Router.route('/classes')
-  .post(classController.create)
-  .get(classController.index);
+  .post(categoryController.create)
+  .get(categoryController.index);
 
-Router.route('/classes/:id').get(classController.show);
+Router.route('/classes/:id').get(categoryController.show);
 
-Router.route('/classes/:classId/changes').post(classController.createChange);
+Router.route('/classes/:classId/changes').post(categoryController.createChange);
 
-module.exports = Router;
+export default Router;

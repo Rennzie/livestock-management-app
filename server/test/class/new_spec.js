@@ -1,7 +1,7 @@
 /* globals describe, it, api expect beforeEach  */
 
-const Class = require('../../src/models/class');
-const classTestData = require('../testData/classData');
+import Class from '../../src/models/class';
+import classTestData from '../testData/classData';
 
 // --- TEST DATA ---//
 const classData = classTestData.single;

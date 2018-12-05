@@ -1,14 +1,14 @@
-const express = require('express');
-
-const Router = express.Router();
+import express from 'express';
 
 // controllers
-const authController = require('../controllers/authController');
-const userController = require('../controllers/userController');
+import authController from '../controllers/authController';
+import userController from '../controllers/userController';
 
 // end points
-const bovines = require('./endpoints/bovines.js');
-const classes = require('./endpoints/classes.js');
+import bovines from './endpoints/bovines';
+import classes from './endpoints/classes';
+
+const Router = express.Router();
 
 // --- Auth Routes ---//
 Router.route('/register').post(authController.register);
@@ -25,4 +25,4 @@ Router.route('/users/:id')
 Router.use(bovines);
 Router.use(classes);
 
-module.exports = Router;
+export default Router;

@@ -1,7 +1,7 @@
 /* globals describe, it, xit, api expect beforeEach  */
-const moment = require('moment');
-const Class = require('../../src/models/class');
-const classTestData = require('../testData/classData');
+import moment from 'moment';
+import Class from '../../src/models/class';
+import classTestData from '../testData/classData';
 
 // --- TEST DATA ---//
 const classData = classTestData.singleLastMonth;
