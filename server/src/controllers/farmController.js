@@ -8,6 +8,7 @@ function newFarm(req, res, next) {
 
 function showFarm(req, res, next) {
   Farm.findById(req.params.id)
+    .populate('categories')
     .then(farm => res.json(farm))
     .catch(next);
 }

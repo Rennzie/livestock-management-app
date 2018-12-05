@@ -1,21 +1,6 @@
 import moment from 'moment';
 
-const classIds = [
-  '5b91752666708bc8b1632821',
-  '5b91752666708bc8b1632806',
-  '5b91752666708bc8b1632807',
-  '5b91752666708bc8b3632208',
-  '5b91752666708bc8b3632206',
-  '5b91752666708bc8b3632205',
-  '5b91752666708bc8b3632204'
-];
-
-const farmIds = [
-  '5b91752666718bc8b1632705',
-  '5b26752666718bc8b1632706',
-  '5b26752666718bc8b1632707',
-  '5b26752666718bc8b1632708'
-];
+import { classIds, farmIds } from './ids';
 
 export default {
   classIds,

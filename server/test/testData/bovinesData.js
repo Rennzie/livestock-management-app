@@ -1,13 +1,4 @@
-const bovineIds = [
-  '5b91752666708bc8b1622721',
-  '5b91752666708bc8b1622706',
-  '5b91752666708bc8b1622707',
-  '5b91752666708bc8b1622708'
-];
-
-// const userIds = [
-//   '5b91752666708bc8b1622709', '5b91752666708bc8b162271a', '5b91752666708bc8b162271b', '5b91752666708bc8b162271c'
-// ];
+import { bovineIds } from './ids';
 
 // date as unix 10/10/2017 DD/MM/YYY
 const oneYearAgo = 1507564800;
@@ -15,7 +6,7 @@ const oneYearAgo = 1507564800;
 // date as unix 11/10/2018 DD/MM/YYYY
 const today = 1539213325;
 
-module.exports = {
+export default {
   bovineIds,
 
   currentSingle: {

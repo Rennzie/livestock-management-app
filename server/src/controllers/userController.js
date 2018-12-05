@@ -2,6 +2,7 @@ import User from '../models/user';
 
 function userShowPage(req, res, next) {
   User.findById(req.params.id)
+    .populate('farms')
     .then(user => res.json(user))
     .catch(next);
 }

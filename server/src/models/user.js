@@ -10,12 +10,8 @@ const UserSchema = new Schema(
     surname: String,
     dateOfBirth: Date
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
-
-// make sure the virtuals get added
-UserSchema.set('toObject', { virtuals: true });
-UserSchema.set('toJSON', { virtuals: true });
 
 // --- PLUGINS ---//
 // throw validation error when duplicate emails are created

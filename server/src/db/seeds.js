@@ -3,9 +3,10 @@ import moment from 'moment';
 import { DB_URI } from '../config/environment';
 
 // Import all the models
-import Bovine from '../models/bovine';
-import Class from '../models/class';
 import User from '../models/user';
+import Farm from '../models/farm';
+import Class from '../models/class';
+import Bovine from '../models/bovine';
 
 // User bluebird to make promises easier
 mongoose.Promise = require('bluebird');
@@ -52,6 +53,7 @@ const userIds = [
   '5b91752666718bc8b1632707',
   '5b91752666718bc8b1632708'
 ];
+
 const farmIds = [
   '5b26752666718bc8b1632705',
   '5b26752666718bc8b1632706',
@@ -531,15 +533,18 @@ const farmData = [
   }
 ];
 
-Bovine.collection.drop();
-Class.collection.drop();
 User.collection.drop();
+Farm.collection.drop();
+Class.collection.drop();
+Bovine.collection.drop();
 
-Bovine.create(bovineData)
-  .then(bovines => console.log(`created ${bovines.length} new bovines`))
-  .then(() => User.create(userData))
+User.create(userData)
   .then(users => console.log(`created ${users.length} new users`))
+  .then(() => Farm.create(farmData))
+  .then(farms => console.log(`created ${farms.length} new farms`))
   .then(() => Class.create(classesData))
   .then(classes => console.log(`created ${classes.length} new classes`))
+  .then(() => Bovine.create(bovineData))
+  .then(bovines => console.log(`created ${bovines.length} new bovines`))
   .catch(err => console.log('Seeding error is', err))
   .finally(() => mongoose.connection.close());

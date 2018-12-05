@@ -10,10 +10,6 @@ const FarmSchema = new Schema(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-// // make sure the virtuals get added
-// FarmSchema.set('toObject', { virtuals: true });
-// FarmSchema.set('toJSON', { virtuals: true });
-
 // --- VIRTUALS ---//
 FarmSchema.virtual('categories', {
   ref: 'Class',
