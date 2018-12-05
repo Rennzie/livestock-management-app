@@ -15,7 +15,7 @@ const ChangeTrackerSchema = new Schema({
 // === DOCUMENTS ===//
 const ClassSchema = new Schema({
   name: String,
-  farm: { type: ObjectId, ref: 'Farm' },
+  farm: { type: ObjectId, ref: 'Farm', required: true },
   class: {
     type: String,
     enum: [

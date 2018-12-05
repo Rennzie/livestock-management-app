@@ -7,4 +7,6 @@ Router.route('/farms').post(farmController.create);
 
 Router.route('/farms/:id').get(farmController.show);
 
+Router.route('/users/:userId/farms').get(farmController.index);
+
 export default Router;

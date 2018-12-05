@@ -19,7 +19,6 @@ describe('CLASS Method calls', () => {
       .post(`/api/classes/${classData._id}/changes`)
       .send(trackedChange)
       .end((err, res) => {
-        console.log('=======> ', res.body.changesArchive);
         expect(res.body).to.be.an('object');
         done();
       });

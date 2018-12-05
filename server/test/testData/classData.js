@@ -327,6 +327,7 @@ export default {
 
   singleLastMonth: {
     _id: classIds[0],
+    farm: farmIds[0],
     name: 'Breeding Cows',
     class: 'cows',
     currentMonthDetail: {

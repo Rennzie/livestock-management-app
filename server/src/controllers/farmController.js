@@ -1,12 +1,18 @@
 import Farm from '../models/farm';
 
-function newFarm(req, res, next) {
+function farmNew(req, res, next) {
   Farm.create(req.body)
     .then(farm => res.status(201).json(farm))
     .catch(next);
 }
 
-function showFarm(req, res, next) {
+function farmIndex(req, res, next) {
+  Farm.find({ _id: req.params.userId })
+    .then(farms => res.json(farms))
+    .catch(next);
+}
+
+function farmShow(req, res, next) {
   Farm.findById(req.params.id)
     .populate('categories')
     .then(farm => res.json(farm))
@@ -14,6 +20,7 @@ function showFarm(req, res, next) {
 }
 
 export default {
-  create: newFarm,
-  show: showFarm
+  create: farmNew,
+  show: farmShow,
+  index: farmIndex
 };

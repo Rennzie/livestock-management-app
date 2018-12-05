@@ -13,7 +13,7 @@ import userData from './mockData/userData';
 import classesData from './mockData/classData';
 import farmData from './mockData/farmData';
 
-// User bluebird to make promises easier
+// Use bluebird to make promises easier
 mongoose.Promise = require('bluebird');
 
 mongoose.connect(
