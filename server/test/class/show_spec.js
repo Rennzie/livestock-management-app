@@ -1,6 +1,6 @@
 /* globals describe, it, api expect beforeEach  */
 
-const Class = require('../../../src/models/class');
+const Class = require('../../src/models/class');
 const classTestData = require('../testData/classData');
 
 // --- TEST DATA ---//

@@ -1,6 +1,6 @@
-/* globals describe, xit, it, api expect beforeEach */
+/* globals describe, it, api expect beforeEach */
 
-const User = require('../../../models/user');
+const User = require('../../src/models/user');
 
 const testData = require('../testData/usersData');
 

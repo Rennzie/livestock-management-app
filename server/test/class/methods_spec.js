@@ -1,6 +1,6 @@
-/* globals describe, it, api expect beforeEach  */
+/* globals describe, it, xit, api expect beforeEach  */
 const moment = require('moment');
-const Class = require('../../../src/models/class');
+const Class = require('../../src/models/class');
 const classTestData = require('../testData/classData');
 
 // --- TEST DATA ---//
@@ -43,9 +43,8 @@ describe('CLASS Method calls', () => {
       .send(trackedChange)
       .end((err, res) => {
         const key = 'Oct-2018';
-        console.log('last months changes are', res.body.changesArchive[key]);
         res.body.changesArchive[key].forEach(change => {
-          console.log('=====>', moment(change.createdAt).format('MMM-YYYY'));
+          // eslint-disable-next-line no-unused-expressions
           moment(change.period).format('MMM-YYYY') === key;
         });
         done();

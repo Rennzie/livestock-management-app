@@ -1,6 +1,6 @@
 /* globals describe, it, api expect beforeEach */
 
-const Bovine = require('../../../src/models/bovine');
+const Bovine = require('../../src/models/bovine');
 const bovineTestData = require('../testData/bovinesData');
 
 // date as unix 11/10/2018 DD/MM/YYYY

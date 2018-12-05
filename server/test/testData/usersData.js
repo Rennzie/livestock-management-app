@@ -16,8 +16,7 @@ module.exports = {
     password: 'pass',
     firstName: 'Sean',
     surname: 'Rennie',
-    dateOfBirth: moment().set({ year: 1989, month: 9, date: 30 }),
-    farmName: 'Palmiet'
+    dateOfBirth: moment().set({ year: 1989, month: 9, date: 30 })
   },
   other: {
     _id: ids[1],
@@ -26,13 +25,11 @@ module.exports = {
     password: 'pass',
     firstName: 'Sean',
     surname: 'Rennie',
-    dateOfBirth: moment().set({ year: 1989, month: 9, date: 30 }),
-    farmName: 'Palmiet'
+    dateOfBirth: moment().set({ year: 1989, month: 9, date: 30 })
   },
   update: {
     username: 'Pennzie',
-    firstName: 'Pean',
-    farmName: 'Kraai Kop'
+    firstName: 'Pean'
   },
   login: {
     email: 'rnnsea001@gmail.com',

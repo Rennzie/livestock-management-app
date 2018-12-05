@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-expressions */
 /* globals describe, it, api expect beforeEach */
 
-const jwt = require('jsonwebtoken');
-const User = require('../../../src/models/user');
-const { SECRET } = require('../../../src/config/environment');
+import jwt from 'jsonwebtoken';
+import User from '../../src/models/user';
+import { SECRET } from '../../src/config/environment';
 
-const testData = require('../testData/usersData');
+import testData from '../testData/usersData';
 
 const userData = testData.single;
 const userLogin = testData.login;
