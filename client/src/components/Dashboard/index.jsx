@@ -43,7 +43,7 @@ class Dashboard extends Component {
           user.farms.map(farm => (
             <Link
               key={farm._id}
-              to={`/${farm.name}/category-manager`}
+              to={`/${farm.name}/${farm._id}/manage-categories`}
               style={{ textDecoration: 'none' }}
             >
               <Card>

@@ -57,7 +57,7 @@ export default function App() {
             <Route exact path="/" component={Dashboard} />
 
             {/* Manage Classes */}
-            <Route exact path="/manage-classes" component={ClassManager} />
+            <Route path="/:farmName/:farmId/manage-categories" component={ClassManager} />
             <Route path="/manage-classes/:className/changes" component={ClassChange} />
             <Route path="/manage-classes/:className/history" component={ClassHistory} />
 

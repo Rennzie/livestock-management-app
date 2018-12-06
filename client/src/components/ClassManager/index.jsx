@@ -17,21 +17,24 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 // Dependancies
 import axios from 'axios';
-import Auth from '../../lib/Auth';
 
 // Components
 export default class ClassManager extends Component {
   state = {
-    expanded: null
+    expanded: null,
+    farmName: 'LOADING...'
   };
 
   componentDidMount() {
-    const userId = Auth.currentUserId();
+    const { match } = this.props;
+    const { farmId } = match.params;
     axios
-      .get(`/api/users/${userId}/farms`)
+      .get(`/api/farms/${farmId}`)
 
       // NOTE: the current assumption is that there is only one farm per user
-      .then(res => this.setState(() => ({ classes: res.data[0].categories })));
+      .then(res =>
+        this.setState(() => ({ categories: res.data.categories, farmName: res.data.name }))
+      );
   }
 
   handleChange = panel => (event, expanded) => {
@@ -52,16 +55,19 @@ export default class ClassManager extends Component {
   // BUG: the class manager crashes when a farm has no classes
 
   render() {
-    const { classes, expanded } = this.state;
+    const { categories, expanded, farmName } = this.state;
+
     return (
       <Fragment>
-        <Typography variant="h5" align="center">
-          Class Manager
-        </Typography>
+        {farmName && (
+          <Typography variant="h5" align="center">
+            {farmName} Category Manager
+          </Typography>
+        )}
 
-        {classes && (
+        {categories && (
           <Fragment>
-            {classes.map(category => (
+            {categories.map(category => (
               <ExpansionPanel
                 key={category._id}
                 expanded={expanded === category.class}
