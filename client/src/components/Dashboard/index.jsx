@@ -1,28 +1,65 @@
-import React from 'react';
-import { Fragment } from 'react';
+import React, { Fragment, Component } from 'react';
+import { Link } from 'react-router-dom';
+import { Typography, Card, CardContent, CircularProgress } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 
-import { Typography } from '@material-ui/core';
+// Dependancies
+import Axios from 'axios';
+import Auth from '../../lib/Auth';
 
 // Components
-import FarmStatus from './FarmStatus.jsx';
-import ActionsContainer from '../common/ActionsContainer.jsx';
+import FarmStatus from './FarmStatus';
+import ActionsContainer from '../common/ActionsContainer';
 
-export default class Dashboard extends React.Component{
+const styles = theme => ({
+  progress: {
+    margin: theme.spacing.unit * 2
+  }
+});
 
+class Dashboard extends Component {
   state = {
-    actions: [
-      { name: 'Class Manager', destination: '/manage-classes' },
-      { name: 'Animal Manager', destination: '/manage-animals' }
-    ]
+    user: null
+  };
+
+  componentDidMount() {
+    const userId = Auth.currentUserId();
+    Axios.get(`/api/users/${userId}`).then(res =>
+      this.setState(() => ({ user: res.data }), () => console.log(this.state))
+    );
   }
 
-  render(){
-    return(
+  render() {
+    const { user } = this.state;
+    const { classes } = this.props;
+    return (
       <Fragment>
-        <Typography variant='h5' align='center'>Palmiet Farm </Typography >
-        {/*<FarmStatus />*/}
-        <ActionsContainer actions={this.state.actions} />
+        <Typography variant="h5" align="center">
+          Stockman.io{' '}
+        </Typography>
+        {!user ? (
+          <CircularProgress className={classes.progress} />
+        ) : (
+          user.farms.map(farm => (
+            <Link
+              key={farm._id}
+              to={`/${farm.name}/category-manager`}
+              style={{ textDecoration: 'none' }}
+            >
+              <Card>
+                <CardContent>
+                  <Typography variant="subtitle1" align="center">
+                    {' '}
+                    {farm.name}: Category Manager{' '}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Link>
+          ))
+        )}
       </Fragment>
     );
   }
 }
+
+export default withStyles(styles)(Dashboard);

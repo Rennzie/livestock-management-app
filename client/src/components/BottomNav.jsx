@@ -41,11 +41,13 @@ class BottomNav extends React.Component {
         className={classes.root}
       >
         <BottomNavigationAction onClick={this.handleClick('/')} label="Home" icon={<Home />} />
-        <BottomNavigationAction
+
+        {/* <BottomNavigationAction
           onClick={this.handleClick('/manage-classes')}
           label="Categories"
           icon={<CategoryIcon />}
-        />
+        /> */}
+
         <BottomNavigationAction
           onClick={this.handleClick('/manage-animals')}
           label="Animals"
