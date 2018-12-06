@@ -14,22 +14,24 @@ import {
 } from '@material-ui/core';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import AddIcon from '@material-ui/icons/Add';
 
 // Dependancies
 import axios from 'axios';
+import Auth from '../../lib/Auth';
 
 // Components
-
 export default class ClassManager extends Component {
   state = {
     expanded: null
   };
 
-  // BUG: when the user completes logging a change the history is one call behind
-
   componentDidMount() {
-    axios.get('/api/classes').then(res => this.setState(() => ({ classes: res.data })));
+    const userId = Auth.currentUserId();
+    axios
+      .get(`/api/users/${userId}/farms`)
+
+      // NOTE: the current assumption is that there is only one farm per user
+      .then(res => this.setState(() => ({ classes: res.data[0].categories })));
   }
 
   handleChange = panel => (event, expanded) => {
@@ -37,27 +39,32 @@ export default class ClassManager extends Component {
   };
 
   handleClassChange = category => () => {
-    this.props.history.push(`/manage-classes/${category.class}/changes`, { category });
+    const { history } = this.props;
+    history.push(`/manage-classes/${category.class}/changes`, { category });
   };
 
   handleGoToHistory = category => () => {
     const id = category._id;
-    this.props.history.push(`/manage-classes/${category.class}/history`, { id });
+    const { history } = this.props;
+    history.push(`/manage-classes/${category.class}/history`, { id });
   };
 
+  // BUG: the class manager crashes when a farm has no classes
+
   render() {
+    const { classes, expanded } = this.state;
     return (
       <Fragment>
         <Typography variant="h5" align="center">
           Class Manager
         </Typography>
 
-        {this.state.classes && (
+        {classes && (
           <Fragment>
-            {this.state.classes.map(category => (
+            {classes.map(category => (
               <ExpansionPanel
                 key={category._id}
-                expanded={this.state.expanded === category.class}
+                expanded={expanded === category.class}
                 onChange={this.handleChange(category.class)}
               >
                 <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>

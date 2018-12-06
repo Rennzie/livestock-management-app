@@ -7,7 +7,10 @@ function farmNew(req, res, next) {
 }
 
 function farmIndex(req, res, next) {
-  Farm.find({ _id: req.params.userId })
+  console.log('the user is is', req.params.userId);
+
+  Farm.find({ farmOwner: req.params.userId })
+    .populate('categories')
     .then(farms => res.json(farms))
     .catch(next);
 }

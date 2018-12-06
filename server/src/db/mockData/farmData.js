@@ -5,6 +5,11 @@ const farmData = [
     _id: farmIds[0],
     name: 'Palmiet',
     farmOwner: userIds[0]
+  },
+  {
+    _id: farmIds[1],
+    name: 'Rocklands',
+    farmOwner: userIds[1]
   }
 ];
 

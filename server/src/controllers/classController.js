@@ -6,6 +6,8 @@ function newClass(req, res, next) {
     .catch(next);
 }
 
+// Note: Need to think about how we incorporate multiple farms into the equation.
+
 function indexClasses(req, res, next) {
   Class.find()
     .then(classes => res.json(classes))
