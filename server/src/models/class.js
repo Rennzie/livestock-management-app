@@ -88,31 +88,31 @@ const CategorySchema = new Schema(
  *        then this will create problems with the current set up.
  *        A more robust solution would be to create change summary from the monthly detail archive??
  */
-// CategorySchema.pre('save', function(next) {
-//   // at first save of a new month, archive last month, set the period and the openingTotal
-//   const period = moment().format('MMM-YYYY');
-//   let currentMonthUpdate = null;
+CategorySchema.pre('save', function(next) {
+  // at first save of a new month, archive last month, set the period and the openingTotal
+  const period = moment().format('MMM-YYYY');
+  let currentMonthUpdate = null;
 
-//   if (this.currentMonthDetail.period !== period) {
-//     // archives the current month at first save of a new month
-//     const lastMonth = JSON.parse(JSON.stringify(this.currentMonthDetail));
-//     this.prevMonthsDetail.push(lastMonth);
+  if (this.currentMonthDetail.period !== period) {
+    // archives the current month at first save of a new month
+    const lastMonth = JSON.parse(JSON.stringify(this.currentMonthDetail));
+    this.prevMonthsDetail.push(lastMonth);
 
-//     currentMonthUpdate = startNewMonth(lastMonth.closingTotal, period);
-//   } else {
-//     currentMonthUpdate = this.currentMonthDetail;
-//   }
+    currentMonthUpdate = startNewMonth(lastMonth.closingTotal, period);
+  } else {
+    currentMonthUpdate = this.currentMonthDetail;
+  }
 
-//   // updates the closing total and the change summary object
-//   currentMonthUpdate.closingTotal = getClosingTotal(
-//     this.currentMonthChanges,
-//     currentMonthUpdate.openingTotal
-//   );
-//   currentMonthUpdate.changes = aggregateMonthChanges(this.currentMonthChanges);
+  // updates the closing total and the change summary object
+  currentMonthUpdate.closingTotal = getClosingTotal(
+    this.currentMonthChanges,
+    currentMonthUpdate.openingTotal
+  );
+  currentMonthUpdate.changes = aggregateMonthChanges(this.currentMonthChanges);
 
-//   this.currentMonthDetail = currentMonthUpdate;
-//   next();
-// });
+  this.currentMonthDetail = currentMonthUpdate;
+  next();
+});
 
 // --- VIRTUALS ---//
 
