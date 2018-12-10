@@ -1,4 +1,4 @@
-export const classIds = [
+export const categoryIds = [
   '5b91752666708bc8b1632821',
   '5b91752666708bc8b1632806',
   '5b91752666708bc8b1632807',

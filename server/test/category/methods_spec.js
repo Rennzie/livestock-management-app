@@ -1,22 +1,22 @@
 /* globals describe, it, xit, api expect beforeEach  */
 import moment from 'moment';
-import Class from '../../src/models/class';
-import classTestData from '../testData/classData';
+import Category from '../../src/models/category';
+import categoryTestData from '../testData/categoryData';
 
 // --- TEST DATA ---//
-const classData = classTestData.singleLastMonth;
-const { trackedChange } = classTestData;
+const classData = categoryTestData.singleLastMonth;
+const { trackedChange } = categoryTestData;
 
 describe('CLASS Method calls', () => {
   beforeEach(done => {
-    Class.deleteMany({})
-      .then(() => Class.create(classData))
+    Category.deleteMany({})
+      .then(() => Category.create(classData))
       .then(() => done());
   });
 
   it('should return an object', done => {
     api
-      .post(`/api/classes/${classData._id}/changes`)
+      .post(`/api/categories/${classData._id}/changes`)
       .send(trackedChange)
       .end((err, res) => {
         expect(res.body).to.be.an('object');
@@ -26,7 +26,7 @@ describe('CLASS Method calls', () => {
 
   xit('should return a new key in the changesArchive "Oct-2018"', done => {
     api
-      .post(`/api/classes/${classData._id}/changes`)
+      .post(`/api/categories/${classData._id}/changes`)
       .send(trackedChange)
       .end((err, res) => {
         const key = 'Oct-2018';
@@ -38,7 +38,7 @@ describe('CLASS Method calls', () => {
 
   xit('the new key should not have any items with the wrong month', done => {
     api
-      .post(`/api/classes/${classData._id}/changes`)
+      .post(`/api/categories/${classData._id}/changes`)
       .send(trackedChange)
       .end((err, res) => {
         const key = 'Oct-2018';

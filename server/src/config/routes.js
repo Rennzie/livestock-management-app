@@ -6,7 +6,7 @@ import userController from '../controllers/userController';
 
 // end points
 import bovines from './endpoints/bovines';
-import classes from './endpoints/classes';
+import categories from './endpoints/categories';
 import farms from './endpoints/farms';
 
 const Router = express.Router();
@@ -26,7 +26,7 @@ Router.route('/users').get(userController.index);
 
 // --- End Points ---//
 Router.use(bovines);
-Router.use(classes);
+Router.use(categories);
 Router.use(farms);
 
 export default Router;

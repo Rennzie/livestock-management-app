@@ -2,7 +2,7 @@
 
 import Farm from '../../src/models/farm';
 import User from '../../src/models/user';
-// import Class from '../../src/models/class';
+// import Category from '../../src/models/class';
 
 import farmTestData from '../testData/farmData';
 import userTestData from '../testData/usersData';
@@ -27,8 +27,8 @@ describe('GET /api/users/:userId/farms', () => {
       .then(() => User.create(userData))
       .then(() => Farm.deleteMany({}))
       .then(() => Farm.create(farmData))
-      //   .then(() => Class.deleteMany({}))
-      //   .then(() => Class.create(categoryData))
+      //   .then(() => Category.deleteMany({}))
+      //   .then(() => Category.create(categoryData))
       .then(() => done());
   });
 

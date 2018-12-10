@@ -1,12 +1,12 @@
 import moment from 'moment';
 
-import { classIds, farmIds } from './ids';
+import { categoryIds, farmIds } from './ids';
 
 export default {
-  classIds,
+  categoryIds,
   multi: [
     {
-      _id: classIds[0],
+      _id: categoryIds[0],
       farm: farmIds[0],
       name: 'Breeding Cows',
       class: 'cows',
@@ -73,7 +73,7 @@ export default {
       }
     },
     {
-      _id: classIds[1],
+      _id: categoryIds[1],
       name: 'Old Heifers',
       farm: farmIds[0],
       class: 'heifers-2-3',
@@ -140,7 +140,7 @@ export default {
       }
     },
     {
-      _id: classIds[2],
+      _id: categoryIds[2],
       name: 'Young Heifers',
       farm: farmIds[0],
       class: 'heifers-1-2',
@@ -207,7 +207,7 @@ export default {
       }
     },
     {
-      _id: classIds[3],
+      _id: categoryIds[3],
       name: 'Fattening Group A',
       farm: farmIds[0],
       class: 'oxen',
@@ -274,7 +274,7 @@ export default {
       }
     },
     {
-      _id: classIds[4],
+      _id: categoryIds[4],
       name: 'Fattening Group A',
       farm: farmIds[1],
       class: 'oxen',
@@ -342,7 +342,7 @@ export default {
     }
   ],
   single: {
-    _id: classIds[1],
+    _id: categoryIds[1],
     name: 'breeding',
     farm: farmIds[0],
     class: 'cows',
@@ -386,14 +386,14 @@ export default {
   },
 
   trackedChange: {
-    _id: classIds[2],
+    _id: categoryIds[2],
     createdAt: moment(),
     reasonForChange: 'death',
     animalsMoved: -10
   },
 
   singleLastMonth: {
-    _id: classIds[0],
+    _id: categoryIds[0],
     farm: farmIds[0],
     name: 'Breeding Cows',
     class: 'cows',

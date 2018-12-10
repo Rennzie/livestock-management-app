@@ -40,7 +40,7 @@ const MonthlyDetailSchema = new Schema({
 // === DOCUMENT ===//
 const CategorySchema = new Schema(
   {
-    class: {
+    category: {
       type: String,
       enum: [
         'archive',
@@ -153,7 +153,7 @@ CategorySchema.methods.newChange = function(newChange) {
   return this.save();
 };
 
-export default model('Class', CategorySchema);
+export default model('Category', CategorySchema);
 
 //  === INTERNAL FUNCTION ===//
 function startNewMonth(lastMonthClosing, period) {

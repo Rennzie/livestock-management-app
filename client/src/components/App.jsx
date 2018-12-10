@@ -15,11 +15,11 @@ import Dashboard from './Dashboard/index';
 // Farms
 import FarmNew from './Farms/New';
 
-// Class/categories
-import ClassManager from './ClassManager';
-import ClassChange from './actions/ClassChange';
-import ClassHistory from './Class/ClassHistory';
-import CategoryNew from './Class/New';
+// Category/categories
+import CategoryManager from './CategoryManager';
+import CategoryChange from './actions/CategoryChange';
+import CategoryHistory from './Category/CategoryHistory';
+import CategoryNew from './Category/New';
 
 // Animals
 import AnimalManager from './AnimalManager';
@@ -69,10 +69,10 @@ export default function App() {
             <Route exact path="/new/farm" component={FarmNew} />
             <Route exact path="/new/category" component={CategoryNew} />
 
-            {/* Manage Classes */}
-            <Route path="/:farmName/:farmId/manage-categories" component={ClassManager} />
-            <Route path="/manage-classes/:className/changes" component={ClassChange} />
-            <Route path="/manage-classes/:className/history" component={ClassHistory} />
+            {/* Manage Categoryes */}
+            <Route path="/:farmName/:farmId/manage-categories" component={CategoryManager} />
+            <Route path="/manage-classes/:className/changes" component={CategoryChange} />
+            <Route path="/manage-classes/:className/history" component={CategoryHistory} />
 
             {/* Manage Animals */}
             <Route exact path="/manage-animals" component={AnimalManager} />

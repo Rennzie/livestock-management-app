@@ -1,1 +1,0 @@
-"use strict";var PORT=process.env.PORT||4e3,ENV=process.env.NODE_ENV||"dev",DB_URI=process.env.MONGODB_URI||"mongodb://localhost/stockman-".concat(ENV),SECRET=process.env.SECRET||"justAlittleSecret";module.exports={PORT:PORT,ENV:ENV,DB_URI:DB_URI,SECRET:SECRET};

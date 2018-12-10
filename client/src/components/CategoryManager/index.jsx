@@ -20,7 +20,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import axios from 'axios';
 
 // Components
-export default class ClassManager extends Component {
+export default class CategoryManager extends Component {
   state = {
     expanded: null,
     farm: null

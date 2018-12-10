@@ -1,10 +1,10 @@
 import moment from 'moment';
 
-import { classIds, farmIds } from './ids';
+import { categoryIds, farmIds } from './ids';
 
-const classesData = [
+const categoriesData = [
   {
-    _id: classIds[0],
+    _id: categoryIds[0],
     farm: farmIds[0],
     class: 'cows',
     currentMonthDetail: {
@@ -74,4 +74,4 @@ const classesData = [
   }
 ];
 
-export default classesData;
+export default categoriesData;

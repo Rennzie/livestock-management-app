@@ -17,7 +17,7 @@ import axios from 'axios';
 // Components
 import CapitalizeText from '../common/CapitalizeText';
 
-export default class ClassHistory extends Component {
+export default class CategoryHistory extends Component {
   state = {};
 
   componentDidMount() {

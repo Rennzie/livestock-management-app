@@ -12,7 +12,7 @@ const FarmSchema = new Schema(
 
 // --- VIRTUALS ---//
 FarmSchema.virtual('categories', {
-  ref: 'Class',
+  ref: 'Category',
   localField: '_id',
   foreignField: 'farm'
 });

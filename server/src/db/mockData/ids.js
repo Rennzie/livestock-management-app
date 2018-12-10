@@ -12,7 +12,7 @@ export const farmIds = [
   '5b26752666718bc8b1632708'
 ];
 
-export const classIds = [
+export const categoryIds = [
   '5b91752666708bc8b1622821',
   '5b91752666708bc8b1622806',
   '5b91752666708bc8b1622807',

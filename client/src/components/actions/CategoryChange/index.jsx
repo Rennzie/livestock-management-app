@@ -46,7 +46,7 @@ const styles = theme => ({
   }
 });
 
-class ClassChange extends Component {
+class CategoryChange extends Component {
   state = {
     newChange: {
       createdAt: '',
@@ -210,4 +210,4 @@ class ClassChange extends Component {
   }
 }
 
-export default withStyles(styles)(ClassChange);
+export default withStyles(styles)(CategoryChange);
