@@ -25,18 +25,18 @@ function login(req, res, next) {
 }
 
 // old register function without logging in.
-function register(req, res, next) {
-  User.create(req.body)
-    .then(user => res.status(201).json({ message: `Create a new user: ${user.username}`, user }))
-    .catch(next);
-}
-
-// by sending a token on register the user will automagically be logged in!
 // function register(req, res, next) {
 //   User.create(req.body)
-//     .then(user => createAndSendToken(user, res, `Created, ${user.username}`))
+//     .then(user => res.status(201).json({ message: `Create a new user: ${user.username}`, user }))
 //     .catch(next);
 // }
+
+// by sending a token on register the user will automagically be logged in!
+function register(req, res, next) {
+  User.create(req.body)
+    .then(user => createAndSendToken(user, res, `Created, ${user.username}`))
+    .catch(next);
+}
 
 export default {
   login,

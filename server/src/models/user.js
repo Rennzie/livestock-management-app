@@ -24,6 +24,17 @@ UserSchema.virtual('farms', {
   foreignField: 'farmOwner'
 });
 
+UserSchema.virtual('totalAnimals').get(function() {
+  if (!this.farms) return null;
+
+  let totalAnimals = 0;
+  this.farms.forEach(farm => {
+    totalAnimals += farm.totalAnimals;
+  });
+
+  return totalAnimals;
+});
+
 // --- METHODS ---//
 // password validation
 UserSchema.methods.validatePassword = function(password) {

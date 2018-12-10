@@ -7,6 +7,11 @@ const farmData = [
     farmOwner: userIds[0]
   },
   {
+    _id: farmIds[2],
+    name: 'Blydefontein',
+    farmOwner: userIds[0]
+  },
+  {
     _id: farmIds[1],
     name: 'Rocklands',
     farmOwner: userIds[1]

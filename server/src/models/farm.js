@@ -17,4 +17,15 @@ FarmSchema.virtual('categories', {
   foreignField: 'farm'
 });
 
+FarmSchema.virtual('totalAnimals').get(function() {
+  if (!this.categories) return null;
+
+  let totalAnimals = 0;
+  this.categories.forEach(category => {
+    totalAnimals += category.currentMonthDetail.closingTotal;
+  });
+
+  return totalAnimals;
+});
+
 export default model('Farm', FarmSchema);

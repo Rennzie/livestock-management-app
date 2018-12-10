@@ -10,12 +10,14 @@ function newClass(req, res, next) {
 
 function indexClasses(req, res, next) {
   Class.find()
+    .populate('farm')
     .then(classes => res.json(classes))
     .catch(next);
 }
 
 function showClass(req, res, next) {
   Class.findById(req.params.id)
+    .populate('farm')
     .then(oneClass => res.json(oneClass))
     .catch(next);
 }

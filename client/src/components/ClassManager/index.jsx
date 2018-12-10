@@ -41,9 +41,9 @@ export default class ClassManager extends Component {
     this.setState({ expanded: expanded ? panel : false });
   };
 
-  handleClassChange = category => () => {
+  handleCategoryChange = category => () => {
     const { history } = this.props;
-    history.push(`/manage-classes/${category.class}/changes`, { category });
+    history.push(`/manage-classes/${category.class}/changes`, { categoryId: category._id });
   };
 
   handleGoToHistory = category => () => {
@@ -148,7 +148,7 @@ export default class ClassManager extends Component {
                 <Divider />
                 <ExpansionPanelActions>
                   <Button onClick={this.handleGoToHistory(category)}> History </Button>
-                  <Button onClick={this.handleClassChange(category)}> Log Change </Button>
+                  <Button onClick={this.handleCategoryChange(category)}> Log Change </Button>
                 </ExpansionPanelActions>
               </ExpansionPanel>
             ))}

@@ -1,41 +1,35 @@
 import React from 'react';
 
-import {
-  List,
-  ListItem,
-  ListItemText,
-  Divider
-} from '@material-ui/core';
+import { List, ListItem, ListItemText, Divider } from '@material-ui/core';
 
-
-function NewCalfInfoDisplay({displayInfo}){
-  return(
+function NewCalfInfoDisplay({ displayInfo }) {
+  return (
     <List dense>
-      <ListItem >
+      <ListItem>
         <ListItemText primary="New Calf:" />
         <ListItemText secondary={displayInfo.identifier} />
       </ListItem>
-      <ListItem >
+      <ListItem>
         <ListItemText primary="Mother:" />
         <ListItemText secondary={displayInfo.mother.identifier} />
       </ListItem>
-      <ListItem >
+      <ListItem>
         <ListItemText primary="Weight:" />
         <ListItemText secondary={`${displayInfo.weight} ${displayInfo.unit}`} />
       </ListItem>
-      <ListItem >
+      <ListItem>
         <ListItemText primary="Category:" />
         <ListItemText secondary={displayInfo.category} />
       </ListItem>
-      <ListItem >
+      <ListItem>
         <ListItemText primary="D.O.B:" />
         <ListItemText secondary={displayInfo.birthDate} />
       </ListItem>
-      <ListItem >
+      <ListItem>
         <ListItemText primary="Breed:" />
         <ListItemText secondary={displayInfo.breed} />
       </ListItem>
-      <Divider/>
+      <Divider />
     </List>
   );
 }

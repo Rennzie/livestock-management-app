@@ -40,22 +40,25 @@ class Dashboard extends Component {
         {!user ? (
           <CircularProgress className={classes.progress} />
         ) : (
-          user.farms.map(farm => (
-            <Link
-              key={farm._id}
-              to={`/${farm.name}/${farm._id}/manage-categories`}
-              style={{ textDecoration: 'none' }}
-            >
-              <Card>
-                <CardContent>
-                  <Typography variant="subtitle1" align="center">
-                    {' '}
-                    {farm.name}: Category Manager{' '}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Link>
-          ))
+          <Fragment>
+            <FarmStatus user={user} />
+            {user.farms.map(farm => (
+              <Link
+                key={farm._id}
+                to={`/${farm.name}/${farm._id}/manage-categories`}
+                style={{ textDecoration: 'none' }}
+              >
+                <Card>
+                  <CardContent>
+                    <Typography variant="subtitle1" align="center">
+                      {' '}
+                      {farm.name}: Category Manager{' '}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </Fragment>
         )}
       </Fragment>
     );

@@ -22,6 +22,8 @@ Router.route('/users/:id')
   .put(userController.update)
   .delete(userController.delete);
 
+Router.route('/users').get(userController.index);
+
 // --- End Points ---//
 Router.use(bovines);
 Router.use(classes);

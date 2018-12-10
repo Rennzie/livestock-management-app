@@ -2,7 +2,7 @@ import User from '../models/user';
 
 function userShowPage(req, res, next) {
   User.findById(req.params.id)
-    .populate('farms')
+    .populate({ path: 'farms', populate: { path: 'categories' } })
     .then(user => res.json(user))
     .catch(next);
 }
@@ -22,8 +22,15 @@ function userDelete(req, res, next) {
     .catch(next);
 }
 
+function userIndex(req, res, next) {
+  User.find()
+    .then(users => res.json(users))
+    .catch(next);
+}
+
 export default {
   show: userShowPage,
   update: userEdit,
-  delete: userDelete
+  delete: userDelete,
+  index: userIndex
 };

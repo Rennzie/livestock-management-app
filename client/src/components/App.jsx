@@ -7,12 +7,20 @@ import BottomNav from './BottomNav';
 
 // Auth
 import Login from './auth/Login';
+import Register from './auth/Register';
 
+// General
 import Dashboard from './Dashboard/index';
+
+// Farms
+import FarmNew from './Farms/New';
+
+// Class/categories
 import ClassManager from './ClassManager';
 import ClassChange from './actions/ClassChange';
 import ClassHistory from './Class/ClassHistory';
 
+// Animals
 import AnimalManager from './AnimalManager';
 
 // Actions
@@ -49,12 +57,15 @@ export default function App() {
       {!loggedIn ? (
         <Switch>
           <Route exact path="/" component={Login} />
-          {/* <Route exact path="/register" component={Register} /> */}
+          <Route exact path="/register" component={Register} />
         </Switch>
       ) : (
         <Fragment>
           <Switch>
             <Route exact path="/" component={Dashboard} />
+
+            {/* Add Inventory */}
+            <Route path="/new/farm" component={FarmNew} />
 
             {/* Manage Classes */}
             <Route path="/:farmName/:farmId/manage-categories" component={ClassManager} />

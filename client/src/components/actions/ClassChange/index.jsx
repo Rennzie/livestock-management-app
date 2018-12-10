@@ -56,11 +56,18 @@ class ClassChange extends Component {
   };
 
   componentDidMount() {
-    this.setState((prevState, props) => {
-      prevState.category = props.location.state.category;
-      prevState.newChange.createdAt = moment().format('YYYY-MM-DD');
-      return prevState;
-    });
+    const { location } = this.props;
+    axios.get(`/api/classes/${location.state.categoryId}`).then(res =>
+      this.setState(
+        prevState => {
+          const newState = prevState;
+          newState.category = res.data;
+          newState.newChange.createdAt = moment().format('YYYY-MM-DD');
+          return newState;
+        },
+        () => console.log(this.state)
+      )
+    );
   }
 
   handleChange = name => event => {
@@ -73,19 +80,24 @@ class ClassChange extends Component {
   };
 
   handleChangeLog = () => {
-    const { newChange } = this.state;
-    const change = this.state.newChange.reasonForChange;
+    const { newChange, category } = this.state;
+    const { history } = this.props;
+
+    const change = newChange.reasonForChange;
 
     const changeObj = {};
     changeObj.createdAt = moment(newChange.createdAt);
     changeObj.reasonForChange = newChange.reasonForChange;
     changeObj.animalsMoved = newChange.animalsMoved;
+
+    // To ensure we send a negative number to database in the correct instance
     if (change === 'death' || change === 'theft' || change === 'sale') {
       changeObj.animalsMoved = newChange.animalsMoved * -1;
     }
+
     axios
-      .post(`/api/classes/${this.state.category._id}/changes`, changeObj)
-      .then(() => this.props.history.push('/manage-classes'));
+      .post(`/api/classes/${category._id}/changes`, changeObj)
+      .then(() => history.push(`/${category.farm.name}/${category.farm._id}/manage-categories`));
   };
 
   handleAdd = () => {

@@ -1,4 +1,5 @@
 import React, { Fragment, Component } from 'react';
+import { withRouter, Link } from 'react-router-dom';
 
 import { Typography, Input, FormControl, InputLabel, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
@@ -39,8 +40,6 @@ class Login extends Component {
     axios
       .post('/api/login', this.state)
       .then(res => {
-        console.log('the login response is', res.data);
-
         const { token } = res.data;
         Auth.setToken(token);
 
@@ -96,6 +95,15 @@ class Login extends Component {
             <Button className={classes.margin} onClick={this.handleLogin} color="secondary">
               Login
             </Button>
+            <Button
+              component={Link}
+              to="/register"
+              variant="text"
+              className={classes.margin}
+              color="secondary"
+            >
+              Not got an account? Register
+            </Button>
           </section>
         </div>
       </Fragment>
@@ -103,4 +111,4 @@ class Login extends Component {
   }
 }
 
-export default withStyles(styles)(Login);
+export default withRouter(withStyles(styles)(Login));
