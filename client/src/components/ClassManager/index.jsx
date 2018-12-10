@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 
 import {
   Typography,
@@ -22,7 +23,7 @@ import axios from 'axios';
 export default class ClassManager extends Component {
   state = {
     expanded: null,
-    farmName: 'LOADING...'
+    farm: null
   };
 
   componentDidMount() {
@@ -31,9 +32,8 @@ export default class ClassManager extends Component {
     axios
       .get(`/api/farms/${farmId}`)
 
-      // NOTE: the current assumption is that there is only one farm per user
       .then(res =>
-        this.setState(() => ({ categories: res.data.categories, farmName: res.data.name }))
+        this.setState(() => ({ farm: res.data }), () => console.log('the state is', this.state))
       );
   }
 
@@ -52,106 +52,112 @@ export default class ClassManager extends Component {
     history.push(`/manage-classes/${category.class}/history`, { id });
   };
 
-  // BUG: the class manager crashes when a farm has no classes
-
   render() {
-    const { categories, expanded, farmName } = this.state;
+    const { farm, expanded } = this.state;
 
     return (
       <Fragment>
-        {farmName && (
-          <Typography variant="h5" align="center">
-            {farmName} Category Manager
-          </Typography>
-        )}
-
-        {categories && (
+        {farm && (
           <Fragment>
-            {categories.map(category => (
-              <ExpansionPanel
-                key={category._id}
-                expanded={expanded === category.class}
-                onChange={this.handleChange(category.class)}
-              >
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography variant="h5">
-                    {category.name} : {category.class}
-                  </Typography>
-                  <Typography variant="subtitle1">
-                    Running Total: {category.currentMonthDetail.closingTotal}
-                  </Typography>
-                  <Typography variant="subtitle1">
-                    Opening Total: {category.currentMonthDetail.openingTotal}
-                  </Typography>
-                  <Typography variant="subtitle1">
-                    Changes:{' '}
-                    {category.currentMonthDetail.closingTotal -
-                      category.currentMonthDetail.openingTotal}
-                  </Typography>
-                </ExpansionPanelSummary>
+            <Typography variant="h5" align="center">
+              {farm.name} Category Manager
+            </Typography>
 
-                <ExpansionPanelDetails>
-                  <List>
-                    <ListItem>
-                      <ListItemText primary={category.currentMonthDetail.period} />
-                    </ListItem>
+            {farm.categories.length === 0 ? (
+              <Typography variant="subtitle1" align="center">
+                You have not registered any categories for {farm.name} yet.
+                <Link to={{ pathname: '/new/category', state: { farm } }}> Click here </Link>
+                to add one.
+              </Typography>
+            ) : (
+              <Fragment>
+                {farm.categories.map(category => (
+                  <ExpansionPanel
+                    key={category._id}
+                    expanded={expanded === category.class}
+                    onChange={this.handleChange(category.class)}
+                  >
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                      <Typography variant="h5">
+                        {category.name} : {category.class}
+                      </Typography>
+                      <Typography variant="subtitle1">
+                        Running Total: {category.currentMonthDetail.closingTotal}
+                      </Typography>
+                      <Typography variant="subtitle1">
+                        Opening Total: {category.currentMonthDetail.openingTotal}
+                      </Typography>
+                      <Typography variant="subtitle1">
+                        Changes:{' '}
+                        {category.currentMonthDetail.closingTotal -
+                          category.currentMonthDetail.openingTotal}
+                      </Typography>
+                    </ExpansionPanelSummary>
 
+                    <ExpansionPanelDetails>
+                      <List>
+                        <ListItem>
+                          <ListItemText primary={category.currentMonthDetail.period} />
+                        </ListItem>
+
+                        <Divider />
+
+                        <ListItem>
+                          <ListItemText
+                            primary={`Added: ${
+                              category.currentMonthDetail.changes.add
+                                ? category.currentMonthDetail.changes.add
+                                : 0
+                            }`}
+                          />
+                        </ListItem>
+                        <ListItem>
+                          <ListItemText
+                            primary={`Purchase: ${
+                              category.currentMonthDetail.changes.purchase
+                                ? category.currentMonthDetail.changes.purchase
+                                : 0
+                            }`}
+                          />
+                        </ListItem>
+                        <ListItem>
+                          <ListItemText
+                            primary={`Death: ${
+                              category.currentMonthDetail.changes.death
+                                ? category.currentMonthDetail.changes.death
+                                : 0
+                            }`}
+                          />
+                        </ListItem>
+                        <ListItem>
+                          <ListItemText
+                            primary={`Theft: ${
+                              category.currentMonthDetail.changes.theft
+                                ? category.currentMonthDetail.changes.theft
+                                : 0
+                            }`}
+                          />
+                        </ListItem>
+                        <ListItem>
+                          <ListItemText
+                            primary={`Sale: ${
+                              category.currentMonthDetail.changes.sale
+                                ? category.currentMonthDetail.changes.sale
+                                : 0
+                            }`}
+                          />
+                        </ListItem>
+                      </List>
+                    </ExpansionPanelDetails>
                     <Divider />
-
-                    <ListItem>
-                      <ListItemText
-                        primary={`Added: ${
-                          category.currentMonthDetail.changes.add
-                            ? category.currentMonthDetail.changes.add
-                            : 0
-                        }`}
-                      />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText
-                        primary={`Purchase: ${
-                          category.currentMonthDetail.changes.purchase
-                            ? category.currentMonthDetail.changes.purchase
-                            : 0
-                        }`}
-                      />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText
-                        primary={`Death: ${
-                          category.currentMonthDetail.changes.death
-                            ? category.currentMonthDetail.changes.death
-                            : 0
-                        }`}
-                      />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText
-                        primary={`Theft: ${
-                          category.currentMonthDetail.changes.theft
-                            ? category.currentMonthDetail.changes.theft
-                            : 0
-                        }`}
-                      />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText
-                        primary={`Sale: ${
-                          category.currentMonthDetail.changes.sale
-                            ? category.currentMonthDetail.changes.sale
-                            : 0
-                        }`}
-                      />
-                    </ListItem>
-                  </List>
-                </ExpansionPanelDetails>
-                <Divider />
-                <ExpansionPanelActions>
-                  <Button onClick={this.handleGoToHistory(category)}> History </Button>
-                  <Button onClick={this.handleCategoryChange(category)}> Log Change </Button>
-                </ExpansionPanelActions>
-              </ExpansionPanel>
-            ))}
+                    <ExpansionPanelActions>
+                      <Button onClick={this.handleGoToHistory(category)}> History </Button>
+                      <Button onClick={this.handleCategoryChange(category)}> Log Change </Button>
+                    </ExpansionPanelActions>
+                  </ExpansionPanel>
+                ))}
+              </Fragment>
+            )}
           </Fragment>
         )}
       </Fragment>

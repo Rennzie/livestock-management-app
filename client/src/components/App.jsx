@@ -19,6 +19,7 @@ import FarmNew from './Farms/New';
 import ClassManager from './ClassManager';
 import ClassChange from './actions/ClassChange';
 import ClassHistory from './Class/ClassHistory';
+import CategoryNew from './Class/New';
 
 // Animals
 import AnimalManager from './AnimalManager';
@@ -65,7 +66,8 @@ export default function App() {
             <Route exact path="/" component={Dashboard} />
 
             {/* Add Inventory */}
-            <Route path="/new/farm" component={FarmNew} />
+            <Route exact path="/new/farm" component={FarmNew} />
+            <Route exact path="/new/category" component={CategoryNew} />
 
             {/* Manage Classes */}
             <Route path="/:farmName/:farmId/manage-categories" component={ClassManager} />

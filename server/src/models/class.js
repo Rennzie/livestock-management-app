@@ -20,6 +20,7 @@ const ClassSchema = new Schema({
     type: String,
     enum: [
       'archive',
+      'calves',
       'cows',
       'bull-calves',
       'oxen',

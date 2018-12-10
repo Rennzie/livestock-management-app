@@ -135,12 +135,11 @@ class ClassChange extends Component {
             </Typography>
 
             <form className={classes.form}>
-              <FormControl className={classes.margin}>
+              <FormControl fullWidth className={classes.margin}>
                 <InputLabel shrink htmlFor="reasonForChange">
                   Reason For Change
                 </InputLabel>
                 <NativeSelect
-                  fullWidth
                   value={newChange.reasonForChange}
                   onChange={this.handleChange('reasonForChange')}
                   input={<Input name="reasonForChange" id="reasonForChange" />}

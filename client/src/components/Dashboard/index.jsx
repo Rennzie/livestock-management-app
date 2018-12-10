@@ -9,7 +9,6 @@ import Auth from '../../lib/Auth';
 
 // Components
 import FarmStatus from './FarmStatus';
-import ActionsContainer from '../common/ActionsContainer';
 
 const styles = theme => ({
   progress: {
@@ -42,22 +41,30 @@ class Dashboard extends Component {
         ) : (
           <Fragment>
             <FarmStatus user={user} />
-            {user.farms.map(farm => (
-              <Link
-                key={farm._id}
-                to={`/${farm.name}/${farm._id}/manage-categories`}
-                style={{ textDecoration: 'none' }}
-              >
-                <Card>
-                  <CardContent>
-                    <Typography variant="subtitle1" align="center">
-                      {' '}
-                      {farm.name}: Category Manager{' '}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
+            {user.farms.length === 0 ? (
+              <Typography variant="subtitle1" align="center">
+                You have not registered a farm yet.
+                <Link to="/new/farm"> Click here </Link>
+                to add one.
+              </Typography>
+            ) : (
+              user.farms.map(farm => (
+                <Link
+                  key={farm._id}
+                  to={`/${farm.name}/${farm._id}/manage-categories`}
+                  style={{ textDecoration: 'none' }}
+                >
+                  <Card>
+                    <CardContent>
+                      <Typography variant="subtitle1" align="center">
+                        {' '}
+                        {farm.name}: Category Manager{' '}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))
+            )}
           </Fragment>
         )}
       </Fragment>
