@@ -15,7 +15,6 @@ import { withStyles } from '@material-ui/core/styles';
 // dependancies
 import axios from 'axios';
 import moment from 'moment';
-import Auth from '../../lib/Auth';
 
 const styles = theme => ({
   fromWrapper: {

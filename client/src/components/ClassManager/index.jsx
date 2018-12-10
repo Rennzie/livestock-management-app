@@ -78,9 +78,7 @@ export default class ClassManager extends Component {
                     onChange={this.handleChange(category.class)}
                   >
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                      <Typography variant="h5">
-                        {category.name} : {category.class}
-                      </Typography>
+                      <Typography variant="h5">{category.class}</Typography>
                       <Typography variant="subtitle1">
                         Running Total: {category.currentMonthDetail.closingTotal}
                       </Typography>
