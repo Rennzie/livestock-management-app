@@ -2,6 +2,46 @@ import moment from 'moment';
 
 import { categoryIds, farmIds } from './ids';
 
+// NOTE: add more categories for UI testing
+
+const thisMonth = moment().month();
+const thisYear = moment().year();
+const lastMonthString = moment()
+  .subtract(1, 'month')
+  .format('MMM-YYYY');
+
+function generateRandomDate() {
+  return Math.floor(Math.random() * 28);
+}
+
+function chooseReason() {
+  const changes = ['add', 'purchase', 'death', 'theft', 'sale', 'other'];
+  const choiceIndex = Math.floor(Math.random() * changes.length);
+
+  return changes[choiceIndex];
+}
+
+function generateRandomNumber(change) {
+  const number = [2, 5, 10, 50, 100];
+  const numberNegative = [2, 5, 10];
+  const choiceIndex = Math.floor(Math.random() * number.length);
+  const choiceIndexNegative = Math.floor(Math.random() * numberNegative.length);
+  if (change === 'add' || change === 'purchase') {
+    return number[choiceIndex];
+  }
+
+  return numberNegative[choiceIndexNegative] * -1;
+}
+
+function createChange(month, year) {
+  const date = generateRandomDate();
+  const createAt = moment().set({ year, month, date });
+  const reasonForChange = chooseReason();
+  const animalsMoved = generateRandomNumber(reasonForChange);
+
+  return { createAt, reasonForChange, animalsMoved };
+}
+
 const categoriesData = [
   {
     _id: categoryIds[0],
@@ -9,7 +49,7 @@ const categoriesData = [
     class: 'cows',
     currentMonthDetail: {
       openingTotal: 0,
-      period: 'Oct-2018',
+      period: lastMonthString,
       changes: [
         { name: 'add', total: 100 },
         { name: 'death', total: -2 },
@@ -18,56 +58,162 @@ const categoriesData = [
       closingTotal: 111
     },
     currentMonthChanges: [
-      {
-        createdAt: moment().set({ year: 2018, month: 10, date: 1 }),
-        reasonForChange: 'add',
-        animalsMoved: 50
-      },
-      {
-        createdAt: moment().set({ year: 2018, month: 10, date: 7 }),
-        reasonForChange: 'theft',
-        animalsMoved: -2
-      },
-      {
-        createdAt: moment().set({ year: 2018, month: 10, date: 10 }),
-        reasonForChange: 'sale',
-        animalsMoved: -10
-      },
-      {
-        createdAt: moment().set({ year: 2018, month: 10, date: 12 }),
-        reasonForChange: 'add',
-        animalsMoved: 10
-      },
-      {
-        createdAt: moment().set({ year: 2018, month: 10, date: 15 }),
-        reasonForChange: 'theft',
-        animalsMoved: -1
-      }
+      createChange(thisMonth, thisYear, 1),
+      createChange(thisMonth, thisYear, 3),
+      createChange(thisMonth, thisYear, 10),
+      createChange(thisMonth, thisYear, 15),
+      createChange(thisMonth, thisYear, 20)
     ],
     prevMonthsChanges: [
       {
-        period: 'Oct-2018',
+        period: lastMonthString,
         changes: [
-          {
-            createdAt: moment().set({ year: 2018, month: 9, date: 1 }),
-            reasonForChange: 'add',
-            animalsMoved: 100
-          },
-          {
-            createdAt: moment().set({ year: 2018, month: 9, date: 10 }),
-            reasonForChange: 'sale',
-            animalsMoved: -10
-          },
-          {
-            createdAt: moment().set({ year: 2018, month: 9, date: 20 }),
-            reasonForChange: 'death',
-            animalsMoved: -2
-          },
-          {
-            createdAt: moment().set({ year: 2018, month: 9, date: 28 }),
-            reasonForChange: 'add',
-            animalsMoved: 23
-          }
+          createChange(thisMonth - 1, thisYear, 1),
+          createChange(thisMonth - 1, thisYear, 4),
+          createChange(thisMonth - 1, thisYear, 10),
+          createChange(thisMonth - 1, thisYear, 15),
+          createChange(thisMonth - 1, thisYear, 27),
+          createChange(thisMonth - 1, thisYear, 30)
+        ]
+      }
+    ]
+  },
+  {
+    _id: categoryIds[1],
+    farm: farmIds[0],
+    class: 'oxen',
+    currentMonthDetail: {
+      openingTotal: 0,
+      period: lastMonthString,
+      changes: [
+        { name: 'add', total: 100 },
+        { name: 'death', total: -2 },
+        { name: 'sale', total: -10 }
+      ],
+      closingTotal: 111
+    },
+    currentMonthChanges: [
+      createChange(thisMonth, thisYear, 1),
+      createChange(thisMonth, thisYear, 3),
+      createChange(thisMonth, thisYear, 10),
+      createChange(thisMonth, thisYear, 15),
+      createChange(thisMonth, thisYear, 20)
+    ],
+    prevMonthsChanges: [
+      {
+        period: lastMonthString,
+        changes: [
+          createChange(thisMonth - 1, thisYear, 1),
+          createChange(thisMonth - 1, thisYear, 4),
+          createChange(thisMonth - 1, thisYear, 10),
+          createChange(thisMonth - 1, thisYear, 15),
+          createChange(thisMonth - 1, thisYear, 27),
+          createChange(thisMonth - 1, thisYear, 30)
+        ]
+      }
+    ]
+  },
+  {
+    _id: categoryIds[2],
+    farm: farmIds[0],
+    class: 'calves',
+    currentMonthDetail: {
+      openingTotal: 0,
+      period: lastMonthString,
+      changes: [
+        { name: 'add', total: 100 },
+        { name: 'death', total: -2 },
+        { name: 'sale', total: -10 }
+      ],
+      closingTotal: 111
+    },
+    currentMonthChanges: [
+      createChange(thisMonth, thisYear, 1),
+      createChange(thisMonth, thisYear, 3),
+      createChange(thisMonth, thisYear, 10),
+      createChange(thisMonth, thisYear, 15),
+      createChange(thisMonth, thisYear, 20)
+    ],
+    prevMonthsChanges: [
+      {
+        period: lastMonthString,
+        changes: [
+          createChange(thisMonth - 1, thisYear, 1),
+          createChange(thisMonth - 1, thisYear, 4),
+          createChange(thisMonth - 1, thisYear, 10),
+          createChange(thisMonth - 1, thisYear, 15),
+          createChange(thisMonth - 1, thisYear, 27),
+          createChange(thisMonth - 1, thisYear, 30)
+        ]
+      }
+    ]
+  },
+  {
+    _id: categoryIds[3],
+    farm: farmIds[1],
+    class: 'cows',
+    currentMonthDetail: {
+      openingTotal: 0,
+      period: lastMonthString,
+      changes: [
+        { name: 'add', total: 100 },
+        { name: 'death', total: -2 },
+        { name: 'sale', total: -10 }
+      ],
+      closingTotal: 111
+    },
+    currentMonthChanges: [
+      createChange(thisMonth, thisYear, 1),
+      createChange(thisMonth, thisYear, 3),
+      createChange(thisMonth, thisYear, 10),
+      createChange(thisMonth, thisYear, 15),
+      createChange(thisMonth, thisYear, 20)
+    ],
+    prevMonthsChanges: [
+      {
+        period: lastMonthString,
+        changes: [
+          createChange(thisMonth - 1, thisYear, 1),
+          createChange(thisMonth - 1, thisYear, 4),
+          createChange(thisMonth - 1, thisYear, 10),
+          createChange(thisMonth - 1, thisYear, 15),
+          createChange(thisMonth - 1, thisYear, 27),
+          createChange(thisMonth - 1, thisYear, 30)
+        ]
+      }
+    ]
+  },
+  {
+    _id: categoryIds[4],
+    farm: farmIds[1],
+    class: 'oxen',
+    currentMonthDetail: {
+      openingTotal: 0,
+      period: lastMonthString,
+      changes: [
+        { name: 'add', total: 100 },
+        { name: 'death', total: -2 },
+        { name: 'sale', total: -10 }
+      ],
+      closingTotal: 111
+    },
+    currentMonthChanges: [
+      createChange(thisMonth, thisYear, 1),
+      createChange(thisMonth, thisYear, 3),
+      createChange(thisMonth, thisYear, 10),
+      createChange(thisMonth, thisYear, 15),
+      createChange(thisMonth, thisYear, 20)
+    ],
+    prevMonthsChanges: [
+      {
+        period: lastMonthString,
+        changes: [
+          createChange(thisMonth - 1, thisYear, 1),
+          createChange(thisMonth - 1, thisYear, 4),
+          createChange(thisMonth - 1, thisYear, 10),
+          createChange(thisMonth - 1, thisYear, 15),
+          createChange(thisMonth - 1, thisYear, 27),
+          createChange(thisMonth - 1, thisYear, 30)
         ]
       }
     ]
