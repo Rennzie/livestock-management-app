@@ -1,25 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
-import {
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  Divider,
-  Button,
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
-  ExpansionPanelActions
-} from '@material-ui/core';
-
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { Typography } from '@material-ui/core';
 
 // Dependancies
 import axios from 'axios';
 
 // Components
+import CategoryExpPanel from './Panel';
+
 export default class CategoryManager extends Component {
   state = {
     expanded: null,
@@ -72,87 +61,14 @@ export default class CategoryManager extends Component {
             ) : (
               <Fragment>
                 {farm.categories.map(category => (
-                  <ExpansionPanel
+                  <CategoryExpPanel
                     key={category._id}
-                    expanded={expanded === category.class}
-                    onChange={this.handleChange(category.class)}
-                  >
-                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                      <Typography variant="h5">{category.class}</Typography>
-                      <Typography variant="subtitle1">
-                        Running Total: {category.currentMonthDetail.closingTotal}
-                      </Typography>
-                      <Typography variant="subtitle1">
-                        Opening Total: {category.currentMonthDetail.openingTotal}
-                      </Typography>
-                      <Typography variant="subtitle1">
-                        Changes:{' '}
-                        {category.currentMonthDetail.closingTotal -
-                          category.currentMonthDetail.openingTotal}
-                      </Typography>
-                    </ExpansionPanelSummary>
-
-                    <ExpansionPanelDetails>
-                      <List>
-                        <ListItem>
-                          <ListItemText primary={category.currentMonthDetail.period} />
-                        </ListItem>
-
-                        <Divider />
-
-                        <ListItem>
-                          <ListItemText
-                            primary={`Added: ${
-                              category.currentMonthDetail.changes.add
-                                ? category.currentMonthDetail.changes.add
-                                : 0
-                            }`}
-                          />
-                        </ListItem>
-                        <ListItem>
-                          <ListItemText
-                            primary={`Purchase: ${
-                              category.currentMonthDetail.changes.purchase
-                                ? category.currentMonthDetail.changes.purchase
-                                : 0
-                            }`}
-                          />
-                        </ListItem>
-                        <ListItem>
-                          <ListItemText
-                            primary={`Death: ${
-                              category.currentMonthDetail.changes.death
-                                ? category.currentMonthDetail.changes.death
-                                : 0
-                            }`}
-                          />
-                        </ListItem>
-                        <ListItem>
-                          <ListItemText
-                            primary={`Theft: ${
-                              category.currentMonthDetail.changes.theft
-                                ? category.currentMonthDetail.changes.theft
-                                : 0
-                            }`}
-                          />
-                        </ListItem>
-                        <ListItem>
-                          <ListItemText
-                            primary={`Sale: ${
-                              category.currentMonthDetail.changes.sale
-                                ? category.currentMonthDetail.changes.sale
-                                : 0
-                            }`}
-                          />
-                        </ListItem>
-                      </List>
-                    </ExpansionPanelDetails>
-                    <Divider />
-                    <ExpansionPanelActions>
-                      <Button onClick={this.handleGoToHistory(category)}> History </Button>
-                      <Button onClick={this.handleCategoryChange(category)}> Log Change </Button>
-                    </ExpansionPanelActions>
-                  </ExpansionPanel>
+                    category={category}
+                    expanded={expanded}
+                    handleChange={this.handleChange}
+                    handleCategoryChange={this.handleCategoryChange}
+                    handleGoToHistory={this.handleGoToHistory}
+                  />
                 ))}
               </Fragment>
             )}

@@ -46,7 +46,7 @@ const categoriesData = [
   {
     _id: categoryIds[0],
     farm: farmIds[0],
-    class: 'cows',
+    category: 'cows',
     currentMonthDetail: {
       openingTotal: 0,
       period: lastMonthString,
@@ -81,7 +81,7 @@ const categoriesData = [
   {
     _id: categoryIds[1],
     farm: farmIds[0],
-    class: 'oxen',
+    category: 'oxen',
     currentMonthDetail: {
       openingTotal: 0,
       period: lastMonthString,
@@ -116,7 +116,7 @@ const categoriesData = [
   {
     _id: categoryIds[2],
     farm: farmIds[0],
-    class: 'calves',
+    category: 'calves',
     currentMonthDetail: {
       openingTotal: 0,
       period: lastMonthString,
@@ -151,7 +151,7 @@ const categoriesData = [
   {
     _id: categoryIds[3],
     farm: farmIds[1],
-    class: 'cows',
+    category: 'cows',
     currentMonthDetail: {
       openingTotal: 0,
       period: lastMonthString,
@@ -186,7 +186,7 @@ const categoriesData = [
   {
     _id: categoryIds[4],
     farm: farmIds[1],
-    class: 'oxen',
+    category: 'oxen',
     currentMonthDetail: {
       openingTotal: 0,
       period: lastMonthString,
