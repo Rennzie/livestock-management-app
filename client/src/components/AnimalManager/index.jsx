@@ -1,11 +1,11 @@
-import React, { Fragment }  from 'react';
+import React, { Fragment } from 'react';
 
 import { Typography } from '@material-ui/core';
 
 // components
-import ActionsContainer from '../common/ActionsContainer.jsx';
+import ActionsContainer from '../common/ActionsContainer';
 
-export default class AnimalManager extends React.Component{
+export default class AnimalManager extends React.Component {
   state = {
     actions: [
       { name: 'Register Calf', destination: '/manage-animals/register-calf' },
@@ -18,13 +18,16 @@ export default class AnimalManager extends React.Component{
       { name: 'Add Purchase', destination: '/manage-animals/add-purchase' },
       { name: 'Innoculate', destination: '/manage-animals/innoculate' }
     ]
-  }
+  };
 
   render() {
-    return(
+    const { actions } = this.state;
+    return (
       <Fragment>
-        <Typography variant='h5' align='center'>Animal Manager</Typography >
-        <ActionsContainer actions={this.state.actions} />
+        <Typography variant="h5" align="center">
+          Animal Manager
+        </Typography>
+        <ActionsContainer actions={actions} />
       </Fragment>
     );
   }

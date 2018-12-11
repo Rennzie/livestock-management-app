@@ -1,10 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import {
   Typography,
-  List,
-  ListItem,
-  ListItemText,
   Divider,
   Button,
   ExpansionPanel,
@@ -15,10 +12,25 @@ import {
 import { withStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-const styles = theme => ({});
+// Components
+import CapitalizeText from '../common/CapitalizeText';
+
+const styles = () => ({
+  column: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItem: 'center',
+    width: '100%'
+  },
+  spreadRow: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  }
+});
 
 function CategoryExpPanel(props) {
   const { category, expanded, handleChange, handleCategoryChange, handleGoToHistory } = props;
+  const { classes } = props;
   return (
     <ExpansionPanel
       key={category._id}
@@ -26,37 +38,35 @@ function CategoryExpPanel(props) {
       onChange={handleChange(category.category)}
     >
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-        <Typography variant="h5">{category.category}</Typography>
-        <Typography variant="subtitle1">
-          Running Total: {category.currentMonthDetail.closingTotal}
-        </Typography>
-        <Typography variant="subtitle1">
-          Opening Total: {category.currentMonthDetail.openingTotal}
-        </Typography>
-        <Typography variant="subtitle1">
-          Changes:{' '}
-          {category.currentMonthDetail.closingTotal - category.currentMonthDetail.openingTotal}
-        </Typography>
+        <div className={classes.column}>
+          <CapitalizeText variant="h5">{category.category}</CapitalizeText>
+          <div className={classes.spreadRow}>
+            <Typography variant="subtitle1">Running Total:</Typography>
+            <Typography variant="subtitle1">{category.currentMonthDetail.closingTotal}</Typography>
+          </div>
+          <div className={classes.spreadRow}>
+            <Typography variant="subtitle1">Opening Total:</Typography>
+            <Typography variant="subtitle1">{category.currentMonthDetail.openingTotal}</Typography>
+          </div>
+          <div className={classes.spreadRow}>
+            <Typography variant="subtitle1">Changes:</Typography>
+            <Typography variant="subtitle1">
+              {category.currentMonthDetail.closingTotal - category.currentMonthDetail.openingTotal}
+            </Typography>
+          </div>
+        </div>
       </ExpansionPanelSummary>
 
+      <Divider />
       <ExpansionPanelDetails>
-        <List>
-          <ListItem>
-            <ListItemText primary={category.currentMonthDetail.period} />
-          </ListItem>
-
-          <Divider />
-
-          <ListItem>
-            <ListItemText
-              primary={`Added: ${
-                category.currentMonthDetail.changes.add
-                  ? category.currentMonthDetail.changes.add
-                  : 0
-              }`}
-            />
-          </ListItem>
-        </List>
+        <div className={classes.column}>
+          {category.currentMonthDetail.changes.map(change => (
+            <div className={classes.spreadRow} key={change._id}>
+              <CapitalizeText variant="subtitle2">{change.name}</CapitalizeText>
+              <Typography variant="subtitle2">{change.total}</Typography>
+            </div>
+          ))}
+        </div>
       </ExpansionPanelDetails>
       <Divider />
       <ExpansionPanelActions>

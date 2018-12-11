@@ -13,6 +13,7 @@ import {
 // Dependancies
 import moment from 'moment';
 import axios from 'axios';
+import lo from 'lodash';
 
 // Components
 import CapitalizeText from '../common/CapitalizeText';
@@ -22,19 +23,17 @@ export default class CategoryHistory extends Component {
 
   componentDidMount() {
     const { location } = this.props;
-    axios
-      .get(`/api/classes/${location.state.id}`)
-      .then(res => this.setState({ category: res.data }));
+    axios.get(`/api/categories/${location.state.id}`).then(res => {
+      const unSortedChanges = res.data.currentMonthChanges;
+      const sortedChanges = lo.sortBy(unSortedChanges, [unSortedChanges.createdAt]);
+      // sortedChanges.sort((a, b) => b.createdAt - a.createdAt);
 
-    // // NOTE: will end up as an if depending on what route gets user here.
-    // this.setState((prevState, props) => {
-    //   prevState.category = props.location.state.category;
-    //   return prevState;
-    // }, () => console.log(this.state));
+      this.setState({ category: res.data, sortedChanges });
+    });
   }
 
   render() {
-    const { category } = this.state;
+    const { category, sortedChanges } = this.state;
     return (
       <Fragment>
         {category && (
@@ -43,7 +42,8 @@ export default class CategoryHistory extends Component {
               History
             </Typography>
             <Typography align="center" variant="subtitle2">
-              <CapitalizeText>{category.class}</CapitalizeText>
+              {category.farm.name}
+              <CapitalizeText>{category.category}</CapitalizeText>
             </Typography>
             <Typography align="center" variant="subtitle2">
               <CapitalizeText>{category.currentMonthDetail.period}</CapitalizeText>
@@ -59,7 +59,7 @@ export default class CategoryHistory extends Component {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {category.currentMonthChanges.map(row => (
+                  {sortedChanges.map(row => (
                     <TableRow key={row._id}>
                       <TableCell component="th" scope="row">
                         {moment(row.createdAt).format('DD MMM YYYY')}

@@ -2,14 +2,26 @@ import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Typography } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 
 // Dependancies
 import axios from 'axios';
+import moment from 'moment';
 
 // Components
 import CategoryExpPanel from './Panel';
 
-export default class CategoryManager extends Component {
+const styles = theme => ({
+  header: {},
+  panel: {
+    // position: 'relative',
+    height: '100%',
+    margin: theme.units,
+    overflow: 'auto'
+  }
+});
+
+class CategoryManager extends Component {
   state = {
     expanded: null,
     farm: null
@@ -32,26 +44,31 @@ export default class CategoryManager extends Component {
 
   handleCategoryChange = category => () => {
     const { history } = this.props;
-    history.push(`/manage-classes/${category.class}/changes`, { categoryId: category._id });
+    history.push(`/manage-classes/${category.category}/changes`, { categoryId: category._id });
   };
 
   handleGoToHistory = category => () => {
     const id = category._id;
     const { history } = this.props;
-    history.push(`/manage-classes/${category.class}/history`, { id });
+    history.push(`/manage-classes/${category.category}/history`, { id });
   };
 
   render() {
     const { farm, expanded } = this.state;
-
+    const { classes } = this.props;
+    const period = moment().format('MMM-YYYY');
     return (
       <Fragment>
         {farm && (
           <Fragment>
-            <Typography variant="h5" align="center">
-              {farm.name} Category Manager
-            </Typography>
-
+            <section className={classes.header}>
+              <Typography variant="h5" align="center">
+                {farm.name} Category Manager
+              </Typography>
+              <Typography variant="subtitle1" align="center">
+                {period}
+              </Typography>
+            </section>
             {farm.categories.length === 0 ? (
               <Typography variant="subtitle1" align="center">
                 You have not registered any categories for {farm.name} yet.
@@ -59,7 +76,7 @@ export default class CategoryManager extends Component {
                 to add one.
               </Typography>
             ) : (
-              <Fragment>
+              <section className={classes.panelContainer}>
                 {farm.categories.map(category => (
                   <CategoryExpPanel
                     key={category._id}
@@ -70,7 +87,7 @@ export default class CategoryManager extends Component {
                     handleGoToHistory={this.handleGoToHistory}
                   />
                 ))}
-              </Fragment>
+              </section>
             )}
           </Fragment>
         )}
@@ -78,3 +95,5 @@ export default class CategoryManager extends Component {
     );
   }
 }
+
+export default withStyles(styles)(CategoryManager);

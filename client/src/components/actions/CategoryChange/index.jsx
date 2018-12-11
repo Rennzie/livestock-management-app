@@ -57,7 +57,7 @@ class CategoryChange extends Component {
 
   componentDidMount() {
     const { location } = this.props;
-    axios.get(`/api/classes/${location.state.categoryId}`).then(res =>
+    axios.get(`/api/categories/${location.state.categoryId}`).then(res =>
       this.setState(
         prevState => {
           const newState = prevState;
@@ -96,7 +96,7 @@ class CategoryChange extends Component {
     }
 
     axios
-      .post(`/api/classes/${category._id}/changes`, changeObj)
+      .post(`/api/categories/${category._id}/changes`, changeObj)
       .then(() => history.push(`/${category.farm.name}/${category.farm._id}/manage-categories`));
   };
 
@@ -130,8 +130,8 @@ class CategoryChange extends Component {
             <Typography align="center" variant="h5">
               Log Change
             </Typography>
-            <Typography align="left" variant="subtitle2">
-              {category.class}
+            <Typography align="center" variant="subtitle1">
+              {category.farm.name} {category.category}
             </Typography>
 
             <form className={classes.form}>
@@ -161,8 +161,9 @@ class CategoryChange extends Component {
 
                 <div className={classes.buttonContainer}>
                   <Fab
+                    color="primary"
                     onClick={this.handleAdd}
-                    className={(classes.buttonGreen, classes.button)}
+                    className={classes.button}
                     variant="round"
                   >
                     <AddIcon />
@@ -170,8 +171,9 @@ class CategoryChange extends Component {
 
                   <Fab
                     disabled={newChange.animalsMoved === 0}
+                    color="secondary"
                     onClick={this.handleRemove}
-                    className={classNames(classes.buttonRed, classes.button)}
+                    className={classes.button}
                     variant="round"
                   >
                     <SubtractIcon />
