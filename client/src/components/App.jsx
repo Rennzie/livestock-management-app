@@ -45,7 +45,6 @@ export default function App() {
   // Note: this effect keeps running so may cause perfomance issues later
   useEffect(() => {
     const authenticated = Auth.isAuthenticated();
-
     if (authenticated) {
       setLoggedIn(true);
     }

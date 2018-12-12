@@ -1,3 +1,5 @@
+// @ts-check
+
 import moment from 'moment';
 
 const Auth = {};
@@ -10,7 +12,10 @@ Auth.getToken = function getToken() {
  *  @type function
  *
  *  Checks to see if a user has a token that has not expired.
- *  Returns bolean response
+ *  Returns false when there is no token
+ *  Returns false if there is a token but it has expired
+ *    this will also remove the token from local storage
+ *  Returns true if there is a valid token
  */
 
 Auth.isAuthenticated = function isAuthenticated() {
@@ -18,10 +23,13 @@ Auth.isAuthenticated = function isAuthenticated() {
 
   if (!token) return false;
 
-  const payload = this.getPayload();
+  const expirery = this.getPayload().exp;
   const now = moment().unix();
-
-  if (now > payload.exp) return false;
+  const checkValid = now > expirery;
+  if (checkValid) {
+    localStorage.removeItem('token');
+    return false;
+  }
 
   return true;
 };
