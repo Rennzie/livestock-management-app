@@ -2,8 +2,6 @@ import moment from 'moment';
 
 import { categoryIds, farmIds } from './ids';
 
-// NOTE: add more categories for UI testing
-
 const thisMonth = moment().month();
 const thisYear = moment().year();
 const lastMonthString = moment()

@@ -6,7 +6,7 @@ import Category from '../../src/models/category';
 
 import farmTestData from '../testData/farmData';
 import userTestData from '../testData/usersData';
-import categoryTestData from '../testData/classData';
+import categoryTestData from '../testData/categoryData';
 
 // --- TEST DATA ---//
 const userData = userTestData.single;
@@ -43,12 +43,10 @@ describe('GET /api/farms/:id', () => {
 
   it('should return a categories key which is an array of objects with a class property', done => {
     api.get(`/api/farms/${farmData._id}`).end((err, res) => {
-      console.log('the response body is ', res.body);
-
       expect(res.body).to.have.property('categories');
       expect(res.body.categories).to.be.an('array');
       expect(res.body.categories[0]).to.be.an('object');
-      expect(res.body.categories[0]).to.have.property('class');
+      expect(res.body.categories[0]).to.have.property('category');
       done();
     });
   });

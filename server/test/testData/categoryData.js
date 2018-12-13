@@ -2,389 +2,153 @@ import moment from 'moment';
 
 import { categoryIds, farmIds } from './ids';
 
+const thisMonth = moment().month();
+const thisYear = moment().year();
+const lastMonthString = moment()
+  .subtract(1, 'month')
+  .format('MMM-YYYY');
+
+function generateRandomDate() {
+  return Math.floor(Math.random() * 28);
+}
+
+function chooseReason() {
+  const changes = ['add', 'purchase', 'death', 'theft', 'sale', 'other'];
+  const choiceIndex = Math.floor(Math.random() * changes.length);
+
+  return changes[choiceIndex];
+}
+
+function generateRandomNumber(change) {
+  const number = [2, 5, 10, 50, 100];
+  const numberNegative = [2, 5, 10];
+  const choiceIndex = Math.floor(Math.random() * number.length);
+  const choiceIndexNegative = Math.floor(Math.random() * numberNegative.length);
+  if (change === 'add' || change === 'purchase') {
+    return number[choiceIndex];
+  }
+
+  return numberNegative[choiceIndexNegative] * -1;
+}
+
+function createChange(month, year) {
+  const date = generateRandomDate();
+  const createAt = moment().set({ year, month, date });
+  const reasonForChange = chooseReason();
+  const animalsMoved = generateRandomNumber(reasonForChange);
+
+  return { createAt, reasonForChange, animalsMoved };
+}
+
 export default {
   categoryIds,
   multi: [
     {
       _id: categoryIds[0],
       farm: farmIds[0],
-      name: 'Breeding Cows',
-      class: 'cows',
+      category: 'cows',
       currentMonthDetail: {
         openingTotal: 0,
-        period: 'Oct-2018',
-        changes: {
-          add: 100,
-          death: -2,
-          sale: -10
-        },
+        period: lastMonthString,
+        changes: [
+          { name: 'add', total: 100 },
+          { name: 'death', total: -2 },
+          { name: 'sale', total: -10 }
+        ],
         closingTotal: 111
       },
       currentMonthChanges: [
-        {
-          createdAt: moment().set({ year: 2018, month: 10, date: 1 }),
-          reasonForChange: 'add',
-          animalsMoved: 50
-        },
-        {
-          createdAt: moment().set({ year: 2018, month: 10, date: 7 }),
-          reasonForChange: 'theft',
-          animalsMoved: -2
-        },
-        {
-          createdAt: moment().set({ year: 2018, month: 10, date: 10 }),
-          reasonForChange: 'sale',
-          animalsMoved: -10
-        },
-        {
-          createdAt: moment().set({ year: 2018, month: 10, date: 12 }),
-          reasonForChange: 'add',
-          animalsMoved: 10
-        },
-        {
-          createdAt: moment().set({ year: 2018, month: 10, date: 15 }),
-          reasonForChange: 'theft',
-          animalsMoved: -1
-        }
+        createChange(thisMonth, thisYear, 1),
+        createChange(thisMonth, thisYear, 3),
+        createChange(thisMonth, thisYear, 10),
+        createChange(thisMonth, thisYear, 15),
+        createChange(thisMonth, thisYear, 20)
       ],
-      changesArchive: {
-        'Oct-2018': [
-          {
-            createdAt: moment().set({ year: 2018, month: 9, date: 1 }),
-            reasonForChange: 'add',
-            animalsMoved: 100
-          },
-          {
-            createdAt: moment().set({ year: 2018, month: 9, date: 10 }),
-            reasonForChange: 'sale',
-            animalsMoved: -10
-          },
-          {
-            createdAt: moment().set({ year: 2018, month: 9, date: 20 }),
-            reasonForChange: 'death',
-            animalsMoved: -2
-          },
-          {
-            createdAt: moment().set({ year: 2018, month: 9, date: 28 }),
-            reasonForChange: 'add',
-            animalsMoved: 23
-          }
-        ]
-      }
+      prevMonthsChanges: [
+        {
+          period: lastMonthString,
+          changes: [
+            createChange(thisMonth - 1, thisYear, 1),
+            createChange(thisMonth - 1, thisYear, 4),
+            createChange(thisMonth - 1, thisYear, 10),
+            createChange(thisMonth - 1, thisYear, 15),
+            createChange(thisMonth - 1, thisYear, 27),
+            createChange(thisMonth - 1, thisYear, 30)
+          ]
+        }
+      ]
     },
     {
       _id: categoryIds[1],
-      name: 'Old Heifers',
       farm: farmIds[0],
-      class: 'heifers-2-3',
+      category: 'oxen',
       currentMonthDetail: {
         openingTotal: 0,
-        period: 'Oct-2018',
-        changes: {
-          add: 100,
-          death: -2,
-          sale: -10
-        },
+        period: lastMonthString,
+        changes: [
+          { name: 'add', total: 100 },
+          { name: 'death', total: -2 },
+          { name: 'sale', total: -10 }
+        ],
         closingTotal: 111
       },
       currentMonthChanges: [
-        {
-          createdAt: moment().set({ year: 2018, month: 10, date: 1 }),
-          reasonForChange: 'add',
-          animalsMoved: 50
-        },
-        {
-          createdAt: moment().set({ year: 2018, month: 10, date: 7 }),
-          reasonForChange: 'theft',
-          animalsMoved: -2
-        },
-        {
-          createdAt: moment().set({ year: 2018, month: 10, date: 10 }),
-          reasonForChange: 'sale',
-          animalsMoved: -10
-        },
-        {
-          createdAt: moment().set({ year: 2018, month: 10, date: 12 }),
-          reasonForChange: 'add',
-          animalsMoved: 10
-        },
-        {
-          createdAt: moment().set({ year: 2018, month: 10, date: 15 }),
-          reasonForChange: 'theft',
-          animalsMoved: -1
-        }
+        createChange(thisMonth, thisYear, 1),
+        createChange(thisMonth, thisYear, 3),
+        createChange(thisMonth, thisYear, 10),
+        createChange(thisMonth, thisYear, 15),
+        createChange(thisMonth, thisYear, 20)
       ],
-      changesArchive: {
-        'Oct-2018': [
-          {
-            createdAt: moment().set({ year: 2018, month: 9, date: 1 }),
-            reasonForChange: 'add',
-            animalsMoved: 100
-          },
-          {
-            createdAt: moment().set({ year: 2018, month: 9, date: 10 }),
-            reasonForChange: 'sale',
-            animalsMoved: -10
-          },
-          {
-            createdAt: moment().set({ year: 2018, month: 9, date: 20 }),
-            reasonForChange: 'death',
-            animalsMoved: -2
-          },
-          {
-            createdAt: moment().set({ year: 2018, month: 9, date: 28 }),
-            reasonForChange: 'add',
-            animalsMoved: 23
-          }
-        ]
-      }
-    },
-    {
-      _id: categoryIds[2],
-      name: 'Young Heifers',
-      farm: farmIds[0],
-      class: 'heifers-1-2',
-      currentMonthDetail: {
-        openingTotal: 0,
-        period: 'Oct-2018',
-        changes: {
-          add: 100,
-          death: -2,
-          sale: -10
-        },
-        closingTotal: 111
-      },
-      currentMonthChanges: [
+      prevMonthsChanges: [
         {
-          createdAt: moment().set({ year: 2018, month: 10, date: 1 }),
-          reasonForChange: 'add',
-          animalsMoved: 50
-        },
-        {
-          createdAt: moment().set({ year: 2018, month: 10, date: 7 }),
-          reasonForChange: 'theft',
-          animalsMoved: -2
-        },
-        {
-          createdAt: moment().set({ year: 2018, month: 10, date: 10 }),
-          reasonForChange: 'sale',
-          animalsMoved: -10
-        },
-        {
-          createdAt: moment().set({ year: 2018, month: 10, date: 12 }),
-          reasonForChange: 'add',
-          animalsMoved: 10
-        },
-        {
-          createdAt: moment().set({ year: 2018, month: 10, date: 15 }),
-          reasonForChange: 'theft',
-          animalsMoved: -1
+          period: lastMonthString,
+          changes: [
+            createChange(thisMonth - 1, thisYear, 1),
+            createChange(thisMonth - 1, thisYear, 4),
+            createChange(thisMonth - 1, thisYear, 10),
+            createChange(thisMonth - 1, thisYear, 15),
+            createChange(thisMonth - 1, thisYear, 27),
+            createChange(thisMonth - 1, thisYear, 30)
+          ]
         }
-      ],
-      changesArchive: {
-        'Oct-2018': [
-          {
-            createdAt: moment().set({ year: 2018, month: 9, date: 1 }),
-            reasonForChange: 'add',
-            animalsMoved: 100
-          },
-          {
-            createdAt: moment().set({ year: 2018, month: 9, date: 10 }),
-            reasonForChange: 'sale',
-            animalsMoved: -10
-          },
-          {
-            createdAt: moment().set({ year: 2018, month: 9, date: 20 }),
-            reasonForChange: 'death',
-            animalsMoved: -2
-          },
-          {
-            createdAt: moment().set({ year: 2018, month: 9, date: 28 }),
-            reasonForChange: 'add',
-            animalsMoved: 23
-          }
-        ]
-      }
-    },
-    {
-      _id: categoryIds[3],
-      name: 'Fattening Group A',
-      farm: farmIds[0],
-      class: 'oxen',
-      currentMonthDetail: {
-        openingTotal: 0,
-        period: 'Oct-2018',
-        changes: {
-          add: 100,
-          death: -2,
-          sale: -10
-        },
-        closingTotal: 111
-      },
-      currentMonthChanges: [
-        {
-          createdAt: moment().set({ year: 2018, month: 10, date: 1 }),
-          reasonForChange: 'add',
-          animalsMoved: 50
-        },
-        {
-          createdAt: moment().set({ year: 2018, month: 10, date: 7 }),
-          reasonForChange: 'theft',
-          animalsMoved: -2
-        },
-        {
-          createdAt: moment().set({ year: 2018, month: 10, date: 10 }),
-          reasonForChange: 'sale',
-          animalsMoved: -10
-        },
-        {
-          createdAt: moment().set({ year: 2018, month: 10, date: 12 }),
-          reasonForChange: 'add',
-          animalsMoved: 10
-        },
-        {
-          createdAt: moment().set({ year: 2018, month: 10, date: 15 }),
-          reasonForChange: 'theft',
-          animalsMoved: -1
-        }
-      ],
-      changesArchive: {
-        'Oct-2018': [
-          {
-            createdAt: moment().set({ year: 2018, month: 9, date: 1 }),
-            reasonForChange: 'add',
-            animalsMoved: 100
-          },
-          {
-            createdAt: moment().set({ year: 2018, month: 9, date: 10 }),
-            reasonForChange: 'sale',
-            animalsMoved: -10
-          },
-          {
-            createdAt: moment().set({ year: 2018, month: 9, date: 20 }),
-            reasonForChange: 'death',
-            animalsMoved: -2
-          },
-          {
-            createdAt: moment().set({ year: 2018, month: 9, date: 28 }),
-            reasonForChange: 'add',
-            animalsMoved: 23
-          }
-        ]
-      }
-    },
-    {
-      _id: categoryIds[4],
-      name: 'Fattening Group A',
-      farm: farmIds[1],
-      class: 'oxen',
-      currentMonthDetail: {
-        openingTotal: 0,
-        period: 'Oct-2018',
-        changes: {
-          add: 100,
-          death: -2,
-          sale: -10
-        },
-        closingTotal: 111
-      },
-      currentMonthChanges: [
-        {
-          createdAt: moment().set({ year: 2018, month: 10, date: 1 }),
-          reasonForChange: 'add',
-          animalsMoved: 50
-        },
-        {
-          createdAt: moment().set({ year: 2018, month: 10, date: 7 }),
-          reasonForChange: 'theft',
-          animalsMoved: -2
-        },
-        {
-          createdAt: moment().set({ year: 2018, month: 10, date: 10 }),
-          reasonForChange: 'sale',
-          animalsMoved: -10
-        },
-        {
-          createdAt: moment().set({ year: 2018, month: 10, date: 12 }),
-          reasonForChange: 'add',
-          animalsMoved: 10
-        },
-        {
-          createdAt: moment().set({ year: 2018, month: 10, date: 15 }),
-          reasonForChange: 'theft',
-          animalsMoved: -1
-        }
-      ],
-      changesArchive: {
-        'Oct-2018': [
-          {
-            createdAt: moment().set({ year: 2018, month: 9, date: 1 }),
-            reasonForChange: 'add',
-            animalsMoved: 100
-          },
-          {
-            createdAt: moment().set({ year: 2018, month: 9, date: 10 }),
-            reasonForChange: 'sale',
-            animalsMoved: -10
-          },
-          {
-            createdAt: moment().set({ year: 2018, month: 9, date: 20 }),
-            reasonForChange: 'death',
-            animalsMoved: -2
-          },
-          {
-            createdAt: moment().set({ year: 2018, month: 9, date: 28 }),
-            reasonForChange: 'add',
-            animalsMoved: 23
-          }
-        ]
-      }
+      ]
     }
   ],
   single: {
-    _id: categoryIds[1],
-    name: 'breeding',
+    _id: categoryIds[0],
     farm: farmIds[0],
-    class: 'cows',
-    changes: [
+    category: 'cows',
+    currentMonthDetail: {
+      openingTotal: 0,
+      period: lastMonthString,
+      changes: [
+        { name: 'add', total: 100 },
+        { name: 'death', total: -2 },
+        { name: 'sale', total: -10 }
+      ],
+      closingTotal: 111
+    },
+    currentMonthChanges: [
+      createChange(thisMonth, thisYear, 1),
+      createChange(thisMonth, thisYear, 3),
+      createChange(thisMonth, thisYear, 10),
+      createChange(thisMonth, thisYear, 15),
+      createChange(thisMonth, thisYear, 20)
+    ],
+    prevMonthsChanges: [
       {
-        createdAt: moment().subtract(7, 'months'),
-        reasonForChange: 'add',
-        animalsMoved: 100
-      },
-      {
-        createdAt: moment().subtract(8, 'weeks'),
-        reasonForChange: 'add',
-        animalsMoved: 100
-      },
-      {
-        createdAt: moment().subtract(6, 'weeks'),
-        reasonForChange: 'sale',
-        animalsMoved: -10
-      },
-      {
-        createdAt: moment().subtract(4, 'weeks'),
-        reasonForChange: 'death',
-        animalsMoved: -2
-      },
-      {
-        createdAt: moment().subtract(3, 'weeks'),
-        reasonForChange: 'add',
-        animalsMoved: 23
-      },
-      {
-        createdAt: moment().subtract(2, 'weeks'),
-        reasonForChange: 'add',
-        animalsMoved: 50
-      },
-      {
-        createdAt: moment().subtract(1, 'weeks'),
-        reasonForChange: 'theft',
-        animalsMoved: -1
+        period: lastMonthString,
+        changes: [
+          createChange(thisMonth - 1, thisYear, 1),
+          createChange(thisMonth - 1, thisYear, 4),
+          createChange(thisMonth - 1, thisYear, 10),
+          createChange(thisMonth - 1, thisYear, 15),
+          createChange(thisMonth - 1, thisYear, 27),
+          createChange(thisMonth - 1, thisYear, 30)
+        ]
       }
     ]
   },
-
   trackedChange: {
     _id: categoryIds[2],
     createdAt: moment(),
@@ -395,68 +159,36 @@ export default {
   singleLastMonth: {
     _id: categoryIds[0],
     farm: farmIds[0],
-    name: 'Breeding Cows',
-    class: 'cows',
+    category: 'cows',
     currentMonthDetail: {
       openingTotal: 0,
-      period: 'Oct-2018',
-      changes: {
-        add: 100,
-        death: -2,
-        sale: -10
-      },
+      period: lastMonthString,
+      changes: [
+        { name: 'add', total: 100 },
+        { name: 'death', total: -2 },
+        { name: 'sale', total: -10 }
+      ],
       closingTotal: 111
     },
     currentMonthChanges: [
-      {
-        createdAt: moment().set({ year: 2018, month: 9, date: 1 }),
-        reasonForChange: 'add',
-        animalsMoved: 50
-      },
-      {
-        createdAt: moment().set({ year: 2018, month: 9, date: 7 }),
-        reasonForChange: 'theft',
-        animalsMoved: -2
-      },
-      {
-        createdAt: moment().set({ year: 2018, month: 9, date: 10 }),
-        reasonForChange: 'sale',
-        animalsMoved: -10
-      },
-      {
-        createdAt: moment().set({ year: 2018, month: 9, date: 12 }),
-        reasonForChange: 'add',
-        animalsMoved: 10
-      },
-      {
-        createdAt: moment().set({ year: 2018, month: 9, date: 15 }),
-        reasonForChange: 'theft',
-        animalsMoved: -1
-      }
+      createChange(thisMonth, thisYear, 1),
+      createChange(thisMonth, thisYear, 3),
+      createChange(thisMonth, thisYear, 10),
+      createChange(thisMonth, thisYear, 15),
+      createChange(thisMonth, thisYear, 20)
     ],
-    changesArchive: {
-      'Sep-2018': [
-        {
-          createdAt: moment().set({ year: 2018, month: 8, date: 1 }),
-          reasonForChange: 'add',
-          animalsMoved: 100
-        },
-        {
-          createdAt: moment().set({ year: 2018, month: 8, date: 10 }),
-          reasonForChange: 'sale',
-          animalsMoved: -10
-        },
-        {
-          createdAt: moment().set({ year: 2018, month: 8, date: 20 }),
-          reasonForChange: 'death',
-          animalsMoved: -2
-        },
-        {
-          createdAt: moment().set({ year: 2018, month: 8, date: 28 }),
-          reasonForChange: 'add',
-          animalsMoved: 23
-        }
-      ]
-    }
+    prevMonthsChanges: [
+      {
+        period: lastMonthString,
+        changes: [
+          createChange(thisMonth - 1, thisYear, 1),
+          createChange(thisMonth - 1, thisYear, 4),
+          createChange(thisMonth - 1, thisYear, 10),
+          createChange(thisMonth - 1, thisYear, 15),
+          createChange(thisMonth - 1, thisYear, 27),
+          createChange(thisMonth - 1, thisYear, 30)
+        ]
+      }
+    ]
   }
 };

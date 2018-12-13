@@ -6,7 +6,7 @@ import categoryDate from '../testData/categoryData';
 // --- TEST DATA ---//
 const categoryData = categoryDate.single;
 
-describe('GET /api/categories/:classId', () => {
+describe('GET /api/categories/:categoryId', () => {
   beforeEach(done => {
     Category.deleteMany({})
       .then(() => Category.create(categoryData))

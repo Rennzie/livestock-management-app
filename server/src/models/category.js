@@ -89,6 +89,8 @@ const CategorySchema = new Schema(
  *        A more robust solution would be to create change summary from the monthly detail archive??
  */
 CategorySchema.pre('save', function(next) {
+  console.log('this from pre save is', this);
+
   // at first save of a new month, archive last month, set the period and the openingTotal
   const period = moment().format('MMM-YYYY');
   let currentMonthUpdate = null;
@@ -114,8 +116,13 @@ CategorySchema.pre('save', function(next) {
   next();
 });
 
-// --- VIRTUALS ---//
+// NEXT: create pre hook that validates which month it is and starts the archive if necessary
+CategorySchema.pre('findOne', function(next) {
+  console.log('this from pre find and findOne', this.schema);
+  next();
+});
 
+// --- VIRTUALS ---//
 // --- METHODS ---//
 
 /**

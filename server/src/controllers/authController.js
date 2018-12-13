@@ -9,7 +9,7 @@ function createAndSendToken(user, res, message) {
   };
 
   const token = jwt.sign(payload, SECRET, { expiresIn: '6h' });
-  return res.status(201).json({ message, token });
+  return res.status(201).json({ user, message, token });
 }
 
 function login(req, res, next) {
