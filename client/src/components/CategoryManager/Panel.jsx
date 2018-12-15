@@ -39,16 +39,28 @@ function CategoryExpPanel(props) {
     >
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
         <div className={classes.column}>
-          <CapitalizeText variant="h5">{category.category}</CapitalizeText>
+          <CapitalizeText gutterBottom variant="h6">
+            {category.category}
+          </CapitalizeText>
+
           <div className={classes.spreadRow}>
             <Typography variant="subtitle1">Opening Total:</Typography>
             <Typography variant="subtitle1">{category.currentMonthDetail.openingTotal}</Typography>
           </div>
 
+          <Divider />
+
           <div className={classes.spreadRow}>
-            <Typography variant="subtitle1">In:</Typography>
-            <Typography variant="subtitle1">{category.currentMonthDetail.in}</Typography>
+            <Typography variant="body1">In:</Typography>
+            <Typography variant="body1">{category.currentMonthDetail.inChanges}</Typography>
           </div>
+
+          <div className={classes.spreadRow}>
+            <Typography variant="body1">Out:</Typography>
+            <Typography variant="body1">{category.currentMonthDetail.outChanges}</Typography>
+          </div>
+
+          <Divider />
 
           <div className={classes.spreadRow}>
             <Typography variant="subtitle1">Running Total:</Typography>

@@ -32,8 +32,8 @@ const MonthlyChangeAccumulatorSchema = new Schema({
 });
 const MonthlyDetailSchema = new Schema({
   openingTotal: Number,
-  in: { type: Number, defualt: 0 },
-  out: { type: Number, default: 0 },
+  inChanges: { type: Number, default: 0 },
+  outChanges: { type: Number, default: 0 },
   closingTotal: Number,
   period: String,
   changes: [MonthlyChangeAccumulatorSchema]
@@ -64,6 +64,8 @@ const CategorySchema = new Schema(
     currentMonthDetail: {
       openingTotal: { type: Number, default: 0 },
       closingTotal: Number,
+      inChanges: { type: Number, default: 0 },
+      outChanges: { type: Number, default: 0 },
       period: { type: String, default: moment().format('MMM-YYYY') },
       changes: [MonthlyChangeAccumulatorSchema]
     },
@@ -113,9 +115,8 @@ CategorySchema.pre('save', function(next) {
     currentMonthUpdate.openingTotal
   );
 
-  // BUG: the out and in numbers are not calculating
-  currentMonthUpdate.in = getInTotal(this.currentMonthChanges);
-  currentMonthUpdate.out = getOutTotal(this.currentMonthChanges);
+  currentMonthUpdate.inChanges = getInTotal(this.currentMonthChanges);
+  currentMonthUpdate.outChanges = getOutTotal(this.currentMonthChanges);
 
   currentMonthUpdate.changes = aggregateMonthChanges(this.currentMonthChanges);
 
@@ -124,10 +125,10 @@ CategorySchema.pre('save', function(next) {
 });
 
 // NEXT: create pre hook that validates which month it is and starts the archive if necessary
-CategorySchema.pre('findOne', function(next) {
-  console.log('this from pre find and findOne', this.schema);
-  next();
-});
+// CategorySchema.pre('findOne', function(next) {
+//   console.log('this from pre find and findOne', this.schema);
+//   next();
+// });
 
 // --- VIRTUALS ---//
 // --- METHODS ---//
