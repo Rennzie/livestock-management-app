@@ -16,7 +16,7 @@ import { withStyles } from '@material-ui/core/styles';
 // Icons
 import Home from '@material-ui/icons/Home';
 import BurgerMenu from '@material-ui/icons/Menu';
-import AnimalIcon from '@material-ui/icons/Pets';
+// import AnimalIcon from '@material-ui/icons/Pets';
 import SettingsIcon from '@material-ui/icons/Settings';
 import LogOutIcon from '@material-ui/icons/PowerSettingsNew';
 
@@ -52,6 +52,14 @@ class BottomNav extends Component {
     this.setState({ [name]: value });
   };
 
+  handleLogOut = () => {
+    // remove token from storage
+    // redirect to /
+    localStorage.removeItem('token');
+    const { history } = this.props;
+    history.push('/');
+  };
+
   render() {
     const { classes } = this.props;
     const { value, open } = this.state;
@@ -80,14 +88,14 @@ class BottomNav extends Component {
 
               <Divider />
 
-              <ListItem button onClick={this.handleClick('/settings')}>
+              <ListItem disabled button onClick={this.handleClick('/settings')}>
                 <ListItemIcon>
                   <SettingsIcon />
                 </ListItemIcon>
                 <ListItemText primary="Account and Settings" />
               </ListItem>
 
-              <ListItem disabled button onClick={this.handleClick('/logout')}>
+              <ListItem button onClick={this.handleLogOut}>
                 <ListItemIcon>
                   <LogOutIcon />
                 </ListItemIcon>

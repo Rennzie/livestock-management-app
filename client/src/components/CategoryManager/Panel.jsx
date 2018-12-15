@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 
 import {
   Typography,
@@ -25,6 +26,9 @@ const styles = () => ({
   spreadRow: {
     display: 'flex',
     justifyContent: 'space-between'
+  },
+  spreadRow_detail: {
+    paddingRight: 36
   }
 });
 
@@ -73,7 +77,10 @@ function CategoryExpPanel(props) {
       <ExpansionPanelDetails>
         <div className={classes.column}>
           {category.currentMonthDetail.changes.map(change => (
-            <div className={classes.spreadRow} key={change._id}>
+            <div
+              className={classNames(classes.spreadRow_detail, classes.spreadRow)}
+              key={change._id}
+            >
               <CapitalizeText variant="subtitle2">{change.name}</CapitalizeText>
               <Typography variant="subtitle2">{change.total}</Typography>
             </div>
@@ -82,8 +89,14 @@ function CategoryExpPanel(props) {
       </ExpansionPanelDetails>
       <Divider />
       <ExpansionPanelActions>
-        <Button onClick={handleGoToHistory(category)}> History </Button>
-        <Button onClick={handleCategoryChange(category)}> Log Change </Button>
+        <Button variant="contained" onClick={handleGoToHistory(category)}>
+          {' '}
+          History{' '}
+        </Button>
+        <Button variant="contained" onClick={handleCategoryChange(category)}>
+          {' '}
+          Log Change{' '}
+        </Button>
       </ExpansionPanelActions>
     </ExpansionPanel>
   );

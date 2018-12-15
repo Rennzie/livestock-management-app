@@ -42,7 +42,8 @@ import Auth from '../lib/Auth';
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
-  // Note: this effect keeps running so may cause perfomance issues later
+  // NOTE: this effect keeps running so may cause perfomance issues later
+  // BUG: if the token is removed and user is not on '/' this will cause a crash
   useEffect(() => {
     const authenticated = Auth.isAuthenticated();
     if (authenticated) {

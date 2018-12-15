@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Typography } from '@material-ui/core';
+import { Typography, Paper } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 // Dependancies
@@ -12,9 +12,16 @@ import moment from 'moment';
 import CategoryExpPanel from './Panel';
 
 const styles = theme => ({
-  header: {},
-  panel: {
+  header: {
+    position: 'fixed',
+    width: '100%',
+    zIndex: 2,
+    top: 0
+  },
+  panelContainer: {
     // position: 'relative',
+    marginTop: 56,
+    marginBottom: 56,
     height: '100%',
     margin: theme.units,
     overflow: 'auto'
@@ -62,12 +69,14 @@ class CategoryManager extends Component {
         {farm && (
           <Fragment>
             <section className={classes.header}>
-              <Typography variant="h5" align="center">
-                {farm.name} Category Manager
-              </Typography>
-              <Typography variant="subtitle1" align="center">
-                {period}
-              </Typography>
+              <Paper square>
+                <Typography variant="h5" align="center">
+                  {farm.name} Category Manager
+                </Typography>
+                <Typography variant="subtitle1" align="center">
+                  {period}
+                </Typography>
+              </Paper>
             </section>
             {farm.categories.length === 0 ? (
               <Typography variant="subtitle1" align="center">
