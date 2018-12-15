@@ -3,14 +3,16 @@ const merge = require('webpack-merge');
 // Plugins
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+
 const Visualizer = require('webpack-visualizer-plugin');
 
 // Configs for merge
 const baseConfig = require('./webpack.base.config');
 
-const prodConfiguration = env => {
-  return merge([
+const prodConfiguration = env =>
+  merge([
     {
       mode: 'production',
       optimization: {
@@ -23,7 +25,7 @@ const prodConfiguration = env => {
         //     }
         //   }
         // },
-        minimizer: [new UglifyJsPlugin()]
+        minimizer: [new TerserPlugin()]
       },
       module: {
         rules: [
@@ -38,8 +40,5 @@ const prodConfiguration = env => {
       ]
     }
   ]);
-};
 
-module.exports = env => {
-  return merge(baseConfig(env), prodConfiguration(env));
-};
+module.exports = env => merge(baseConfig(env), prodConfiguration(env));

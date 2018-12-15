@@ -5,10 +5,10 @@ const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const APP_DIR = path.resolve(__dirname, '../src');
+const APP_DIR = path.resolve(__dirname, '../src/index.jsx');
 
-module.exports = env => {
-  return merge([
+module.exports = env =>
+  merge([
     {
       entry: ['@babel/polyfill', APP_DIR],
       output: {
@@ -54,4 +54,3 @@ module.exports = env => {
       ]
     }
   ]);
-};

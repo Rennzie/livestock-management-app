@@ -10,7 +10,8 @@
     ]
   },
   "scripts": {
-    "start": "nodemon --exec babel-node src/index.js",
+    "start:server": "nodemon --exec babel-node src/index.js",
+    "start:client": "cd client && yarn start:client",
     "clean": "rm -rf dist && mkdir dist",
     "seed": "babel-node src/db/seeds",
     "build": "yarn clean && babel src --preset minify --out-dir dist",
