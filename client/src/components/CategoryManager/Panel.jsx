@@ -41,10 +41,6 @@ function CategoryExpPanel(props) {
         <div className={classes.column}>
           <CapitalizeText variant="h5">{category.category}</CapitalizeText>
           <div className={classes.spreadRow}>
-            <Typography variant="subtitle1">Running Total:</Typography>
-            <Typography variant="subtitle1">{category.currentMonthDetail.closingTotal}</Typography>
-          </div>
-          <div className={classes.spreadRow}>
             <Typography variant="subtitle1">Opening Total:</Typography>
             <Typography variant="subtitle1">{category.currentMonthDetail.openingTotal}</Typography>
           </div>
@@ -53,6 +49,10 @@ function CategoryExpPanel(props) {
             <Typography variant="subtitle1">
               {category.currentMonthDetail.closingTotal - category.currentMonthDetail.openingTotal}
             </Typography>
+          </div>
+          <div className={classes.spreadRow}>
+            <Typography variant="subtitle1">Running Total:</Typography>
+            <Typography variant="subtitle1">{category.currentMonthDetail.closingTotal}</Typography>
           </div>
         </div>
       </ExpansionPanelSummary>

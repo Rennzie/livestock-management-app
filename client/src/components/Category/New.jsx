@@ -52,7 +52,7 @@ class CategoryNew extends Component {
     const { history } = this.props;
 
     const newCategory = {};
-    newCategory.class = category;
+    newCategory.category = category;
     newCategory.farm = farm._id;
 
     const newChange = {};
@@ -61,8 +61,8 @@ class CategoryNew extends Component {
     newChange.reasonForChange = 'add';
 
     axios
-      .post('/api/classes', newCategory)
-      .then(res => axios.post(`/api/classes/${res.data._id}/changes`, newChange))
+      .post('/api/categories', newCategory)
+      .then(res => axios.post(`/api/categories/${res.data._id}/changes`, newChange))
       .then(() => history.push(`/${farm.name}/${farm._id}/manage-categories`));
   };
 

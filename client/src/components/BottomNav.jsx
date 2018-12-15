@@ -1,23 +1,44 @@
-import React from 'react';
+// @ts-check
+
+import React, { Component, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
+
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Divider
+} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+
+// Icons
 import Home from '@material-ui/icons/Home';
-import CategoryIcon from '@material-ui/icons/Category';
+import BurgerMenu from '@material-ui/icons/Menu';
 import AnimalIcon from '@material-ui/icons/Pets';
+import SettingsIcon from '@material-ui/icons/Settings';
+import LogOutIcon from '@material-ui/icons/PowerSettingsNew';
 
 const styles = {
   root: {
     width: '100%',
     position: 'fixed',
     bottom: 0
+  },
+  draw: {
+    paperAnchorBottom: {
+      backgroundColor: 'red'
+    }
   }
 };
 
-class BottomNav extends React.Component {
+class BottomNav extends Component {
   state = {
-    value: 0
+    value: 0,
+    open: false
   };
 
   handleChange = (event, value) => {
@@ -29,31 +50,76 @@ class BottomNav extends React.Component {
     history.push(destination);
   };
 
+  toggleBurgerMenu = (name, value) => () => {
+    this.setState({ [name]: value });
+  };
+
   render() {
     const { classes } = this.props;
-    const { value } = this.state;
+    const { value, open } = this.state;
 
     return (
-      <BottomNavigation
-        value={value}
-        onChange={this.handleChange}
-        showLabels
-        className={classes.root}
-      >
-        <BottomNavigationAction onClick={this.handleClick('/')} label="Home" icon={<Home />} />
+      <Fragment>
+        <Drawer
+          className={classes.draw.paperAnchorBottom}
+          anchor="bottom"
+          open={open}
+          onClose={this.toggleBurgerMenu('open', false)}
+        >
+          <div
+            tabIndex={0}
+            role="button"
+            onClick={this.toggleBurgerMenu('bottom', false)}
+            onKeyDown={this.toggleBurgerMenu('bottom', false)}
+          >
+            <List>
+              <ListItem disabled button onClick={this.handleClick('/new/farm')}>
+                <ListItemText primary="New Farm" />
+              </ListItem>
+              <ListItem button onClick={this.handleClick('/new/category')}>
+                <ListItemText primary="New Category" />
+              </ListItem>
 
-        {/* <BottomNavigationAction
-          onClick={this.handleClick('/manage-classes')}
-          label="Categories"
-          icon={<CategoryIcon />}
-        /> */}
+              <Divider />
 
-        <BottomNavigationAction
-          onClick={this.handleClick('/manage-animals')}
-          label="Animals"
-          icon={<AnimalIcon />}
-        />
-      </BottomNavigation>
+              <ListItem disabled button onClick={this.handleClick('/settings')}>
+                <ListItemIcon>
+                  <SettingsIcon />
+                </ListItemIcon>
+                <ListItemText primary="Account and Settings" />
+              </ListItem>
+
+              <ListItem disabled button onClick={this.handleClick('/logout')}>
+                <ListItemIcon>
+                  <LogOutIcon />
+                </ListItemIcon>
+                <ListItemText primary="Log Out" />
+              </ListItem>
+            </List>
+          </div>
+        </Drawer>
+        <BottomNavigation
+          value={value}
+          onChange={this.handleChange}
+          showLabels
+          className={classes.root}
+        >
+          <BottomNavigationAction onClick={this.handleClick('/')} label="Home" icon={<Home />} />
+
+          <BottomNavigationAction
+            disabled
+            onClick={this.handleClick('/manage-animals')}
+            label="Animals"
+            icon={<AnimalIcon />}
+          />
+
+          <BottomNavigationAction
+            onClick={this.toggleBurgerMenu('open', true)}
+            label="Menu"
+            icon={<BurgerMenu />}
+          />
+        </BottomNavigation>
+      </Fragment>
     );
   }
 }
