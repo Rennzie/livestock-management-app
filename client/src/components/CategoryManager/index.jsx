@@ -19,7 +19,6 @@ const styles = theme => ({
     top: 0
   },
   panelContainer: {
-    // position: 'relative',
     marginTop: 56,
     marginBottom: 56,
     height: '100%',
@@ -40,9 +39,7 @@ class CategoryManager extends Component {
     axios
       .get(`/api/farms/${farmId}`)
 
-      .then(res =>
-        this.setState(() => ({ farm: res.data }), () => console.log('the state is', this.state))
-      );
+      .then(res => this.setState(() => ({ farm: res.data })));
   }
 
   handleChange = panel => (event, expanded) => {
