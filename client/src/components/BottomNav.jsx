@@ -1,5 +1,3 @@
-// @ts-check
-
 import React, { Component, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
 
@@ -69,11 +67,11 @@ class BottomNav extends Component {
           <div
             tabIndex={0}
             role="button"
-            onClick={this.toggleBurgerMenu('bottom', false)}
-            onKeyDown={this.toggleBurgerMenu('bottom', false)}
+            onClick={this.toggleBurgerMenu('open', false)}
+            onKeyDown={this.toggleBurgerMenu('open', false)}
           >
             <List>
-              <ListItem disabled button onClick={this.handleClick('/new/farm')}>
+              <ListItem button onClick={this.handleClick('/new/farm')}>
                 <ListItemText primary="New Farm" />
               </ListItem>
               <ListItem button onClick={this.handleClick('/new/category')}>
@@ -82,7 +80,7 @@ class BottomNav extends Component {
 
               <Divider />
 
-              <ListItem disabled button onClick={this.handleClick('/settings')}>
+              <ListItem button onClick={this.handleClick('/settings')}>
                 <ListItemIcon>
                   <SettingsIcon />
                 </ListItemIcon>
@@ -98,6 +96,7 @@ class BottomNav extends Component {
             </List>
           </div>
         </Drawer>
+
         <BottomNavigation
           value={value}
           onChange={this.handleChange}
@@ -106,12 +105,12 @@ class BottomNav extends Component {
         >
           <BottomNavigationAction onClick={this.handleClick('/')} label="Home" icon={<Home />} />
 
-          <BottomNavigationAction
+          {/* <BottomNavigationAction
             disabled
             onClick={this.handleClick('/manage-animals')}
             label="Animals"
             icon={<AnimalIcon />}
-          />
+          /> */}
 
           <BottomNavigationAction
             onClick={this.toggleBurgerMenu('open', true)}

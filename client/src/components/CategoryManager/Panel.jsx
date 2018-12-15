@@ -44,12 +44,12 @@ function CategoryExpPanel(props) {
             <Typography variant="subtitle1">Opening Total:</Typography>
             <Typography variant="subtitle1">{category.currentMonthDetail.openingTotal}</Typography>
           </div>
+
           <div className={classes.spreadRow}>
-            <Typography variant="subtitle1">Changes:</Typography>
-            <Typography variant="subtitle1">
-              {category.currentMonthDetail.closingTotal - category.currentMonthDetail.openingTotal}
-            </Typography>
+            <Typography variant="subtitle1">In:</Typography>
+            <Typography variant="subtitle1">{category.currentMonthDetail.in}</Typography>
           </div>
+
           <div className={classes.spreadRow}>
             <Typography variant="subtitle1">Running Total:</Typography>
             <Typography variant="subtitle1">{category.currentMonthDetail.closingTotal}</Typography>

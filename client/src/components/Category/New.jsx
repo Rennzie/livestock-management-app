@@ -15,6 +15,7 @@ import { withStyles } from '@material-ui/core/styles';
 // dependancies
 import axios from 'axios';
 import moment from 'moment';
+import Auth from '../../lib/Auth';
 
 const styles = theme => ({
   fromWrapper: {
@@ -36,24 +37,27 @@ const styles = theme => ({
 class CategoryNew extends Component {
   state = {};
 
+  // get the list of users farms,
+  // display them in a select field
   componentDidMount() {
     const { history } = this.props;
-    const { farm } = history.location.state;
-    this.setState(
-      () => ({
-        farm
-      }),
-      () => console.log('new category state is', this.state)
-    );
+    if (!history.location.state) {
+      const userId = Auth.currentUserId();
+      axios.get(`/api/users/${userId}`).then(res => this.setState({ farms: res.data.farms }));
+    } else {
+      this.setState(() => ({
+        farmSelected: history.location.state.farm
+      }));
+    }
   }
 
   handleRegister = () => {
-    const { farm, category, animalsMoved } = this.state;
+    const { farmSelected, category, animalsMoved } = this.state;
     const { history } = this.props;
 
     const newCategory = {};
     newCategory.category = category;
-    newCategory.farm = farm._id;
+    newCategory.farm = farmSelected._id;
 
     const newChange = {};
     newChange.animalsMoved = animalsMoved;
@@ -63,25 +67,58 @@ class CategoryNew extends Component {
     axios
       .post('/api/categories', newCategory)
       .then(res => axios.post(`/api/categories/${res.data._id}/changes`, newChange))
-      .then(() => history.push(`/${farm.name}/${farm._id}/manage-categories`));
+      .then(() => history.push(`/${farmSelected.name}/${farmSelected._id}/manage-categories`));
   };
 
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
 
+  handleFarmSelect = event => {
+    const { farms } = this.state;
+
+    const farmSelected = farms.filter(farm => farm._id.toString() === event.target.value);
+    this.setState(() => ({ farmSelected: farmSelected[0] }));
+  };
+
   handleRegisterNewCategory = () => {};
 
-  // NOTE: will add in a plus button so multiple farms can be registered at the same time
+  // NOTE: will add in a plus button so multiple categories can be registered at the same time
   render() {
-    const { farm, category, animalsMoved } = this.state;
+    const { farmSelected, farms, category, animalsMoved } = this.state;
     const { classes } = this.props;
     return (
       <Fragment>
-        {farm && (
+        {!farmSelected && farms && (
           <Fragment>
             <Typography variant="h5" align="center">
-              Register Category for {farm.name}
+              Register Category to ...
+            </Typography>
+
+            <FormControl variant="outlined" required fullWidth className={classes.margin}>
+              <InputLabel shrink htmlFor="farmSelected">
+                Farm
+              </InputLabel>
+              <NativeSelect
+                value={farmSelected}
+                onChange={this.handleFarmSelect}
+                input={<Input name="farmSelected" id="farmSelected" />}
+              >
+                <option value="">Choose a farm</option>
+                {farms.map(farm => (
+                  <option key={farm._id} value={farm._id}>
+                    {farm.name}
+                  </option>
+                ))}
+              </NativeSelect>
+            </FormControl>
+          </Fragment>
+        )}
+
+        {farmSelected && (
+          <Fragment>
+            <Typography variant="h5" align="center">
+              Register Category for {farmSelected.name}
             </Typography>
 
             <FormControl variant="outlined" required fullWidth className={classes.margin}>

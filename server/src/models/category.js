@@ -32,6 +32,8 @@ const MonthlyChangeAccumulatorSchema = new Schema({
 });
 const MonthlyDetailSchema = new Schema({
   openingTotal: Number,
+  in: { type: Number, defualt: 0 },
+  out: { type: Number, default: 0 },
   closingTotal: Number,
   period: String,
   changes: [MonthlyChangeAccumulatorSchema]
@@ -89,7 +91,7 @@ const CategorySchema = new Schema(
  *        A more robust solution would be to create change summary from the monthly detail archive??
  */
 CategorySchema.pre('save', function(next) {
-  console.log('this from pre save is', this);
+  // console.log('this from pre save is', this);
 
   // at first save of a new month, archive last month, set the period and the openingTotal
   const period = moment().format('MMM-YYYY');
@@ -110,6 +112,11 @@ CategorySchema.pre('save', function(next) {
     this.currentMonthChanges,
     currentMonthUpdate.openingTotal
   );
+
+  // BUG: the out and in numbers are not calculating
+  currentMonthUpdate.in = getInTotal(this.currentMonthChanges);
+  currentMonthUpdate.out = getOutTotal(this.currentMonthChanges);
+
   currentMonthUpdate.changes = aggregateMonthChanges(this.currentMonthChanges);
 
   this.currentMonthDetail = currentMonthUpdate;
@@ -181,6 +188,26 @@ function getClosingTotal(monthsChanges, openingTotal) {
     closingTotal += monthsChanges[i].animalsMoved;
   }
   return closingTotal;
+}
+
+function getInTotal(monthsChanges) {
+  if (!monthsChanges.length) return 0;
+  const inChanges = monthsChanges.filter(change => change.animalsMoved >= 0);
+  let inTotal = 0;
+  for (let i = 0; i < inChanges.length; i += 1) {
+    inTotal += inChanges[i].animalsMoved;
+  }
+  return inTotal;
+}
+
+function getOutTotal(monthsChanges) {
+  if (!monthsChanges.length) return 0;
+  const outChanges = monthsChanges.filter(change => change.animalsMoved < 0);
+  let outTotal = 0;
+  for (let i = 0; i < outChanges.length; i += 1) {
+    outTotal += outChanges[i].animalsMoved;
+  }
+  return outTotal;
 }
 
 // NOTE: WE CAN DO THIS UPON ADDING A CHANGE TO DECREASE THE AMOUNT OF WORK
