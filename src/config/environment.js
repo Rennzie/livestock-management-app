@@ -9,3 +9,5 @@ module.exports = {
   DB_URI,
   SECRET
 };
+
+// NEXT: teach heroku to run a build when deployed

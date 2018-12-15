@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
 import Router from './config/routes';
+import path from 'path';
 
 import errorHandler from './lib/errorHandler';
 import { PORT, DB_URI } from './config/environment';
@@ -22,7 +23,13 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 app.use('/api', Router);
-app.get('/*', (req, res) => res.sendFile(`${__dirname}/public/index.html`));
+
+app.use(express.static(path.join(__dirname, "client", "dist")))
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
+// app.get('/*', (req, res) => res.sendFile(`${__dirname}/public/index.html`));
 
 app.use(errorHandler);
 
