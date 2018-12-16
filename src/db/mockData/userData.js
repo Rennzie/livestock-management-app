@@ -4,12 +4,12 @@ import { userIds } from './ids';
 const userData = [
   {
     _id: userIds[0],
-    username: 'Rennzie',
-    email: 'rnnsea001@gmail.com',
-    password: 'pass',
-    passwordConfirmation: 'pass',
-    firstName: 'Sean',
-    surname: 'Rennie',
+    username: 'Example',
+    email: 'example@gmail.com',
+    password: 'example',
+    passwordConfirmation: 'example',
+    firstName: 'User',
+    surname: 'Name',
     dateOfBirth: moment().set({ year: 1989, month: 9, date: 30 })
   },
   {

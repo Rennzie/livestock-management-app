@@ -3,12 +3,12 @@ import { farmIds, userIds } from './ids';
 const farmData = [
   {
     _id: farmIds[0],
-    name: 'Palmiet',
+    name: 'Example',
     farmOwner: userIds[0]
   },
   {
     _id: farmIds[2],
-    name: 'Blydefontein',
+    name: 'Example Two',
     farmOwner: userIds[0]
   },
   {
