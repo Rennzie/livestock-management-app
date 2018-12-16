@@ -5,7 +5,7 @@ const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const APP_DIR = path.resolve(__dirname, '../src/index.jsx');
+const APP_DIR = path.resolve(__dirname, '../src');
 
 module.exports = env =>
   merge([
@@ -23,7 +23,7 @@ module.exports = env =>
       module: {
         rules: [
           {
-            test: /\.jsx$/,
+            test: /\.js$/,
             exclude: /node_modules/,
             use: {
               loader: 'babel-loader'

@@ -4,28 +4,20 @@ import { Fragment } from 'react';
 // dependancies
 import axios from 'axios';
 import moment from 'moment';
-import {
-  Paper,
-  Button,
-  Typography,
-  MobileStepper
-} from '@material-ui/core';
+import { Paper, Button, Typography, MobileStepper } from '@material-ui/core';
 
-import {
-  KeyboardArrowLeft,
-  KeyboardArrowRight
-} from '@material-ui/icons';
+import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons';
 
 // utils
 import Generate from '../../../lib/Generate';
 
 // components
-import AnimalSearchSelect from '../common/AnimalSearchSelect.jsx';
-import RegisterForm from './RegisterForm.jsx';
-import NewCalfInfoDisplay from './InfoDisplay.jsx';
+import AnimalSearchSelect from '../common/AnimalSearchSelect';
+import RegisterForm from './RegisterForm';
+import NewCalfInfoDisplay from './InfoDisplay';
 
-export default class RegisterCalf extends React.Component{
-  state={
+export default class RegisterCalf extends React.Component {
+  state = {
     activeStep: 0,
     animalSelected: false,
     readyToRegister: false,
@@ -41,32 +33,29 @@ export default class RegisterCalf extends React.Component{
   };
 
   componentDidMount() {
-    axios.get('/api/bovines')
-      .then(res => this.setState({animals: res.data}));
+    axios.get('/api/bovines').then(res => this.setState({ animals: res.data }));
   }
 
-  handleAnimalSelect = ( mother ) => {
-    return () => {
-      const newState = this.state;
-      newState.newCalf.mother = mother;
-      newState.newCalf.identifier = Generate.newIdentifier();
-      newState.newCalf._id = Generate.newId();
-      newState.animalSelected = true;
-      newState.activeStep = 1;
+  handleAnimalSelect = mother => () => {
+    const newState = this.state;
+    newState.newCalf.mother = mother;
+    newState.newCalf.identifier = Generate.newIdentifier();
+    newState.newCalf._id = Generate.newId();
+    newState.animalSelected = true;
+    newState.activeStep = 1;
 
-      this.setState(newState, () => console.log('=====>', this.state));
-    };
-  }
+    this.setState(newState, () => console.log('=====>', this.state));
+  };
 
   handleChange = name => event => {
     const newState = this.state;
     newState.newCalf[name] = event.target.value;
-    if(Object.values(newState.newCalf).every(item => item)) {
+    if (Object.values(newState.newCalf).every(item => item)) {
       newState.readyToRegister = true;
       this.setState(newState);
     }
     this.setState(newState);
-  }
+  };
 
   handleCalfRegister = () => {
     const newState = this.state;
@@ -78,11 +67,13 @@ export default class RegisterCalf extends React.Component{
       birthDate: unixBirthDate,
       breed: newCalf.breed,
       mother: newCalf.mother._id,
-      weights: [{
-        weight: newCalf.weight,
-        unit: newCalf.unit,
-        timing: 'birth'
-      }]
+      weights: [
+        {
+          weight: newCalf.weight,
+          unit: newCalf.unit,
+          timing: 'birth'
+        }
+      ]
     };
 
     const mothersProductionUpdate = {
@@ -96,7 +87,7 @@ export default class RegisterCalf extends React.Component{
     axios.post(`/api/bovines/${newCalf.mother._id}/breeding/production`, mothersProductionUpdate);
 
     this.resetCalfRegister();
-  }
+  };
 
   resetCalfRegister = () => {
     const newState = this.state;
@@ -114,15 +105,15 @@ export default class RegisterCalf extends React.Component{
       unit: ''
     };
     this.setState(newState, () => console.log('the reset state is', this.state));
-  }
+  };
 
   handleBack = () => {
     this.setState(state => {
-      switch(state.activeStep){
+      switch (state.activeStep) {
         case 0:
           return this.props.history.push('/manage-animals');
         case 1:
-          return ({
+          return {
             activeStep: state.activeStep - 1,
             animalSelected: false,
             readyToRegister: false,
@@ -135,43 +126,37 @@ export default class RegisterCalf extends React.Component{
               weight: '',
               unit: ''
             }
-          });
+          };
       }
     });
   };
 
   render() {
-
     return (
       <Fragment>
-        {this.state.animals &&
+        {this.state.animals && (
           <main>
             <Paper position="static" elevation={0} square>
-              <Typography align='center' variant="h5" color="inherit">
+              <Typography align="center" variant="h5" color="inherit">
                 Calf Registration
               </Typography>
             </Paper>
 
-            {!this.state.animalSelected &&
+            {!this.state.animalSelected && (
               <AnimalSearchSelect
                 title="Select mother:"
                 animals={this.state.animals}
                 handleAnimalSelect={this.handleAnimalSelect}
               />
-            }
+            )}
 
             {/* New Calf info display */}
-            {this.state.animalSelected &&
-              <NewCalfInfoDisplay displayInfo={this.state.newCalf}/>
-            }
+            {this.state.animalSelected && <NewCalfInfoDisplay displayInfo={this.state.newCalf} />}
 
             {/* New calf info collect */}
-            {this.state.animalSelected &&
-              <RegisterForm
-                handleChange={this.handleChange}
-                newCalf={this.state.newCalf}
-              />
-            }
+            {this.state.animalSelected && (
+              <RegisterForm handleChange={this.handleChange} newCalf={this.state.newCalf} />
+            )}
 
             <MobileStepper
               variant="dots"
@@ -179,20 +164,24 @@ export default class RegisterCalf extends React.Component{
               position="static"
               activeStep={this.state.activeStep}
               nextButton={
-                <Button size="small" onClick={this.handleCalfRegister} disabled={!this.state.readyToRegister}>
+                <Button
+                  size="small"
+                  onClick={this.handleCalfRegister}
+                  disabled={!this.state.readyToRegister}
+                >
                   Register
                   <KeyboardArrowRight />
                 </Button>
               }
               backButton={
-                <Button size="small" onClick={this.handleBack} >
+                <Button size="small" onClick={this.handleBack}>
                   <KeyboardArrowLeft />
                   Back
                 </Button>
               }
             />
           </main>
-        }
+        )}
       </Fragment>
     );
   }

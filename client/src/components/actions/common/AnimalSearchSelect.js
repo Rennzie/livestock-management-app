@@ -6,8 +6,8 @@ import { Grid, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 // components
-import SearchBar from '../../common/SearchBar.jsx';
-import AnimalCard from '../../common/AnimalCard.jsx';
+import SearchBar from '../../common/SearchBar';
+import AnimalCard from '../../common/AnimalCard';
 
 const styles = () => ({
   root: {
