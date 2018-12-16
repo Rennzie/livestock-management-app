@@ -27,13 +27,13 @@ const styles = theme => ({
 
 class Register extends Component {
   state = {
-    username: 'Jamo',
-    email: 'jamobaxter@gmail.com',
-    password: 'pass',
-    passwordConfirmation: 'pass',
+    username: '',
+    email: '',
+    password: '',
+    passwordConfirmation: '',
     passwordsMatch: true,
-    firstName: 'James',
-    surname: 'Baxter'
+    firstName: '',
+    surname: ''
   };
 
   passwordsMatch = passwordConfirmation => {

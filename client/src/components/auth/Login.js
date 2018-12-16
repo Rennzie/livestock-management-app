@@ -28,8 +28,8 @@ const styles = theme => ({
 class Login extends Component {
   state = {
     // passwordVisible: false,
-    email: 'rnnsea001@gmail.com',
-    password: 'pass'
+    email: '',
+    password: ''
   };
 
   handleChange = name => event => {
