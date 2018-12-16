@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "start:client": "webpack-dev-server --config config/webpack.dev.config.js --open --hot --env.PLATFORM=local --env.VERSION=0.0.1",
-    "build": "webpack --config config/webpack.prod.config.js --env.PLATFORM=production --env.VERSION=stag --progress"
+    "clean": "rm -rf dist && mkdir dist",
+    "build": "yarn clean &&  webpack --config config/webpack.prod.config.js --env.PLATFORM=production --env.VERSION=stag --progress"
   },
   "proxy": "http://localhost:4000",
   "engines": {

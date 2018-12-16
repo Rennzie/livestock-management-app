@@ -2,8 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
-import Router from './config/routes';
 import path from 'path';
+import Router from './config/routes';
 
 import errorHandler from './lib/errorHandler';
 import { PORT, DB_URI } from './config/environment';
@@ -24,10 +24,10 @@ app.use(morgan('dev'));
 
 app.use('/api', Router);
 
-app.use(express.static(path.join(__dirname, "client", "dist")))
+// app.use(express.static(path.join(__dirname, "client", "dist")))
 
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(path.join(`${__dirname}/client/build/index.html`)));
 });
 // app.get('/*', (req, res) => res.sendFile(`${__dirname}/public/index.html`));
 
