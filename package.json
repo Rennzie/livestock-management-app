@@ -15,14 +15,15 @@
     "clean": "rm -rf dist && mkdir dist",
     "seed": "babel-node src/db/seeds",
     "build": "yarn clean && babel src --preset minify --out-dir dist",
-    "heroku-postbuild": "yarn install && yarn build && cd client && yarn install && yarn build",
+    "heroku-postbuild": "yarn build && cd client && yarn install && yarn build",
     "start": "node dist/index.js",
     "eslint-check": "eslint --print-config . | eslint-config-prettier-check",
     "debug": "node ./testRef.js",
     "test": "nyc mocha --require @babel/register test/**/*_spec.js --require test/spec_helper --recursive --exit"
   },
   "engines": {
-    "node": "9.10.0"
+    "node": "9.10.0",
+    "yarn": "1.12.3"
   },
   "dependencies": {
     "bcrypt": "^3.0.2",
