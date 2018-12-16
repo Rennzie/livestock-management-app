@@ -1,8 +1,8 @@
-build/
+/build
 .DS_Store
-node_modules/
+/node_modules
 .env
 *.orig
-.idea/
-.vscode/
-dist/
+/.idea
+/.vscode
+/dist
