@@ -15,7 +15,8 @@
     "clean": "rm -rf dist && mkdir dist",
     "seed": "babel-node src/db/seeds",
     "build": "yarn clean && babel src --preset minify --out-dir dist",
-    "serve": "node dist/index.js",
+    "heroku-postbuild": "yarn install && yarn build && cd client && yarn install --prod && yarn build",
+    "start": "node dist/index.js",
     "eslint-check": "eslint --print-config . | eslint-config-prettier-check",
     "debug": "node ./testRef.js",
     "test": "nyc mocha --require @babel/register test/**/*_spec.js --require test/spec_helper --recursive --exit"
