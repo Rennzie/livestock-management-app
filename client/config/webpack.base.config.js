@@ -18,16 +18,14 @@ module.exports = env =>
         publicPath: '/'
       },
       resolve: {
-        extensions: ['.js', '.jsx']
+        extensions: ['.js']
       },
       module: {
         rules: [
           {
-            test: /\.js$/,
-            exclude: /node_modules/,
-            use: {
-              loader: 'babel-loader'
-            }
+            test: /\.(js|jsx)$/,
+            use: 'babel-loader',
+            exclude: /node_modules/
           },
           {
             test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,

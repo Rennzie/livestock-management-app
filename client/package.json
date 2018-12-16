@@ -4,15 +4,9 @@
   "main": "index.js",
   "author": "sean rennie",
   "license": "MIT",
-  "nodemonConfig": {
-    "ignore": [
-      "src/*"
-    ]
-  },
   "scripts": {
     "start:client": "webpack-dev-server --config config/webpack.dev.config.js --open --hot --env.PLATFORM=local --env.VERSION=0.0.1",
-    "prebuild": "webpack --config config/webpack.prod.config.js --env.PLATFORM=production --env.VERSION=stag --progress",
-    "build": "webpack"
+    "build": "webpack --config config/webpack.prod.config.js --env.PLATFORM=production --env.VERSION=stag --progress"
   },
   "proxy": "http://localhost:4000",
   "engines": {
