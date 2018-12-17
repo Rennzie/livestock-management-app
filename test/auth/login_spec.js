@@ -10,6 +10,7 @@ import testData from '../testData/usersData';
 const userData = testData.single;
 const userLogin = testData.login;
 const userLoginWrong = testData.loginWrong;
+const userLoginWrongCase = testData.loginWrongCase;
 
 // create a user before each test
 // try to login with that user
@@ -51,6 +52,16 @@ describe('LOGIN /api/login', () => {
       .send(userLogin)
       .end((err, res) => {
         expect(jwt.verify(res.body.token, SECRET)).to.ok;
+        done();
+      });
+  });
+
+  it('should have a case insensitive email', done => {
+    api
+      .post('/api/login')
+      .send(userLoginWrongCase)
+      .end((err, res) => {
+        expect(res.status).to.eq(201);
         done();
       });
   });

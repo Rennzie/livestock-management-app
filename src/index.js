@@ -6,7 +6,7 @@ import path from 'path';
 import Router from './config/routes';
 
 import errorHandler from './lib/errorHandler';
-import { PORT, DB_URI } from './config/environment';
+import { PORT, DB_URI, ENV } from './config/environment';
 
 const app = express();
 
@@ -24,11 +24,12 @@ app.use(morgan('dev'));
 
 app.use('/api', Router);
 
+// if (ENV === 'production') {
 app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
-
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
 });
+// }
 // app.get('/*', (req, res) => res.sendFile(`${__dirname}/public/index.html`));
 
 app.use(errorHandler);

@@ -4,7 +4,7 @@ import { compareSync, hashSync } from 'bcrypt';
 const UserSchema = new Schema(
   {
     username: { type: String, unique: true },
-    email: { type: String, unique: true },
+    email: { type: String, unique: true, lowercase: true },
     password: { type: String, require: true },
     firstName: String,
     surname: String,

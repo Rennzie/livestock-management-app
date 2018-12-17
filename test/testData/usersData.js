@@ -32,5 +32,9 @@ export default {
   loginWrong: {
     email: 'rnnsea001@gmail.com',
     password: 'p'
+  },
+  loginWrongCase: {
+    email: 'Rnnsea001@gmail.com',
+    password: 'pass'
   }
 };

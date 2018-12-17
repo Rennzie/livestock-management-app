@@ -13,7 +13,7 @@ function createAndSendToken(user, res, message) {
 }
 
 function login(req, res, next) {
-  User.findOne({ email: req.body.email })
+  User.findOne({ email: req.body.email.toLowerCase() })
     .then(user => {
       if (!user || !user.validatePassword(req.body.password)) {
         return res.status(401).json({ message: `Unauthorised ${req.body.email}` });

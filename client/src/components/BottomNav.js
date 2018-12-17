@@ -53,8 +53,6 @@ class BottomNav extends Component {
   };
 
   handleLogOut = () => {
-    // remove token from storage
-    // redirect to /
     localStorage.removeItem('token');
     const { history } = this.props;
     history.push('/');
