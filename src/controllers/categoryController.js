@@ -43,7 +43,15 @@ function editTrackedChange(req, res, next) {
     .catch(next);
 }
 
-function deleteTrackedChange() {}
+function deleteTrackedChange(req, res, next) {
+  Category.findById(req.params.categoryId)
+    .then(category => {
+      category.currentMonthChanges.id(req.params.changeId).remove();
+      category.save();
+    })
+    .then(() => res.status(202).send({ message: 'Change Deleted' }))
+    .catch(next);
+}
 
 export default {
   create: newCategory,
