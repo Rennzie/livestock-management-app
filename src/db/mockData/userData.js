@@ -6,8 +6,8 @@ const userData = [
     _id: userIds[0],
     username: 'Example',
     email: 'example@gmail.com',
-    password: 'example',
-    passwordConfirmation: 'example',
+    password: 'pass',
+    passwordConfirmation: 'pass',
     firstName: 'User',
     surname: 'Name',
     dateOfBirth: moment().set({ year: 1989, month: 9, date: 30 })

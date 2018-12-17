@@ -9,6 +9,7 @@ import {
   TableCell,
   TableBody
 } from '@material-ui/core';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 // Dependancies
 import moment from 'moment';
@@ -31,6 +32,12 @@ export default class CategoryHistory extends Component {
       this.setState({ category: res.data, sortedChanges });
     });
   }
+
+  handleChangeEdit = changeId => () => {
+    const { history, location } = this.props;
+
+    history.push(`/categories/${location.state.id}/changes/${changeId}/edit`);
+  };
 
   render() {
     const { category, sortedChanges } = this.state;
@@ -56,6 +63,7 @@ export default class CategoryHistory extends Component {
                     <TableCell>Date</TableCell>
                     <TableCell>Reason for Change</TableCell>
                     <TableCell numeric>Moved</TableCell>
+                    <TableCell>Edit</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -64,10 +72,16 @@ export default class CategoryHistory extends Component {
                       <TableCell component="th" scope="row">
                         {moment(row.createdAt).format('DD MMM YYYY')}
                       </TableCell>
+
                       <TableCell>
                         <CapitalizeText>{row.reasonForChange}</CapitalizeText>
                       </TableCell>
+
                       <TableCell numeric>{row.animalsMoved}</TableCell>
+
+                      <TableCell>
+                        <MoreHorizIcon onClick={this.handleChangeEdit(row._id)} />
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
