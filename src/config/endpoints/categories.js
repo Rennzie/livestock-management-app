@@ -10,6 +10,10 @@ Router.route('/categories')
 
 Router.route('/categories/:id').get(categoryController.show);
 
-Router.route('/categories/:classId/changes').post(categoryController.createChange);
+Router.route('/categories/:categoryId/changes').post(categoryController.createChange);
+
+Router.route('/categories/:categoryId/changes/:changeId')
+  .put(categoryController.editChange)
+  .delete(categoryController.deleteChange);
 
 export default Router;

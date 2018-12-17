@@ -76,11 +76,13 @@ class CategoryManager extends Component {
               </Paper>
             </section>
             {farm.categories.length === 0 ? (
-              <Typography variant="subtitle1" align="center">
-                You have not registered any categories for {farm.name} yet.
-                <Link to={{ pathname: '/new/category', state: { farm } }}> Click here </Link>
-                to add one.
-              </Typography>
+              <section className={classes.panelContainer}>
+                <Typography variant="subtitle1" align="center">
+                  You have not registered any categories for {farm.name} yet.
+                  <Link to={{ pathname: '/new/category', state: { farm } }}> Click here </Link>
+                  to add one.
+                </Typography>
+              </section>
             ) : (
               <section className={classes.panelContainer}>
                 {farm.categories.map(category => (

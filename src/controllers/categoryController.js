@@ -18,20 +18,38 @@ function indexcategories(req, res, next) {
 function showCategory(req, res, next) {
   Category.findById(req.params.id)
     .populate('farm')
-    .then(oneCategory => res.json(oneCategory))
+    .then(category => res.json(category))
     .catch(next);
 }
 
 function newTrackedChange(req, res, next) {
-  Category.findById(req.params.classId)
-    .then(oneCategory => oneCategory.newChange(req.body))
-    .then(oneCategory => res.status(201).json(oneCategory))
+  Category.findById(req.params.categoryId)
+    .then(category => category.newChange(req.body))
+    .then(category => res.status(201).json(category))
     .catch(next);
 }
+
+function editTrackedChange(req, res, next) {
+  Category.findById(req.params.categoryId)
+    .then(category => {
+      const change = category.currentMonthChanges.id(req.params.changeId);
+
+      change.set(req.body);
+      console.log('found in editTracked change end =========>', change);
+      return category.save();
+    })
+    .then(category => res.status(202).send(category))
+
+    .catch(next);
+}
+
+function deleteTrackedChange() {}
 
 export default {
   create: newCategory,
   index: indexcategories,
   show: showCategory,
-  createChange: newTrackedChange
+  createChange: newTrackedChange,
+  editChange: editTrackedChange,
+  deleteChange: deleteTrackedChange
 };

@@ -155,6 +155,10 @@ export default {
     reasonForChange: 'death',
     animalsMoved: -10
   },
+  changeEdit: {
+    reasonForChange: 'death',
+    animalsMoved: -10
+  },
 
   singleLastMonth: {
     _id: categoryIds[0],
