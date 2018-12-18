@@ -1,24 +1,18 @@
 import React, { Component, Fragment } from 'react';
 
-import {
-  Typography,
-  FormControl,
-  InputLabel,
-  NativeSelect,
-  Input,
-  Button,
-  Fab
-} from '@material-ui/core';
+import { Typography, FormControl, InputLabel, NativeSelect, Input, Fab } from '@material-ui/core';
 
 import AddIcon from '@material-ui/icons/Add';
 import SubtractIcon from '@material-ui/icons/Remove';
 
 import { withStyles } from '@material-ui/core/styles';
-import classNames from 'classnames';
+
+// Components
 
 // Dependancies
 import moment from 'moment';
 import axios from 'axios';
+import SubmitButton from '../../common/SubmitButton';
 
 const styles = theme => ({
   form: {
@@ -194,16 +188,14 @@ class CategoryChange extends Component {
                 />
               </FormControl>
 
-              <Button
+              <SubmitButton
                 disabled={!newChange.reasonForChange}
                 variant="contained"
                 className={classes.margin}
                 color="secondary"
-                onClick={this.handleChangeLog}
-              >
-                {' '}
-                Log Change{' '}
-              </Button>
+                handleClick={this.handleChangeLog}
+                name="Log Change"
+              />
             </form>
           </Fragment>
         )}

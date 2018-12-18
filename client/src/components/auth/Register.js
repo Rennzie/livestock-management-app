@@ -1,12 +1,15 @@
 import React, { Fragment, Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Typography, Button, TextField } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
 
 // Dependancies
 import axios from 'axios';
 import Auth from '../../lib/Auth';
+
+// Components
+import SubmitButton from '../common/SubmitButton';
 
 const styles = theme => ({
   fromWrapper: {
@@ -27,6 +30,7 @@ const styles = theme => ({
 
 class Register extends Component {
   state = {
+    allSet: false,
     username: '',
     email: '',
     password: '',
@@ -52,6 +56,15 @@ class Register extends Component {
       this.setState({ [name]: event.target.value, passwordsMatch });
     } else {
       this.setState({ [name]: event.target.value });
+    }
+    this.validateForm();
+  };
+
+  // BUG: the button does not disable itself if the passwords are not matched
+  validateForm = () => {
+    const { passwordsMatch, username, email, password } = this.state;
+    if (passwordsMatch && username && email && password) {
+      this.setState({ allSet: true });
     }
   };
 
@@ -85,7 +98,8 @@ class Register extends Component {
       passwordConfirmation,
       firstName,
       surname,
-      passwordsMatch
+      passwordsMatch,
+      allSet
     } = this.state;
 
     const { classes } = this.props;
@@ -97,7 +111,6 @@ class Register extends Component {
         </Typography>
 
         <TextField
-          //   classes={classes.margin}
           margin="normal"
           fullWidth
           label="Username"
@@ -110,7 +123,6 @@ class Register extends Component {
         />
 
         <TextField
-          //   classes={classes.margin}
           margin="normal"
           fullWidth
           label="Email"
@@ -123,7 +135,6 @@ class Register extends Component {
         />
 
         <TextField
-          //   classes={classes.margin}
           margin="normal"
           fullWidth
           label="Password"
@@ -136,7 +147,6 @@ class Register extends Component {
           onChange={this.handleChange('password')}
         />
         <TextField
-          //   classes={classes.margin}
           margin="normal"
           error={!passwordsMatch}
           fullWidth
@@ -151,7 +161,6 @@ class Register extends Component {
         />
 
         <TextField
-          //   classes={classes.margin}
           margin="normal"
           fullWidth
           label="First Name"
@@ -164,7 +173,6 @@ class Register extends Component {
         />
 
         <TextField
-          //   classes={classes.margin}
           margin="normal"
           fullWidth
           label="Surname"
@@ -176,14 +184,14 @@ class Register extends Component {
           onChange={this.handleChange('surname')}
         />
 
-        <Button
+        <SubmitButton
+          disabled={!allSet}
           variant="text"
           className={classes.margin}
           color="secondary"
-          onClick={this.handleRegister}
-        >
-          Register
-        </Button>
+          handleClick={this.handleRegister}
+          name="REGISTER"
+        />
         <Button
           component={Link}
           to="/login"

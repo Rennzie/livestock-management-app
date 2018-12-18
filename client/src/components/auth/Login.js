@@ -7,6 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 // Dependancies
 import axios from 'axios';
 import Auth from '../../lib/Auth';
+import SubmitButton from '../common/SubmitButton';
 
 const styles = theme => ({
   fromWrapper: {
@@ -91,7 +92,6 @@ class Login extends Component {
                 onChange={this.handleChange('password')}
               />
             </FormControl>
-
             <Button className={classes.margin} onClick={this.handleLogin} color="secondary">
               Login
             </Button>

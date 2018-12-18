@@ -4,7 +4,6 @@ import React, { Fragment, Component } from 'react';
 import {
   Typography,
   TextField,
-  Button,
   FormControl,
   InputLabel,
   Input,
@@ -16,6 +15,9 @@ import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import moment from 'moment';
 import Auth from '../../lib/Auth';
+
+// components
+import SubmitButton from '../common/SubmitButton';
 
 const styles = theme => ({
   fromWrapper: {
@@ -156,14 +158,14 @@ class CategoryNew extends Component {
               onChange={this.handleChange('animalsMoved')}
             />
 
-            <Button
+            <SubmitButton
+              disabled={!category}
               variant="text"
               className={classes.margin}
               color="secondary"
-              onClick={this.handleRegister}
-            >
-              Register
-            </Button>
+              handleClick={this.handleRegister}
+              name="REGISTER"
+            />
           </Fragment>
         )}
       </Fragment>

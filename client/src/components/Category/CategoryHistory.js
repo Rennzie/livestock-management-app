@@ -19,6 +19,7 @@ import lo from 'lodash';
 
 // Components
 import CapitalizeText from '../common/CapitalizeText';
+import LoadingSpinner from '../common/LoadingSpinner';
 
 const styles = theme => ({
   root: {
@@ -56,7 +57,7 @@ class CategoryHistory extends Component {
     const { classes } = this.props;
     return (
       <Fragment>
-        {category && (
+        {category ? (
           <Fragment>
             <Typography align="center" variant="h5">
               History
@@ -101,6 +102,8 @@ class CategoryHistory extends Component {
               </Table>
             </Paper>
           </Fragment>
+        ) : (
+          <LoadingSpinner />
         )}
       </Fragment>
     );

@@ -10,6 +10,7 @@ import moment from 'moment';
 
 // Components
 import CategoryExpPanel from './Panel';
+import LoadingSpinner from '../common/LoadingSpinner';
 
 const styles = theme => ({
   header: {
@@ -63,7 +64,7 @@ class CategoryManager extends Component {
     const period = moment().format('MMM-YYYY');
     return (
       <Fragment>
-        {farm && (
+        {farm ? (
           <Fragment>
             <section className={classes.header}>
               <Paper square>
@@ -98,6 +99,8 @@ class CategoryManager extends Component {
               </section>
             )}
           </Fragment>
+        ) : (
+          <LoadingSpinner />
         )}
       </Fragment>
     );

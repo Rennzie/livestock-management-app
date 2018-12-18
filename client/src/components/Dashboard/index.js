@@ -9,6 +9,7 @@ import Auth from '../../lib/Auth';
 
 // Components
 import FarmStatus from './FarmStatus';
+import LoadingSpinner from '../common/LoadingSpinner';
 
 const styles = theme => ({
   progress: {
@@ -30,14 +31,15 @@ class Dashboard extends Component {
 
   render() {
     const { user } = this.state;
-    const { classes } = this.props;
+    // const { classes } = this.props;
     return (
       <Fragment>
         <Typography variant="h5" align="center">
           Stockman.io{' '}
         </Typography>
         {!user ? (
-          <CircularProgress className={classes.progress} />
+          // <CircularProgress className={classes.progress} />
+          <LoadingSpinner color="primary" />
         ) : (
           <Fragment>
             <FarmStatus user={user} />

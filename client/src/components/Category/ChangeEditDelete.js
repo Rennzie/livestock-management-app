@@ -14,11 +14,12 @@ import AddIcon from '@material-ui/icons/Add';
 import SubtractIcon from '@material-ui/icons/Remove';
 
 import { withStyles } from '@material-ui/core/styles';
-import classNames from 'classnames';
 
 // Dependancies
 import moment from 'moment';
 import axios from 'axios';
+
+import SubmitButton from '../common/SubmitButton';
 
 const styles = theme => ({
   form: {
@@ -54,17 +55,14 @@ class ChangeEditDelete extends Component {
     axios
       .get(`/api/categories/${match.params.categoryId}/changes/${match.params.changeId}`)
       .then(res =>
-        this.setState(
-          prevState => {
-            const newState = prevState;
-            newState.createdAt = moment(res.data.createdAt).format('YYYY-MM-DD');
-            newState.animalsMoved =
-              res.data.animalsMoved < 0 ? res.data.animalsMoved * -1 : res.data.animalsMoved;
-            newState.reasonForChange = res.data.reasonForChange;
-            return newState;
-          },
-          () => console.log(this.state)
-        )
+        this.setState(prevState => {
+          const newState = prevState;
+          newState.createdAt = moment(res.data.createdAt).format('YYYY-MM-DD');
+          newState.animalsMoved =
+            res.data.animalsMoved < 0 ? res.data.animalsMoved * -1 : res.data.animalsMoved;
+          newState.reasonForChange = res.data.reasonForChange;
+          return newState;
+        })
       );
   }
 
@@ -198,26 +196,22 @@ class ChangeEditDelete extends Component {
                 />
               </FormControl>
 
-              <Button
+              <SubmitButton
                 disabled={!reasonForChange}
                 variant="contained"
                 className={classes.margin}
                 color="secondary"
-                onClick={this.handleEditChange}
-              >
-                {' '}
-                Edit Change{' '}
-              </Button>
-              <Button
+                handleClick={this.handleEditChange}
+                name="Edit Change"
+              />
+              <SubmitButton
                 disabled={!reasonForChange}
                 variant="contained"
                 className={classes.margin}
                 color="secondary"
-                onClick={this.handleDeleteChange}
-              >
-                {' '}
-                Delete Change{' '}
-              </Button>
+                handleClick={this.handleDeleteChange}
+                name="Delete Change"
+              />
             </form>
           </Fragment>
         )}

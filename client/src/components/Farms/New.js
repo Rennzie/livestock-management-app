@@ -3,9 +3,10 @@ import React, { Fragment, Component } from 'react';
 // components
 import { Typography, TextField, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import axios from 'axios';
+import SubmitButton from '../common/SubmitButton';
 
 // dependancies
-import axios from 'axios';
 import Auth from '../../lib/Auth';
 
 const styles = theme => ({
@@ -71,14 +72,14 @@ class NewFarm extends Component {
           onChange={this.handleChange('name')}
         />
 
-        <Button
+        <SubmitButton
+          disabled={!name}
           variant="text"
           className={classes.margin}
           color="secondary"
-          onClick={this.handleRegister}
-        >
-          Register
-        </Button>
+          handleClick={this.handleRegister}
+          name="REGISTER"
+        />
       </Fragment>
     );
   }
