@@ -24,7 +24,13 @@ module.exports = env =>
         rules: [
           {
             test: /\.(js|jsx)$/,
-            use: 'babel-loader',
+            use: {
+              loader: 'babel-loader',
+              options: {
+                presets: [['@babel/preset-env', { modules: false }]],
+                plugins: ['@babel/plugin-proposal-class-properties']
+              }
+            },
             exclude: /node_modules/
           },
           {
