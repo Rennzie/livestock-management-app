@@ -1,10 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import BrowserRouter from 'react-router-dom/BrowserRouter';
 
 import App from './components/App';
-
-console.log('index js registered a new change');
 
 ReactDOM.render(
   <BrowserRouter>

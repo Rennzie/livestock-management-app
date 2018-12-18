@@ -1,7 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { Switch, Route } from 'react-router-dom';
-import { CssBaseline } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import Switch from 'react-router-dom/Switch';
+import Route from 'react-router-dom/Route';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 // COMPONENTS
 import BottomNav from './BottomNav';
@@ -22,16 +23,6 @@ import CategoryChange from './actions/CategoryChange';
 import CategoryHistory from './Category/CategoryHistory';
 import CategoryNew from './Category/New';
 import ChangeEditDelete from './Category/ChangeEditDelete';
-
-// Animals
-import AnimalManager from './AnimalManager';
-
-// Actions
-import RegisterCalf from './actions/RegisterCalf';
-import WeighAnimals from './actions/WeighAnimals';
-// import WeanAnimals from './actions/WeanAnimals';
-import PregTest from './actions/PregTest';
-import ArchiveAnimal from './actions/ArchiveAnimal';
 
 // Dependancies
 import Auth from '../lib/Auth';
@@ -99,13 +90,6 @@ function App({ classes }) {
                 path="/manage-categories/:categoryId/changes/:changeId/edit"
                 component={ChangeEditDelete}
               />
-
-              {/* Manage Animals */}
-              <Route exact path="/manage-animals" component={AnimalManager} />
-              <Route path="/manage-animals/register-calf" component={RegisterCalf} />
-              <Route path="/manage-animals/weigh" component={WeighAnimals} />
-              <Route path="/manage-animals/preg-test" component={PregTest} />
-              <Route path="/manage-animals/archive" component={ArchiveAnimal} />
             </Switch>
             <BottomNav />
           </main>

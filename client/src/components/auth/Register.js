@@ -1,8 +1,10 @@
 import React, { Fragment, Component } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'react-router-dom/Link';
 
-import { Typography, Button, TextField } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 // Dependancies
 import axios from 'axios';

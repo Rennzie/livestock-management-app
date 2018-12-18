@@ -1,7 +1,10 @@
 import React, { Fragment, Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Typography, Card, CardContent, CircularProgress } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import Link from 'react-router-dom/Link';
+
+import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 // Dependancies
 import Axios from 'axios';
@@ -24,9 +27,7 @@ class Dashboard extends Component {
 
   componentDidMount() {
     const userId = Auth.currentUserId();
-    Axios.get(`/api/users/${userId}`).then(res =>
-      this.setState(() => ({ user: res.data }), () => console.log(this.state))
-    );
+    Axios.get(`/api/users/${userId}`).then(res => this.setState(() => ({ user: res.data })));
   }
 
   render() {

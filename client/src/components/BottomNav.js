@@ -1,17 +1,15 @@
 import React, { Component, Fragment } from 'react';
-import { withRouter } from 'react-router-dom';
+import withRouter from 'react-router-dom/withRouter';
 
-import {
-  BottomNavigation,
-  BottomNavigationAction,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  Divider
-} from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Divider from '@material-ui/core/Divider';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 // Icons
 import Home from '@material-ui/icons/Home';

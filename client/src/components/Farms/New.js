@@ -1,8 +1,9 @@
 import React, { Fragment, Component } from 'react';
 
 // components
-import { Typography, TextField, Button } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import withStyles from '@material-ui/core/styles/withStyles';
 import axios from 'axios';
 import SubmitButton from '../common/SubmitButton';
 

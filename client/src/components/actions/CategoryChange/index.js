@@ -1,11 +1,16 @@
 import React, { Component, Fragment } from 'react';
 
-import { Typography, FormControl, InputLabel, NativeSelect, Input, Fab } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import NativeSelect from '@material-ui/core/NativeSelect';
+import Input from '@material-ui/core/Input';
+import Fab from '@material-ui/core/Fab';
 
 import AddIcon from '@material-ui/icons/Add';
 import SubtractIcon from '@material-ui/icons/Remove';
 
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 // Components
 

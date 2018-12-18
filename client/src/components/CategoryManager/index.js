@@ -1,8 +1,9 @@
 import React, { Component, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'react-router-dom/Link';
 
-import { Typography, Paper } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 // Dependancies
 import axios from 'axios';

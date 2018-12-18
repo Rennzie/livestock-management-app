@@ -1,21 +1,19 @@
 import React, { Component, Fragment } from 'react';
 
-import {
-  Typography,
-  Paper,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody
-} from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+import TableBody from '@material-ui/core/TableBody';
+import withStyles from '@material-ui/core/styles/withStyles';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 // Dependancies
 import moment from 'moment';
 import axios from 'axios';
-import lo from 'lodash';
+import orderBy from 'lodash/orderBy';
 
 // Components
 import CapitalizeText from '../common/CapitalizeText';
@@ -39,7 +37,7 @@ class CategoryHistory extends Component {
     const { match } = this.props;
     axios.get(`/api/categories/${match.params.categoryId}`).then(res => {
       const unSortedChanges = res.data.currentMonthChanges;
-      const sortedChanges = lo.orderBy(unSortedChanges, change => change.createdAt, ['desc']);
+      const sortedChanges = orderBy(unSortedChanges, change => change.createdAt, ['desc']);
       // sortedChanges.sort((a, b) => b.createdAt - a.createdAt);
 
       this.setState({ category: res.data, sortedChanges });

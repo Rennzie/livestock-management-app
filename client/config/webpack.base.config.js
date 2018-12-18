@@ -12,7 +12,7 @@ module.exports = env =>
     {
       entry: ['@babel/polyfill', APP_DIR],
       output: {
-        filename: '[name].bundle.js',
+        filename: '[name].[contenthash].js',
         // chunkFilename: '[name].chunk.bundle.js',
         path: path.resolve(__dirname, '..', 'dist'),
         publicPath: '/'

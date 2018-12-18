@@ -1,15 +1,13 @@
 import React, { Fragment, Component } from 'react';
 
 // components
-import {
-  Typography,
-  TextField,
-  FormControl,
-  InputLabel,
-  Input,
-  NativeSelect
-} from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
+import NativeSelect from '@material-ui/core/NativeSelect';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 // dependancies
 import axios from 'axios';

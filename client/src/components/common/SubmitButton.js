@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import { CircularProgress, Button } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Button from '@material-ui/core/Button';
 
 class SubmitButton extends Component {
   state = {

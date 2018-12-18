@@ -1,13 +1,17 @@
 import React, { Fragment, Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 
-import { Typography, Input, FormControl, InputLabel, Button } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Input from '@material-ui/core/Input';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Button from '@material-ui/core/Button';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 // Dependancies
 import axios from 'axios';
 import Auth from '../../lib/Auth';
-import SubmitButton from '../common/SubmitButton';
+// import SubmitButton from '../common/SubmitButton';
 
 const styles = theme => ({
   fromWrapper: {
