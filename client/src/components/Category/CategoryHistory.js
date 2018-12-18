@@ -9,6 +9,7 @@ import {
   TableCell,
   TableBody
 } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 // Dependancies
@@ -19,14 +20,25 @@ import lo from 'lodash';
 // Components
 import CapitalizeText from '../common/CapitalizeText';
 
-export default class CategoryHistory extends Component {
+const styles = theme => ({
+  root: {
+    width: '100vw',
+    marginTop: theme.spacing.unit * 3,
+    overflowX: 'auto'
+  },
+  table: {
+    width: '50%'
+  }
+});
+
+class CategoryHistory extends Component {
   state = {};
 
   componentDidMount() {
-    const { location } = this.props;
-    axios.get(`/api/categories/${location.state.id}`).then(res => {
+    const { match } = this.props;
+    axios.get(`/api/categories/${match.params.categoryId}`).then(res => {
       const unSortedChanges = res.data.currentMonthChanges;
-      const sortedChanges = lo.sortBy(unSortedChanges, [unSortedChanges.createdAt]);
+      const sortedChanges = lo.orderBy(unSortedChanges, change => change.createdAt, ['desc']);
       // sortedChanges.sort((a, b) => b.createdAt - a.createdAt);
 
       this.setState({ category: res.data, sortedChanges });
@@ -34,13 +46,14 @@ export default class CategoryHistory extends Component {
   }
 
   handleChangeEdit = changeId => () => {
-    const { history, location } = this.props;
+    const { history, match } = this.props;
 
-    history.push(`/categories/${location.state.id}/changes/${changeId}/edit`);
+    history.push(`/manage-categories/${match.params.categoryId}/changes/${changeId}/edit`);
   };
 
   render() {
     const { category, sortedChanges } = this.state;
+    const { classes } = this.props;
     return (
       <Fragment>
         {category && (
@@ -56,8 +69,8 @@ export default class CategoryHistory extends Component {
               <CapitalizeText>{category.currentMonthDetail.period}</CapitalizeText>
             </Typography>
 
-            <Paper>
-              <Table>
+            <Paper className={classes.root}>
+              <Table className={classes.table}>
                 <TableHead>
                   <TableRow>
                     <TableCell>Date</TableCell>
@@ -70,7 +83,7 @@ export default class CategoryHistory extends Component {
                   {sortedChanges.map(row => (
                     <TableRow key={row._id}>
                       <TableCell component="th" scope="row">
-                        {moment(row.createdAt).format('DD MMM YYYY')}
+                        {moment(row.createdAt).format('Do')}
                       </TableCell>
 
                       <TableCell>
@@ -93,3 +106,5 @@ export default class CategoryHistory extends Component {
     );
   }
 }
+
+export default withStyles(styles)(CategoryHistory);

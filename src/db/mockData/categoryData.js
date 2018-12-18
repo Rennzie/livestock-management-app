@@ -33,11 +33,11 @@ function generateRandomNumber(change) {
 
 function createChange(month, year) {
   const date = generateRandomDate();
-  const createAt = moment().set({ year, month, date });
+  const createdAt = moment().set({ year, month, date });
   const reasonForChange = chooseReason();
   const animalsMoved = generateRandomNumber(reasonForChange);
 
-  return { createAt, reasonForChange, animalsMoved };
+  return { createdAt, reasonForChange, animalsMoved };
 }
 
 const categoriesData = [

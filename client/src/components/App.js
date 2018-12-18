@@ -20,6 +20,7 @@ import CategoryManager from './CategoryManager';
 import CategoryChange from './actions/CategoryChange';
 import CategoryHistory from './Category/CategoryHistory';
 import CategoryNew from './Category/New';
+import ChangeEditDelete from './Category/ChangeEditDelete';
 
 // Animals
 import AnimalManager from './AnimalManager';
@@ -79,7 +80,14 @@ export default function App() {
             {/* Manage Categoryes */}
             <Route path="/:farmName/:farmId/manage-categories" component={CategoryManager} />
             <Route path="/manage-classes/:className/changes" component={CategoryChange} />
-            <Route path="/manage-classes/:className/history" component={CategoryHistory} />
+            <Route
+              path="/manage-categories/:categoryId/changes/history"
+              component={CategoryHistory}
+            />
+            <Route
+              path="/manage-categories/:categoryId/changes/:changeId/edit"
+              component={ChangeEditDelete}
+            />
 
             {/* Manage Animals */}
             <Route exact path="/manage-animals" component={AnimalManager} />

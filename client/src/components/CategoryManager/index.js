@@ -54,7 +54,7 @@ class CategoryManager extends Component {
   handleGoToHistory = category => () => {
     const id = category._id;
     const { history } = this.props;
-    history.push(`/manage-classes/${category.category}/history`, { id });
+    history.push(`/manage-categories/${id}/changes/history`);
   };
 
   render() {

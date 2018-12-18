@@ -53,11 +53,19 @@ function deleteTrackedChange(req, res, next) {
     .catch(next);
 }
 
+function showTrackedChange(req, res, next) {
+  Category.findById(req.params.categoryId)
+    .then(category => category.currentMonthChanges.id(req.params.changeId))
+    .then(change => res.send(change))
+    .catch(next);
+}
+
 export default {
   create: newCategory,
   index: indexcategories,
   show: showCategory,
   createChange: newTrackedChange,
   editChange: editTrackedChange,
-  deleteChange: deleteTrackedChange
+  deleteChange: deleteTrackedChange,
+  showChange: showTrackedChange
 };

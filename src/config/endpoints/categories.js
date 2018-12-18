@@ -13,6 +13,7 @@ Router.route('/categories/:id').get(categoryController.show);
 Router.route('/categories/:categoryId/changes').post(categoryController.createChange);
 
 Router.route('/categories/:categoryId/changes/:changeId')
+  .get(categoryController.showChange)
   .put(categoryController.editChange)
   .delete(categoryController.deleteChange);
 
