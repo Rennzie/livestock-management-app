@@ -1,4 +1,5 @@
 import express from 'express';
+import expressStaticGzip from 'express-static-gzip';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
@@ -25,7 +26,8 @@ app.use(morgan('dev'));
 app.use('/api', Router);
 
 // if (ENV === 'production') {
-app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
+// app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
+app.use(expressStaticGzip(path.join(__dirname, '..', 'client', 'dist')));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
 });
