@@ -61,8 +61,8 @@ const prodConfiguration = () =>
         new CompressionPlugin(),
         new webpack.HashedModuleIdsPlugin(), // so that file hashes don't change unexpectedly
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-        new Visualizer({ filename: './statistics.html' }),
-        new BundleAnalyzerPlugin()
+        new Visualizer({ filename: './statistics.html' })
+        // new BundleAnalyzerPlugin()
       ]
     }
   ]);
