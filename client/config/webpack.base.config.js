@@ -11,12 +11,6 @@ module.exports = env =>
   merge([
     {
       entry: ['@babel/polyfill', APP_DIR],
-      output: {
-        filename: '[name].[contenthash].js',
-        // chunkFilename: '[name].chunk.bundle.js',
-        path: path.resolve(__dirname, '..', 'dist'),
-        publicPath: '/'
-      },
       resolve: {
         extensions: ['.js']
       },
@@ -30,8 +24,8 @@ module.exports = env =>
                 presets: [['@babel/preset-env', { modules: false }]],
                 plugins: ['@babel/plugin-proposal-class-properties']
               }
-            }
-            // exclude: /node_modules/
+            },
+            exclude: /node_modules(?!\/@babel)/
           },
           {
             test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,

@@ -45,20 +45,19 @@ const CategorySchema = new Schema(
     category: {
       type: String,
       enum: [
-        'archive',
+        'bulls-1-2',
+        'bulls',
         'calves',
         'cows',
-        'bull-calves',
-        'oxen',
-        'weaners',
-        'bulls',
-        'pasturelot',
-        'feedlot',
-        'grassland',
         'heifers-1-2',
         'heifers-2-3',
-        'replacement-heifers'
-      ]
+        'oxen-1-2',
+        'oxen-2-3',
+        'oxen-mature',
+        'weaner-heifers',
+        'weaner-oxen'
+      ],
+      unique: true
     },
     farm: { type: ObjectId, ref: 'Farm', required: true },
     currentMonthDetail: {

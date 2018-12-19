@@ -149,6 +149,10 @@ export default {
       }
     ]
   },
+  update: {
+    farm: farmIds[1],
+    category: 'oxen'
+  },
   trackedChange: {
     _id: categoryIds[2],
     createdAt: moment(),

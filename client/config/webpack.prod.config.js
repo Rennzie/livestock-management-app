@@ -1,3 +1,4 @@
+const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 
@@ -8,6 +9,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
 const Visualizer = require('webpack-visualizer-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 // Configs for merge
 const baseConfig = require('./webpack.base.config');
@@ -16,10 +18,19 @@ const prodConfiguration = () =>
   merge([
     {
       mode: 'production',
+      output: {
+        filename: '[name].[contenthash].js',
+        // chunkFilename: '[name].chunk.bundle.js',
+        path: path.resolve(__dirname, '..', 'dist'),
+        publicPath: '/'
+      },
       optimization: {
         runtimeChunk: 'single',
         splitChunks: {
-          chunks: 'all',
+          chunks(chunk) {
+            // exclude `my-excluded-chunk`
+            return chunk.name !== 'babel';
+          },
           maxInitialRequests: Infinity,
           minSize: 0,
           cacheGroups: {
@@ -50,7 +61,8 @@ const prodConfiguration = () =>
         new CompressionPlugin(),
         new webpack.HashedModuleIdsPlugin(), // so that file hashes don't change unexpectedly
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-        new Visualizer({ filename: './statistics.html' })
+        new Visualizer({ filename: './statistics.html' }),
+        new BundleAnalyzerPlugin()
       ]
     }
   ]);

@@ -6,8 +6,6 @@ function newCategory(req, res, next) {
     .catch(next);
 }
 
-// Note: Need to think about how we incorporate multiple farms into the equation.
-
 function indexcategories(req, res, next) {
   Category.find()
     .populate('farm')
@@ -22,6 +20,23 @@ function showCategory(req, res, next) {
     .catch(next);
 }
 
+function updateCategory(req, res, next) {
+  Category.findById(req.params.id)
+    .then(category => {
+      category.set(req.body);
+      return category.save();
+    })
+    .then(category => res.status(202).send(category))
+    .catch(next);
+}
+
+function deleteCategory(req, res, next) {
+  Category.findById(req.params.id)
+    .then(category => category.remove())
+    .then(() => res.status(202).send({ message: 'Category Deleted' }))
+    .catch(next);
+}
+
 function newTrackedChange(req, res, next) {
   Category.findById(req.params.categoryId)
     .then(category => category.newChange(req.body))
@@ -33,13 +48,10 @@ function editTrackedChange(req, res, next) {
   Category.findById(req.params.categoryId)
     .then(category => {
       const change = category.currentMonthChanges.id(req.params.changeId);
-
       change.set(req.body);
-      console.log('found in editTracked change end =========>', change);
       return category.save();
     })
     .then(category => res.status(202).send(category))
-
     .catch(next);
 }
 
@@ -64,6 +76,8 @@ export default {
   create: newCategory,
   index: indexcategories,
   show: showCategory,
+  edit: updateCategory,
+  delete: deleteCategory,
   createChange: newTrackedChange,
   editChange: editTrackedChange,
   deleteChange: deleteTrackedChange,

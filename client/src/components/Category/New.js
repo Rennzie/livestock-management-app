@@ -130,16 +130,18 @@ class CategoryNew extends Component {
                 onChange={this.handleChange('category')}
                 input={<Input name="category" id="category" />}
               >
-                <option value="">None</option>
-                <option value="bull-calves">Bull Calves</option>
+                <option value="">Select Category</option>
+                <option value="bulls-1-2">Bulls 1-2 Yrs</option>
                 <option value="bulls">Bulls</option>
                 <option value="calves">Calves</option>
                 <option value="cows">Cows</option>
-                <option value="hefiers-1-2">Heifers 1-2 Years</option>
-                <option value="hefiers-2-3">Heifers 2-3 Years</option>
-                <option value="oxen">Oxen</option>
-                <option value="replacement-heifers">Replacement Heifers</option>
-                <option value="weaners">Weaners</option>
+                <option value="heifers-1-2">Heifers 1-2 Yrs</option>
+                <option value="heifers-2-3">Heifers 2-3 Yrs</option>
+                <option value="oxen-1-2">Oxen 1-2 Yrs</option>
+                <option value="oxen-2-3"> Oxen 2-3 Yrs</option>
+                <option value="oxen-mature">Oxen Mature</option>
+                <option value="weaner-heifers">Weaner Heifers</option>
+                <option value="weaner-oxen">Weaner Oxen</option>
               </NativeSelect>
             </FormControl>
 

@@ -1,15 +1,20 @@
 const path = require('path');
-const webpack = require('webpack');
 const merge = require('webpack-merge');
 
 // Configs for merge
 const baseConfig = require('./webpack.base.config');
 
-const devConfig = env => {
+const devConfig = () =>
   //   const { VERSION, PLATFORM } = env;
-  return merge([
+  merge([
     {
       mode: 'development',
+      output: {
+        // filename: '[name].[contenthash].js',
+        chunkFilename: '[name].chunk.bundle.js',
+        path: path.resolve(__dirname, '..', 'dist'),
+        publicPath: '/'
+      },
       module: {
         rules: [
           {
@@ -37,8 +42,4 @@ const devConfig = env => {
       }
     }
   ]);
-};
-
-module.exports = env => {
-  return merge(baseConfig(env), devConfig(env));
-};
+module.exports = env => merge(baseConfig(env), devConfig(env));

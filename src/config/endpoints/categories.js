@@ -8,7 +8,10 @@ Router.route('/categories')
   .post(categoryController.create)
   .get(categoryController.index);
 
-Router.route('/categories/:id').get(categoryController.show);
+Router.route('/categories/:id')
+  .get(categoryController.show)
+  .put(categoryController.edit)
+  .delete(categoryController.delete);
 
 Router.route('/categories/:categoryId/changes').post(categoryController.createChange);
 
