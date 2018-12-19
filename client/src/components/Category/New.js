@@ -101,12 +101,13 @@ class CategoryNew extends Component {
                   Register Category to ...
                 </Typography>
 
-                <FormControl variant="outlined" required fullWidth className={classes.margin}>
+                <FormControl variant="outlined" required fullWidth>
                   <InputLabel shrink htmlFor="farmSelected">
                     Farm
                   </InputLabel>
                   <NativeSelect
                     value={farmSelected}
+                    className={classes.margin}
                     onChange={this.handleFarmSelect}
                     input={<Input name="farmSelected" id="farmSelected" />}
                   >
@@ -127,11 +128,12 @@ class CategoryNew extends Component {
                   Register Category for {farmSelected.name}
                 </Typography>
 
-                <FormControl variant="outlined" required fullWidth className={classes.margin}>
+                <FormControl variant="outlined" required fullWidth>
                   <InputLabel shrink htmlFor="category">
                     Category
                   </InputLabel>
                   <NativeSelect
+                    className={classes.margin}
                     value={category}
                     onChange={this.handleChange('category')}
                     input={<Input name="category" id="category" />}
@@ -153,6 +155,7 @@ class CategoryNew extends Component {
                 </FormControl>
 
                 <TextField
+                  className={classes.margin}
                   margin="normal"
                   fullWidth
                   label="Number of Animals"
