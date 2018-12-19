@@ -30,8 +30,8 @@ module.exports = env =>
                 presets: [['@babel/preset-env', { modules: false }]],
                 plugins: ['@babel/plugin-proposal-class-properties']
               }
-            },
-            exclude: /node_modules/
+            }
+            // exclude: /node_modules/
           },
           {
             test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,

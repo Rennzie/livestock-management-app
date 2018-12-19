@@ -26,7 +26,6 @@
     "yarn": "1.12.3"
   },
   "dependencies": {
-    "babel-loader": "^8.0.0-beta.6",
     "bcrypt": "^3.0.2",
     "bluebird": "^3.5.3",
     "body-parser": "^1.18.3",
