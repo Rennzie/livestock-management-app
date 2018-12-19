@@ -79,7 +79,7 @@ const categoriesData = [
   {
     _id: categoryIds[1],
     farm: farmIds[0],
-    category: 'oxen',
+    category: 'oxen-1-2',
     currentMonthDetail: {
       openingTotal: 0,
       period: lastMonthString,
@@ -184,7 +184,7 @@ const categoriesData = [
   {
     _id: categoryIds[4],
     farm: farmIds[1],
-    category: 'oxen',
+    category: 'oxen-2-3',
     currentMonthDetail: {
       openingTotal: 0,
       period: lastMonthString,

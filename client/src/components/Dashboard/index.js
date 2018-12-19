@@ -15,8 +15,8 @@ import FarmStatus from './FarmStatus';
 import LoadingSpinner from '../common/LoadingSpinner';
 
 const styles = theme => ({
-  progress: {
-    margin: theme.spacing.unit * 2
+  margin: {
+    margin: theme.spacing.unit
   }
 });
 
@@ -32,14 +32,13 @@ class Dashboard extends Component {
 
   render() {
     const { user } = this.state;
-    // const { classes } = this.props;
+    const { classes } = this.props;
     return (
       <Fragment>
         <Typography variant="h5" align="center">
           Stockman.io{' '}
         </Typography>
         {!user ? (
-          // <CircularProgress className={classes.progress} />
           <LoadingSpinner color="primary" />
         ) : (
           <Fragment>
@@ -57,7 +56,7 @@ class Dashboard extends Component {
                   to={`/${farm.name}/${farm._id}/manage-categories`}
                   style={{ textDecoration: 'none' }}
                 >
-                  <Card>
+                  <Card className={classes.margin}>
                     <CardContent>
                       <Typography variant="subtitle1" align="center">
                         {' '}

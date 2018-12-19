@@ -20,7 +20,7 @@ const styles = theme => ({
 function LoadingSpinner({ classes, color }) {
   return (
     <div className={classes.progressContainer}>
-      <CircularProgress className={classes.progress} color={color} />;
+      <CircularProgress className={classes.progress} color={color} />
     </div>
   );
 }

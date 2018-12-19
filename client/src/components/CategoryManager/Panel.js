@@ -14,7 +14,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 // Components
 import CapitalizeText from '../common/CapitalizeText';
 
-const styles = () => ({
+const styles = theme => ({
   column: {
     display: 'flex',
     flexDirection: 'column',
@@ -27,6 +27,9 @@ const styles = () => ({
   },
   spreadRow_detail: {
     paddingRight: 36
+  },
+  margin: {
+    margin: theme.spacing.unit
   }
 });
 
@@ -38,6 +41,7 @@ function CategoryExpPanel(props) {
       key={category._id}
       expanded={expanded === category.category}
       onChange={handleChange(category.category)}
+      className={classes.margin}
     >
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
         <div className={classes.column}>

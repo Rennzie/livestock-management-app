@@ -51,13 +51,13 @@ const CategorySchema = new Schema(
         'cows',
         'heifers-1-2',
         'heifers-2-3',
+        'heifers-culls',
         'oxen-1-2',
         'oxen-2-3',
         'oxen-mature',
         'weaner-heifers',
         'weaner-oxen'
-      ],
-      unique: true
+      ]
     },
     farm: { type: ObjectId, ref: 'Farm', required: true },
     currentMonthDetail: {

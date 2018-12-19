@@ -13,7 +13,7 @@ import moment from 'moment';
 import CategoryExpPanel from './Panel';
 import LoadingSpinner from '../common/LoadingSpinner';
 
-const styles = theme => ({
+const styles = () => ({
   header: {
     position: 'fixed',
     width: '100%',
@@ -24,7 +24,6 @@ const styles = theme => ({
     marginTop: 56,
     marginBottom: 56,
     height: '100%',
-    margin: theme.units,
     overflow: 'auto'
   }
 });

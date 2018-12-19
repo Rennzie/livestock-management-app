@@ -16,6 +16,7 @@ import Auth from '../../lib/Auth';
 
 // components
 import SubmitButton from '../common/SubmitButton';
+import LoadingSpinner from '../common/LoadingSpinner';
 
 const styles = theme => ({
   fromWrapper: {
@@ -38,17 +39,18 @@ class CategoryNew extends Component {
   state = {};
 
   // get the list of users farms,
+  // if there is one then load into farms and go straight to new category
   // display them in a select field
   componentDidMount() {
-    const { history } = this.props;
-    if (!history.location.state) {
-      const userId = Auth.currentUserId();
-      axios.get(`/api/users/${userId}`).then(res => this.setState({ farms: res.data.farms }));
-    } else {
-      this.setState(() => ({
-        farmSelected: history.location.state.farm
-      }));
-    }
+    const userId = Auth.currentUserId();
+    axios.get(`/api/users/${userId}`).then(res => {
+      const { farms } = res.data;
+      if (farms.length === 1) {
+        this.setState({ farms, farmSelected: farms[0] });
+      } else {
+        this.setState({ farms });
+      }
+    });
   }
 
   handleRegister = () => {
@@ -89,83 +91,90 @@ class CategoryNew extends Component {
     const { classes } = this.props;
     return (
       <Fragment>
-        {!farmSelected && farms && (
+        {!farms ? (
+          <LoadingSpinner />
+        ) : (
           <Fragment>
-            <Typography variant="h5" align="center">
-              Register Category to ...
-            </Typography>
+            {!farmSelected && farms && (
+              <Fragment>
+                <Typography variant="h5" align="center">
+                  Register Category to ...
+                </Typography>
 
-            <FormControl variant="outlined" required fullWidth className={classes.margin}>
-              <InputLabel shrink htmlFor="farmSelected">
-                Farm
-              </InputLabel>
-              <NativeSelect
-                value={farmSelected}
-                onChange={this.handleFarmSelect}
-                input={<Input name="farmSelected" id="farmSelected" />}
-              >
-                <option value="">Choose a farm</option>
-                {farms.map(farm => (
-                  <option key={farm._id} value={farm._id}>
-                    {farm.name}
-                  </option>
-                ))}
-              </NativeSelect>
-            </FormControl>
-          </Fragment>
-        )}
+                <FormControl variant="outlined" required fullWidth className={classes.margin}>
+                  <InputLabel shrink htmlFor="farmSelected">
+                    Farm
+                  </InputLabel>
+                  <NativeSelect
+                    value={farmSelected}
+                    onChange={this.handleFarmSelect}
+                    input={<Input name="farmSelected" id="farmSelected" />}
+                  >
+                    <option value="">Choose a farm</option>
+                    {farms.map(farm => (
+                      <option key={farm._id} value={farm._id}>
+                        {farm.name}
+                      </option>
+                    ))}
+                  </NativeSelect>
+                </FormControl>
+              </Fragment>
+            )}
 
-        {farmSelected && (
-          <Fragment>
-            <Typography variant="h5" align="center">
-              Register Category for {farmSelected.name}
-            </Typography>
+            {farmSelected && (
+              <Fragment>
+                <Typography variant="h5" align="center">
+                  Register Category for {farmSelected.name}
+                </Typography>
 
-            <FormControl variant="outlined" required fullWidth className={classes.margin}>
-              <InputLabel shrink htmlFor="category">
-                Category
-              </InputLabel>
-              <NativeSelect
-                value={category}
-                onChange={this.handleChange('category')}
-                input={<Input name="category" id="category" />}
-              >
-                <option value="">Select Category</option>
-                <option value="bulls-1-2">Bulls 1-2 Yrs</option>
-                <option value="bulls">Bulls</option>
-                <option value="calves">Calves</option>
-                <option value="cows">Cows</option>
-                <option value="heifers-1-2">Heifers 1-2 Yrs</option>
-                <option value="heifers-2-3">Heifers 2-3 Yrs</option>
-                <option value="oxen-1-2">Oxen 1-2 Yrs</option>
-                <option value="oxen-2-3"> Oxen 2-3 Yrs</option>
-                <option value="oxen-mature">Oxen Mature</option>
-                <option value="weaner-heifers">Weaner Heifers</option>
-                <option value="weaner-oxen">Weaner Oxen</option>
-              </NativeSelect>
-            </FormControl>
+                <FormControl variant="outlined" required fullWidth className={classes.margin}>
+                  <InputLabel shrink htmlFor="category">
+                    Category
+                  </InputLabel>
+                  <NativeSelect
+                    value={category}
+                    onChange={this.handleChange('category')}
+                    input={<Input name="category" id="category" />}
+                  >
+                    <option value="">Select Category</option>
+                    <option value="bulls-1-2">Bulls 1-2 Yrs</option>
+                    <option value="bulls">Bulls</option>
+                    <option value="calves">Calves</option>
+                    <option value="cows">Cows</option>
+                    <option value="heifers-1-2">Heifers 1-2 Yrs</option>
+                    <option value="heifers-2-3">Heifers 2-3 Yrs</option>
+                    <option value="heifers-culls">Heifers Culls</option>
+                    <option value="oxen-1-2">Oxen 1-2 Yrs</option>
+                    <option value="oxen-2-3"> Oxen 2-3 Yrs</option>
+                    <option value="oxen-mature">Oxen Mature</option>
+                    <option value="weaner-heifers">Weaner Heifers</option>
+                    <option value="weaner-oxen">Weaner Oxen</option>
+                  </NativeSelect>
+                </FormControl>
 
-            <TextField
-              margin="normal"
-              fullWidth
-              label="Number of Animals"
-              id="animalsMoved"
-              name="animalsMoved"
-              required
-              type="number"
-              variant="outlined"
-              value={animalsMoved}
-              onChange={this.handleChange('animalsMoved')}
-            />
+                <TextField
+                  margin="normal"
+                  fullWidth
+                  label="Number of Animals"
+                  id="animalsMoved"
+                  name="animalsMoved"
+                  required
+                  type="number"
+                  variant="outlined"
+                  value={animalsMoved}
+                  onChange={this.handleChange('animalsMoved')}
+                />
 
-            <SubmitButton
-              disabled={!category}
-              variant="text"
-              className={classes.margin}
-              color="secondary"
-              handleClick={this.handleRegister}
-              name="REGISTER"
-            />
+                <SubmitButton
+                  disabled={!category}
+                  variant="text"
+                  className={classes.margin}
+                  color="secondary"
+                  handleClick={this.handleRegister}
+                  name="REGISTER"
+                />
+              </Fragment>
+            )}
           </Fragment>
         )}
       </Fragment>
