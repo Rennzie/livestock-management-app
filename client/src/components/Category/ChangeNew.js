@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react';
 
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import NativeSelect from '@material-ui/core/NativeSelect';
@@ -8,6 +10,9 @@ import Input from '@material-ui/core/Input';
 import Fab from '@material-ui/core/Fab';
 
 import AddIcon from '@material-ui/icons/Add';
+import Icon from '@material-ui/core/Icon';
+import UpArrowIcon from '@material-ui/icons/ArrowDropUp';
+import DownArrowIcon from '@material-ui/icons/ArrowDropDown';
 import SubtractIcon from '@material-ui/icons/Remove';
 
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -27,21 +32,20 @@ const styles = theme => ({
     justifyContent: 'spaceAround',
     margin: theme.spacing.unit
   },
-  button: {
-    margin: theme.spacing.unit
-  },
-  buttonGreen: {
-    backgroundColor: 'green'
-  },
-  buttonRed: {
-    backgroundColor: 'red'
-  },
-  buttonContainer: {
+  animalsMoved: {
     display: 'flex',
-    justifyContent: 'center'
+    flexDirection: 'column',
+    // alignItems: 'center',
+    justifyContent: 'spaceAround',
+    margin: 'auto',
+    width: '40%'
   },
   margin: {
     margin: theme.spacing.unit
+  },
+  number: {
+    fontSize: 60,
+    textAlign: 'center'
   }
 });
 
@@ -57,20 +61,21 @@ class ChangeNew extends Component {
   componentDidMount() {
     const { match } = this.props;
     axios.get(`/api/categories/${match.params.categoryId}`).then(res =>
-      this.setState(
-        prevState => {
-          const newState = prevState;
-          newState.category = res.data;
-          newState.newChange.createdAt = moment().format('YYYY-MM-DD');
-          return newState;
-        },
-        () => console.log(this.state)
-      )
+      this.setState(prevState => {
+        const newState = prevState;
+        newState.category = res.data;
+        newState.newChange.createdAt = moment().format('YYYY-MM-DD');
+        return newState;
+      })
     );
   }
 
   handleChange = name => event => {
-    const { value } = event.target;
+    let { value } = event.target;
+
+    if (name === 'animalsMoved') {
+      value = parseInt(value, 10);
+    }
     this.setState(prevState => {
       const newState = prevState;
       newState.newChange[name] = value;
@@ -134,11 +139,12 @@ class ChangeNew extends Component {
             </Typography>
 
             <form className={classes.form}>
-              <FormControl fullWidth className={classes.margin}>
-                <InputLabel shrink htmlFor="reasonForChange">
+              <FormControl fullWidth>
+                <InputLabel className={classes.margin} shrink htmlFor="reasonForChange">
                   Reason For Change
                 </InputLabel>
                 <NativeSelect
+                  className={classes.margin}
                   value={newChange.reasonForChange}
                   onChange={this.handleChange('reasonForChange')}
                   input={<Input name="reasonForChange" id="reasonForChange" />}
@@ -153,31 +159,22 @@ class ChangeNew extends Component {
               </FormControl>
 
               <div className={classes.animalsMoved}>
-                <Typography align="center" variant="h1">
-                  {' '}
-                  {newChange.animalsMoved}{' '}
-                </Typography>
+                <IconButton onClick={this.handleAdd}>
+                  <Icon style={{ fontSize: 70 }}>arrow_drop_up</Icon>
+                </IconButton>
 
-                <div className={classes.buttonContainer}>
-                  <Fab
-                    color="primary"
-                    onClick={this.handleAdd}
-                    className={classes.button}
-                    variant="round"
-                  >
-                    <AddIcon />
-                  </Fab>
+                <Input
+                  className={classes.number}
+                  type="number"
+                  id="animalsMoved"
+                  name="animalsMoved"
+                  value={newChange.animalsMoved}
+                  onChange={this.handleChange('animalsMoved')}
+                />
 
-                  <Fab
-                    disabled={newChange.animalsMoved === 0}
-                    color="secondary"
-                    onClick={this.handleRemove}
-                    className={classes.button}
-                    variant="round"
-                  >
-                    <SubtractIcon />
-                  </Fab>
-                </div>
+                <IconButton disabled={newChange.animalsMoved === 0} onClick={this.handleRemove}>
+                  <Icon style={{ fontSize: 70 }}>arrow_drop_down</Icon>
+                </IconButton>
               </div>
 
               <FormControl className={classes.margin}>
