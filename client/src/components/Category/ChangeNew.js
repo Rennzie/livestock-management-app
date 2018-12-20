@@ -17,7 +17,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 // Dependancies
 import moment from 'moment';
 import axios from 'axios';
-import SubmitButton from '../../common/SubmitButton';
+import SubmitButton from '../common/SubmitButton';
 
 const styles = theme => ({
   form: {
@@ -45,7 +45,7 @@ const styles = theme => ({
   }
 });
 
-class CategoryChange extends Component {
+class ChangeNew extends Component {
   state = {
     newChange: {
       createdAt: '',
@@ -55,8 +55,8 @@ class CategoryChange extends Component {
   };
 
   componentDidMount() {
-    const { location } = this.props;
-    axios.get(`/api/categories/${location.state.categoryId}`).then(res =>
+    const { match } = this.props;
+    axios.get(`/api/categories/${match.params.categoryId}`).then(res =>
       this.setState(
         prevState => {
           const newState = prevState;
@@ -209,4 +209,4 @@ class CategoryChange extends Component {
   }
 }
 
-export default withStyles(styles)(CategoryChange);
+export default withStyles(styles)(ChangeNew);

@@ -19,10 +19,10 @@ import FarmNew from './Farms/New';
 
 // Category/categories
 import CategoryManager from './CategoryManager';
-import CategoryChange from './actions/CategoryChange';
-import CategoryHistory from './Category/CategoryHistory';
+import ChangeNew from './Category/ChangeNew';
 import CategoryNew from './Category/New';
 import ChangeEditDelete from './Category/ChangeEditDelete';
+import CategoryShow from './Category/Show';
 
 // Dependancies
 import Auth from '../lib/Auth';
@@ -75,16 +75,16 @@ function App({ classes }) {
               <Route exact path="/" component={Dashboard} />
 
               {/* Add Inventory */}
-
               <Route exact path="/new/farm" component={FarmNew} />
               <Route exact path="/new/category" component={CategoryNew} />
 
               {/* Manage Categoryes */}
               <Route path="/:farmName/:farmId/manage-categories" component={CategoryManager} />
-              <Route path="/manage-classes/:className/changes" component={CategoryChange} />
+              <Route path="/categories/:categoryId" component={CategoryShow} />
+
               <Route
-                path="/manage-categories/:categoryId/changes/history"
-                component={CategoryHistory}
+                path="/manage-categories/:categoryName/:categoryId/changes"
+                component={ChangeNew}
               />
               <Route
                 path="/manage-categories/:categoryId/changes/:changeId/edit"

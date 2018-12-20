@@ -10,7 +10,7 @@ import axios from 'axios';
 import moment from 'moment';
 
 // Components
-import CategoryExpPanel from './Panel';
+import CategoryCard from './Card';
 import LoadingSpinner from '../common/LoadingSpinner';
 
 const styles = () => ({
@@ -30,7 +30,6 @@ const styles = () => ({
 
 class CategoryManager extends Component {
   state = {
-    expanded: null,
     farm: null
   };
 
@@ -42,10 +41,6 @@ class CategoryManager extends Component {
 
       .then(res => this.setState(() => ({ farm: res.data })));
   }
-
-  handleChange = panel => (event, expanded) => {
-    this.setState({ expanded: expanded ? panel : false });
-  };
 
   handleCategoryChange = category => () => {
     const { history } = this.props;
@@ -59,7 +54,7 @@ class CategoryManager extends Component {
   };
 
   render() {
-    const { farm, expanded } = this.state;
+    const { farm } = this.state;
     const { classes } = this.props;
     const period = moment().format('MMM-YYYY');
     return (
@@ -87,14 +82,7 @@ class CategoryManager extends Component {
             ) : (
               <section className={classes.panelContainer}>
                 {farm.categories.map(category => (
-                  <CategoryExpPanel
-                    key={category._id}
-                    category={category}
-                    expanded={expanded}
-                    handleChange={this.handleChange}
-                    handleCategoryChange={this.handleCategoryChange}
-                    handleGoToHistory={this.handleGoToHistory}
-                  />
+                  <CategoryCard key={category._id} category={category} />
                 ))}
               </section>
             )}
