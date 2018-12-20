@@ -94,7 +94,6 @@ class CategoryShow extends Component {
     const { classes } = this.props;
     return (
       <Fragment>
-        {/* <section className={classes.header}> */}
         <Paper className={classes.header} square>
           <CapitalizeText variant="h5" align="center">
             {!category ? 'Category' : category.category}
@@ -106,7 +105,6 @@ class CategoryShow extends Component {
             <Icon fontSize="small">delete</Icon>
           </IconButton>
         </Paper>
-        {/* </section> */}
         <Fragment>
           {!category ? (
             <LoadingSpinner />

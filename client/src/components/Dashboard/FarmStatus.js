@@ -1,25 +1,43 @@
 import React from 'react';
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import classNames from 'classnames';
+import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import withStyles from '@material-ui/core/styles/withStyles';
 
-export default function FarmStatus({ user }) {
+const styles = theme => ({
+  spreadRow: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    paddingRight: theme.spacing.unit * 3
+  },
+  margin: {
+    margin: theme.spacing.unit
+  },
+  column: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItem: 'center',
+    width: '100%'
+  }
+});
+
+function FarmStatus({ user, classes }) {
   return (
-    <List dense>
-      <ListItem>
-        <ListItemText primary="Total Animals:" />
-        <ListItemText secondary={user.totalAnimals} />
-      </ListItem>
+    <div className={classNames(classes.column, classes.margin)}>
+      <div className={classes.spreadRow}>
+        <Typography variant="subtitle1">Total Animals:</Typography>
+        <Typography variant="subtitle1">{user.totalAnimals}</Typography>
+      </div>
       <Divider />
       {user.farms.map(farm => (
-        <ListItem key={farm._id}>
-          <ListItemText primary={`${farm.name} Total Animals:`} />
-          <ListItemText secondary={farm.totalAnimals} />
-        </ListItem>
+        <div key={farm._id} className={classes.spreadRow}>
+          <Typography variant="subtitle1">{farm.name}</Typography>
+          <Typography variant="subtitle1">{farm.totalAnimals}</Typography>
+        </div>
       ))}
-      <Divider />
-    </List>
+    </div>
   );
 }
+
+export default withStyles(styles)(FarmStatus);

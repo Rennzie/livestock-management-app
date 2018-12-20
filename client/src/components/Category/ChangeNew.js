@@ -89,7 +89,7 @@ class ChangeNew extends Component {
 
     axios
       .post(`/api/categories/${category._id}/changes`, changeObj)
-      .then(() => history.push(`/${category.farm.name}/${category.farm._id}/manage-categories`));
+      .then(() => history.push(`/categories/${category._id}`));
   };
 
   handleAdd = () => {
