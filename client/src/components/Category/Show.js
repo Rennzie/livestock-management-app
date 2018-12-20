@@ -9,6 +9,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
+import SwapIcon from '@material-ui/icons/SwapHoriz';
 import LoadingSpinner from '../common/LoadingSpinner';
 import CapitalizeText from '../common/CapitalizeText';
 import CategoryHistory from './ChangeHistory';
@@ -51,12 +53,12 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit * 10
   },
   fabButton: {
-    position: 'absolute',
+    // position: 'absolute',
     zIndex: 20,
-    bottom: 30,
-    left: 0,
-    right: 0,
-    margin: '0 auto'
+    // bottom: 30,
+    // left: 0,
+    // right: 0,
+    margin: theme.spacing.unit
   }
 });
 class CategoryShow extends Component {
@@ -70,16 +72,15 @@ class CategoryShow extends Component {
     );
   }
 
-  handleNewChange = () => {
+  handleNewChange = changeType => () => {
     const { category } = this.state;
     const { history } = this.props;
 
-    history.push(`/manage-categories/${category.category}/${category._id}/changes`);
+    history.push(`/manage-categories/${category.category}/${category._id}/changes`, { changeType });
   };
 
   handleChangeEdit = changeId => () => {
     const { history, match } = this.props;
-
     history.push(`/manage-categories/${match.params.categoryId}/changes/${changeId}/edit`);
   };
 
@@ -157,6 +158,33 @@ class CategoryShow extends Component {
                 <Divider />
               </div>
 
+              <Fab
+                disabled={!category}
+                onClick={this.handleNewChange('add')}
+                color="primary"
+                className={classes.fabButton}
+              >
+                <AddIcon />
+              </Fab>
+              <Fab
+                disabled={!category}
+                onClick={this.handleNewChange('remove')}
+                color="secondary"
+                className={classes.fabButton}
+              >
+                <RemoveIcon />
+              </Fab>
+              <Fab
+                disabled={!category}
+                onClick={this.handleNewChange('transfer')}
+                color="default"
+                variant="extended"
+                className={classes.fabButton}
+              >
+                <SwapIcon />
+                Transfer
+              </Fab>
+
               <CategoryHistory
                 handleChangeEdit={this.handleChangeEdit}
                 changes={category.currentMonthChanges}
@@ -164,15 +192,6 @@ class CategoryShow extends Component {
             </section>
           )}
         </Fragment>
-        <Fab
-          disabled={!category}
-          onClick={this.handleNewChange}
-          color="primary"
-          aria-label="Add"
-          className={classes.fabButton}
-        >
-          <AddIcon />
-        </Fab>
       </Fragment>
     );
   }

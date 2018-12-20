@@ -18,12 +18,13 @@ class ChangeNew extends Component {
   };
 
   componentDidMount() {
-    const { match } = this.props;
+    const { match, history } = this.props;
     axios.get(`/api/categories/${match.params.categoryId}`).then(res =>
       this.setState(prevState => {
         const newState = prevState;
         newState.category = res.data;
         newState.newChange.createdAt = moment().format('YYYY-MM-DD');
+        newState.changeType = history.location.state.changeType;
         return newState;
       })
     );
@@ -42,7 +43,7 @@ class ChangeNew extends Component {
     });
   };
 
-  handleChangeLog = () => {
+  handleChangeLog = changeType => () => {
     const { newChange, category } = this.state;
     const { history } = this.props;
 
@@ -54,7 +55,7 @@ class ChangeNew extends Component {
     changeObj.animalsMoved = newChange.animalsMoved;
 
     // To ensure we send a negative number to database in the correct instance
-    if (change === 'death' || change === 'theft' || change === 'sale') {
+    if (changeType === 'remove' || change === 'transfersOut') {
       changeObj.animalsMoved = newChange.animalsMoved * -1;
     }
 
@@ -64,7 +65,7 @@ class ChangeNew extends Component {
   };
 
   render() {
-    const { newChange, category } = this.state;
+    const { newChange, category, changeType } = this.state;
 
     return (
       <Fragment>
@@ -81,6 +82,7 @@ class ChangeNew extends Component {
               change={newChange}
               handleChange={this.handleChange}
               handleSubmit={this.handleChangeLog}
+              changeType={changeType}
             />
           </Fragment>
         )}

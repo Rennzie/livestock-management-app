@@ -44,6 +44,8 @@ class CategoryHistory extends Component {
     this.setState({ sortedChanges });
   }
 
+  // NEXT: make the change history table scrollable
+
   render() {
     const { sortedChanges } = this.state;
     const { classes, handleChangeEdit } = this.props;

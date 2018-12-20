@@ -40,7 +40,7 @@ class ChangeEditDelete extends Component {
     });
   };
 
-  handleEditChange = () => {
+  handleEditChange = changeType => () => {
     const { createdAt, animalsMoved, reasonForChange } = this.state;
     const { history, match } = this.props;
 
@@ -52,7 +52,12 @@ class ChangeEditDelete extends Component {
     updatedChangeObj.animalsMoved = animalsMoved;
 
     // To ensure we send a negative number to database in the correct instance
-    if (change === 'death' || change === 'theft' || change === 'sale') {
+    if (
+      change === 'death' ||
+      change === 'theft' ||
+      change === 'sale' ||
+      change === 'transfersOut'
+    ) {
       updatedChangeObj.animalsMoved = animalsMoved * -1;
     }
 
@@ -61,7 +66,7 @@ class ChangeEditDelete extends Component {
         `/api/categories/${match.params.categoryId}/changes/${match.params.changeId}`,
         updatedChangeObj
       )
-      .then(() => history.push(`/manage-categories/${match.params.categoryId}/changes/history`));
+      .then(() => history.push(`/categories/${match.params.categoryId}`));
   };
 
   handleDeleteChange = () => {
@@ -85,7 +90,8 @@ class ChangeEditDelete extends Component {
             <ChangeForm
               change={newChange}
               handleChange={this.handleChange}
-              handleSubmit={this.handleChangeLog}
+              handleSubmit={this.handleEditChange}
+              changeType="edit"
             />
             <SubmitButton
               disabled={!newChange.reasonForChange}

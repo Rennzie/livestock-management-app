@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import NativeSelect from '@material-ui/core/NativeSelect';
@@ -50,7 +50,7 @@ const styles = theme => ({
 //   });
 // };
 
-function ChangeForm({ classes, change, handleChange, handleSubmit }) {
+function ChangeForm({ classes, change, handleChange, handleSubmit, changeType }) {
   return (
     <form className={classes.form}>
       <FormControl fullWidth>
@@ -64,13 +64,25 @@ function ChangeForm({ classes, change, handleChange, handleSubmit }) {
           input={<Input name="reasonForChange" id="reasonForChange" />}
         >
           <option value="">select reason</option>
-          <option value="births">Births</option>
-          <option value="death">Deaths</option>
-          <option value="purchase">Purchases</option>
-          <option value="transferIn">Transfers In</option>
-          <option value="transferOut">Transfers Out</option>
-          <option value="theft">Theft</option>
-          <option value="sale">Sales</option>
+          {(changeType === 'add' || changeType === 'edit') && (
+            <Fragment>
+              <option value="births">Births</option>
+              <option value="purchases">Purchases</option>
+            </Fragment>
+          )}
+          {(changeType === 'transfer' || changeType === 'edit') && (
+            <Fragment>
+              <option value="transfersIn">Transfers In</option>
+              <option value="transfersOut">Transfers Out</option>
+            </Fragment>
+          )}
+          {(changeType === 'remove' || changeType === 'edit') && (
+            <Fragment>
+              <option value="death">Deaths</option>
+              <option value="theft">Theft</option>
+              <option value="sale">Sales</option>
+            </Fragment>
+          )}
         </NativeSelect>
       </FormControl>
 
@@ -111,7 +123,7 @@ function ChangeForm({ classes, change, handleChange, handleSubmit }) {
         variant="contained"
         className={classes.margin}
         color="secondary"
-        handleClick={handleSubmit}
+        handleClick={handleSubmit(changeType)}
         name="Log Change"
       />
     </form>
