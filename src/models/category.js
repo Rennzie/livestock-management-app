@@ -30,6 +30,7 @@ const MonthlyChangeAccumulatorSchema = new Schema({
   name: String,
   total: Number
 });
+
 const MonthlyDetailSchema = new Schema({
   openingTotal: Number,
   inChanges: { type: Number, default: 0 },
@@ -95,18 +96,19 @@ CategorySchema.pre('save', function(next) {
   // console.log('this from pre save is', this);
 
   // at first save of a new month, archive last month, set the period and the openingTotal
-  const period = moment().format('MMM-YYYY');
-  let currentMonthUpdate = null;
+  // const period = moment().format('MMM-YYYY');
+  // let currentMonthUpdate = null;
 
-  if (this.currentMonthDetail.period !== period) {
-    // archives the current month at first save of a new month
-    const lastMonth = JSON.parse(JSON.stringify(this.currentMonthDetail));
-    this.prevMonthsDetail.push(lastMonth);
+  // if (this.currentMonthDetail.period !== period) {
+  //   // archives the current month at first save of a new month
+  //   const lastMonth = JSON.parse(JSON.stringify(this.currentMonthDetail));
+  //   this.prevMonthsDetail.push(lastMonth);
 
-    currentMonthUpdate = startNewMonth(lastMonth.closingTotal, period);
-  } else {
-    currentMonthUpdate = this.currentMonthDetail;
-  }
+  //   currentMonthUpdate = startNewMonth(lastMonth.closingTotal, period);
+  // } else {
+  // }
+
+  const currentMonthUpdate = this.currentMonthDetail;
 
   // updates the closing total and the change summary object
   currentMonthUpdate.closingTotal = getClosingTotal(
@@ -123,14 +125,37 @@ CategorySchema.pre('save', function(next) {
   next();
 });
 
-// NEXT: create pre hook that validates which month it is and starts the archive if necessary
-// CategorySchema.pre('findOne', function(next) {
-//   console.log('this from pre find and findOne', this.schema);
-//   next();
-// });
-
 // --- VIRTUALS ---//
 // --- METHODS ---//
+
+CategorySchema.methods.generateMonthsDetail = function() {
+  const period = moment().format('MMM-YYYY');
+
+  if (this.currentMonthDetail.period === period) return this.save();
+
+  // when its a new month
+  // archive the months detail
+  // start a new months detail and carry over the closing total of previous month
+
+  // Archive all the changes and start a new curreMonthChanges array
+  const lastMonthsChanges = {};
+  lastMonthsChanges.period = this.currentMonthDetail.period;
+  lastMonthsChanges.changes = [...this.currentMonthChanges];
+  this.prevMonthsChanges.push(lastMonthsChanges);
+
+  // make a reset the current month changes
+  this.currentMonthChanges = [];
+
+  // archives the current months detail object
+  const lastMonth = JSON.parse(JSON.stringify(this.currentMonthDetail));
+  this.prevMonthsDetail.push(lastMonth);
+
+  // starts a new months detail object carrying over closing total
+  const newMonthDetail = startNewMonth(lastMonth.closingTotal, period);
+  this.currentMonthDetail = newMonthDetail;
+
+  return this.save();
+};
 
 /**
  *  If the changePeriod is !== currentSavePeriod then it should be the next month
@@ -141,26 +166,26 @@ CategorySchema.pre('save', function(next) {
  *  Otherwise just add the newChange to the currentMonthChanges array
  */
 CategorySchema.methods.newChange = function(newChange) {
-  const lastMonth = moment()
-    .subtract(1, 'month')
-    .format('MMM-YYYY');
-  const changePeriod = moment(newChange.createdAt).format('MMM-YYYY');
-  // the period of the last saved monthlyDetail
-  const currentSavedPeriod = this.currentMonthDetail.period;
+  // const lastMonth = moment()
+  //   .subtract(1, 'month')
+  //   .format('MMM-YYYY');
+  // const changePeriod = moment(newChange.createdAt).format('MMM-YYYY');
+  // // the period of the last saved monthlyDetail
+  // const currentSavedPeriod = this.currentMonthDetail.period;
 
-  if (changePeriod !== currentSavedPeriod) {
-    // Archive all the changes and start a new curreMonthChanges array
-    const lastMonthsChanges = {};
-    lastMonthsChanges.period = lastMonth;
-    lastMonthsChanges.changes = [...this.currentMonthChanges];
-    this.prevMonthsChanges.push(lastMonthsChanges);
+  // if (changePeriod !== currentSavedPeriod) {
+  //   // Archive all the changes and start a new curreMonthChanges array
+  //   const lastMonthsChanges = {};
+  //   lastMonthsChanges.period = lastMonth;
+  //   lastMonthsChanges.changes = [...this.currentMonthChanges];
+  //   this.prevMonthsChanges.push(lastMonthsChanges);
 
-    // make a fresh currentMonthChanges
-    this.currentMonthChanges = [];
-    this.currentMonthChanges.push(newChange);
+  //   // make a fresh currentMonthChanges
+  //   this.currentMonthChanges = [];
+  //   this.currentMonthChanges.push(newChange);
 
-    return this.save();
-  }
+  //   return this.save();
+  // }
 
   this.currentMonthChanges.push(newChange);
 

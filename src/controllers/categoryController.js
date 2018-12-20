@@ -16,6 +16,7 @@ function indexcategories(req, res, next) {
 function showCategory(req, res, next) {
   Category.findById(req.params.id)
     .populate('farm')
+    .then(category => category.generateMonthsDetail())
     .then(category => res.json(category))
     .catch(next);
 }
