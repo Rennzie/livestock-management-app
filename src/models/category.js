@@ -16,7 +16,9 @@ const { ObjectId } = Schema.Types;
 // === SUB-DOCUMENTS ===//
 const ChangeTrackerSchema = new Schema({
   createdAt: Date,
-  reasonForChange: { type: String, enum: ['add', 'purchase', 'death', 'theft', 'sale', 'other'] },
+  reasonForChange: {
+    type: String
+  },
   animalsMoved: Number,
   notes: String
 });

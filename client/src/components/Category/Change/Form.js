@@ -64,11 +64,13 @@ function ChangeForm({ classes, change, handleChange, handleSubmit }) {
           input={<Input name="reasonForChange" id="reasonForChange" />}
         >
           <option value="">select reason</option>
-          <option value="add">Add</option>
-          <option value="purchase">Purchase</option>
-          <option value="death">Death</option>
+          <option value="births">Births</option>
+          <option value="death">Deaths</option>
+          <option value="purchase">Purchases</option>
+          <option value="transferIn">Transfers In</option>
+          <option value="transferOut">Transfers Out</option>
           <option value="theft">Theft</option>
-          <option value="sale">Sale</option>
+          <option value="sale">Sales</option>
         </NativeSelect>
       </FormControl>
 

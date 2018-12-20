@@ -39,7 +39,7 @@ class CategoryHistory extends Component {
     const { changes } = this.props;
 
     const unSortedChanges = changes;
-    const sortedChanges = orderBy(unSortedChanges, change => change.createdAt, ['desc']);
+    const sortedChanges = orderBy(unSortedChanges, change => change.createdAt, ['asc']);
 
     this.setState({ sortedChanges });
   }
@@ -58,7 +58,7 @@ class CategoryHistory extends Component {
                     <TableCell>Date</TableCell>
                     <TableCell>Reason</TableCell>
                     <TableCell numeric>Moved</TableCell>
-                    <TableCell>Edit</TableCell>
+                    <TableCell />
                   </TableRow>
                 </TableHead>
                 <TableBody className={classes.body}>
@@ -79,7 +79,7 @@ class CategoryHistory extends Component {
                       </TableCell>
 
                       <TableCell onClick={handleChangeEdit(row._id)}>
-                        <Icon fontSize="small">more_horiz</Icon>
+                        <Icon fontSize="small">edit</Icon>
                       </TableCell>
                     </TableRow>
                   ))}
