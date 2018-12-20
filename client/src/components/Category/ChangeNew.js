@@ -2,22 +2,12 @@ import React, { Component, Fragment } from 'react';
 
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import Input from '@material-ui/core/Input';
-import Fab from '@material-ui/core/Fab';
-
-import AddIcon from '@material-ui/icons/Add';
 import Icon from '@material-ui/core/Icon';
-import UpArrowIcon from '@material-ui/icons/ArrowDropUp';
-import DownArrowIcon from '@material-ui/icons/ArrowDropDown';
-import SubtractIcon from '@material-ui/icons/Remove';
-
 import withStyles from '@material-ui/core/styles/withStyles';
-
-// Components
 
 // Dependancies
 import moment from 'moment';
@@ -28,14 +18,12 @@ const styles = theme => ({
   form: {
     display: 'flex',
     flexDirection: 'column',
-    // alignItems: 'center',
     justifyContent: 'spaceAround',
     margin: theme.spacing.unit
   },
   animalsMoved: {
     display: 'flex',
     flexDirection: 'column',
-    // alignItems: 'center',
     justifyContent: 'spaceAround',
     margin: 'auto',
     width: '40%'

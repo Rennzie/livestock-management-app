@@ -5,6 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
+import IconButton from '@material-ui/core/IconButton';
+import Icon from '@material-ui/core/Icon';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import LoadingSpinner from '../common/LoadingSpinner';
@@ -13,6 +15,8 @@ import CategoryHistory from './ChangeHistory';
 
 const styles = theme => ({
   header: {
+    display: 'flex',
+    justifyContent: 'space-between',
     position: 'fixed',
     width: '100%',
     zIndex: 2,
@@ -79,21 +83,30 @@ class CategoryShow extends Component {
     history.push(`/manage-categories/${match.params.categoryId}/changes/${changeId}/edit`);
   };
 
+  handleRemove = () => {
+    const { category } = this.state;
+    const { history } = this.props;
+    Axios.delete(`/api/categories/${category._id}`).then(() => history.push('/'));
+  };
+
   render() {
     const { category } = this.state;
     const { classes } = this.props;
     return (
       <Fragment>
-        <section className={classes.header}>
-          <Paper square>
-            <CapitalizeText variant="h5" align="center">
-              {!category ? 'Category' : category.category}
-            </CapitalizeText>
-            <Typography variant="subtitle1" align="center">
-              {!category ? 'Period' : category.currentMonthDetail.period}
-            </Typography>
-          </Paper>
-        </section>
+        {/* <section className={classes.header}> */}
+        <Paper className={classes.header} square>
+          <CapitalizeText variant="h5" align="center">
+            {!category ? 'Category' : category.category}
+          </CapitalizeText>
+          <Typography variant="subtitle1" align="center">
+            {!category ? 'Period' : category.currentMonthDetail.period}
+          </Typography>
+          <IconButton disabled={!category} onClick={this.handleRemove}>
+            <Icon fontSize="small">delete</Icon>
+          </IconButton>
+        </Paper>
+        {/* </section> */}
         <Fragment>
           {!category ? (
             <LoadingSpinner />

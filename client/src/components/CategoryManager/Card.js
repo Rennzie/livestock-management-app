@@ -11,10 +11,19 @@ const styles = theme => ({
   margin: {
     margin: theme.spacing.unit
   },
+  padding: {
+    padding: theme.spacing.unit * 1.5
+  },
   spreadRow: {
     display: 'flex',
     justifyContent: 'space-between',
     textDecoration: 'none'
+  },
+  paddingLeft: {
+    paddingLeft: theme.spacing.unit * 3
+  },
+  paddingRight: {
+    paddingRight: theme.spacing.unit * 3
   }
 });
 
@@ -23,7 +32,7 @@ function CategoryCard({ category, classes }) {
     <Paper
       component={Link}
       to={`/categories/${category._id}`}
-      className={classNames(classes.margin, classes.spreadRow)}
+      className={classNames(classes.margin, classes.padding, classes.spreadRow)}
     >
       <CapitalizeText className={classes.margin} gutterBottom variant="subtitle2">
         {category.category}
