@@ -64,7 +64,7 @@ class CategoryNew extends Component {
     const newChange = {};
     newChange.animalsMoved = animalsMoved;
     newChange.createdAt = moment();
-    newChange.reasonForChange = 'add';
+    newChange.reasonForChange = 'initialAdd';
 
     axios
       .post('/api/categories', newCategory)

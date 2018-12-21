@@ -38,7 +38,18 @@ function register(req, res, next) {
     .catch(next);
 }
 
+function googleAuth(req, res) {
+  console.log('googleAuth fired from withn the controller', req.user);
+  const io = req.app.get('io');
+  const user = {
+    name: req.user.displayName,
+    photo: req.user.photos[0].value.replace(/sz=50/gi, 'sz=250')
+  };
+  io.in(req.session.socketId).emit('google', user);
+}
+
 export default {
   login,
-  register
+  register,
+  google: googleAuth
 };

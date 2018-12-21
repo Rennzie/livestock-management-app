@@ -26,6 +26,7 @@ import CategoryShow from './Category/Show';
 
 // Dependancies
 import Auth from '../lib/Auth';
+import ServiceLogin from './auth/ServiceLogin';
 
 const styles = () => ({
   appBackground: {
@@ -65,7 +66,7 @@ function App({ classes }) {
 
       {!loggedIn ? (
         <Switch>
-          <Route exact path="/" component={Login} />
+          <Route exact path="/" component={ServiceLogin} />
           <Route exact path="/register" component={Register} />
         </Switch>
       ) : (
