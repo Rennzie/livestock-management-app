@@ -56,6 +56,7 @@ app.use(
 // Connecting sockets to the server and adding them to the request
 // so that we can access them later in the controller
 const io = socketio(server);
+
 app.set('io', io);
 
 app.use('/', authRouter);

@@ -1,33 +1,35 @@
 import React, { Component } from 'react';
-import FontAwesome from 'react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 import API_URL from '../../../config/config';
 
 export default class OAuth extends Component {
-  state = {
-    user: {},
-    disabled: ''
-  };
-
   componentDidMount() {
     const { socket, provider } = this.props;
 
-    socket.on(provider, user => {
+    // token is the returned socket object from every emit
+    socket.on(provider, token => {
       this.popup.close();
-      this.setState({ user });
+      if (token) {
+        localStorage.setItem('token', token);
+      }
     });
   }
 
-  // Routinely checks the popup to re-enable the login button
-  // if the user closes the popup without authenticating.
-  checkPopup() {
-    const check = setInterval(() => {
-      const { popup } = this;
-      if (!popup || popup.closed || popup.closed === undefined) {
-        clearInterval(check);
-        this.setState({ disabled: '' });
-      }
-    }, 1000);
+  componentWillUnmount() {
+    const { socket, provider } = this.props;
+    socket.off(provider);
   }
+
+  // Kicks off the processes of opening the popup on the server and listening
+  // to the popup. It also disables the login button so the user can not
+  // attempt to login to the provider twice.
+  startAuth = e => {
+    e.preventDefault();
+    this.popup = this.openPopup();
+    this.checkPopup();
+  };
 
   // Launches the popup by making a request to the server and then
   // passes along the socket id so it can be used to send back user
@@ -50,47 +52,25 @@ export default class OAuth extends Component {
     );
   }
 
-  // Kicks off the processes of opening the popup on the server and listening
-  // to the popup. It also disables the login button so the user can not
-  // attempt to login to the provider twice.
-  startAuth = e => {
-    const { disabled } = this.state;
-    if (!disabled) {
-      e.preventDefault();
-      this.popup = this.openPopup();
-      this.checkPopup();
-      this.setState({ disabled: 'disabled' });
-    }
-  };
-
-  closeCard = () => {
-    this.setState({ user: {} });
-  };
+  // Routinely checks the popup to re-enable the login button
+  // if the user closes the popup without authenticating.
+  checkPopup() {
+    const check = setInterval(() => {
+      const { popup } = this;
+      if (!popup || popup.closed || popup.closed === undefined) {
+        clearInterval(check);
+      }
+    }, 1000);
+  }
 
   render() {
-    const { user, disabled } = this.state;
-    const { provider } = this.props;
-    const { name, photo, token } = user;
-
     // removed the bind(this) from the onClick methods. could cause an issue
     return (
-      <div>
-        {name ? (
-          <div className="card">
-            <img src={photo} alt={name} />
-            <FontAwesome name="times-circle" className="close" onClick={this.closeCard} />
-            <h4>{name}</h4>
-            <div>Token:{token}</div>
-          </div>
-        ) : (
-          <div className="button-wrapper fadein-fast">
-            {/* eslint-disable-next-line react/button-has-type */}
-            <button onClick={this.startAuth} className={`${provider} ${disabled} button`}>
-              <FontAwesome name={provider} />
-            </button>
-          </div>
-        )}
-      </div>
+      <Paper>
+        <Button color="primary" onClick={this.startAuth}>
+          <FontAwesomeIcon icon="igloo" />
+        </Button>
+      </Paper>
     );
   }
 }

@@ -5,6 +5,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 // COMPONENTS
+import { library } from '@fortawesome/fontawesome-svg-core';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faIgloo } from '@fortawesome/free-solid-svg-icons';
 import BottomNav from './BottomNav';
 
 // Auth
@@ -27,6 +30,8 @@ import CategoryShow from './Category/Show';
 // Dependancies
 import Auth from '../lib/Auth';
 import ServiceLogin from './auth/ServiceLogin';
+
+library.add(faIgloo);
 
 const styles = () => ({
   appBackground: {
