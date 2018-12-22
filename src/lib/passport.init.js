@@ -1,12 +1,46 @@
-// lib/passport.init.js
-
-// const { Strategy: TwitterStrategy } = require('passport-twitter');
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
 import passport from 'passport';
 
 import { GOOGLE_CONFIG } from '../config/config';
+import User from '../models/user';
 
+export default () => {
+  // Allowing passport to sesrialize and deserialize users into sessions
+  // passport.serializeUser((user, cb) => cb(null, user));
+  // passport.deserializeUser((obj, cb) => cb(null, obj));
+
+  // The function that is called when an OAuth provider sends back user
+  // information.  Normally, you would save the user to the database
+  // in a callback that was customized for each provider.
+  const callback = (req, accessToken, refreshToken, profile, next) => {
+    // console.log('profile from google is ', profile);
+    const email = profile.emails[0].value;
+    User.findOne({ email })
+      .then(user => {
+        if (!user) {
+          // we will create a user here if they done exists; signing them up
+          return next(null, false, { message: 'email is invalid' });
+        }
+        // puts the user profile onto the req obj and calls next in line
+        // in thiscase it is the authController.google function
+        return next(null, user);
+      })
+      .catch(next);
+  };
+
+  // Adding each OAuth provider's strategy to passport
+  if (GOOGLE_CONFIG.clientID) {
+    passport.use(new GoogleStrategy(GOOGLE_CONFIG, callback));
+  }
+};
+
+// ****** additional routes for other oAuth providers//
+
+// passport.use(new TwitterStrategy(TWITTER_CONFIG, callback));
+// passport.use(new FacebookStrategy(FACEBOOK_CONFIG, callback));
+// passport.use(new GithubStrategy(GITHUB_CONFIG, callback));
 // const { Strategy: FacebookStrategy } = require('passport-facebook');
+// const { Strategy: TwitterStrategy } = require('passport-twitter');
 // const { Strategy: GithubStrategy } = require('passport-github');
 // const {
 //   TWITTER_CONFIG,
@@ -14,23 +48,3 @@ import { GOOGLE_CONFIG } from '../config/config';
 //   FACEBOOK_CONFIG,
 //   GITHUB_CONFIG
 // } = require('../config/environment');
-
-export default () => {
-  // Allowing passport to sesrialize and deserialize users into sessions
-  passport.serializeUser((user, cb) => cb(null, user));
-  passport.deserializeUser((obj, cb) => cb(null, obj));
-
-  // The function that is called when an OAuth provider sends back user
-  // information.  Normally, you would save the user to the database
-  // in a callback that was customized for each provider.
-  const callback = (accessToken, refreshToken, profile, cb) => {
-    console.log('profile from google is ', profile);
-    return cb(null, profile);
-  };
-
-  // Adding each OAuth provider's strategy to passport
-  // passport.use(new TwitterStrategy(TWITTER_CONFIG, callback));
-  passport.use(new GoogleStrategy(GOOGLE_CONFIG, callback));
-  // passport.use(new FacebookStrategy(FACEBOOK_CONFIG, callback));
-  // passport.use(new GithubStrategy(GITHUB_CONFIG, callback));
-};

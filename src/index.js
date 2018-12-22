@@ -61,14 +61,11 @@ app.set('io', io);
 app.use('/', authRouter);
 app.use('/api', Router);
 
-// if (ENV === 'production') {
-// app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
-// app.use(expressStaticGzip(path.join(__dirname, '..', 'client', 'dist')));
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
-// });
-// }
-// app.get('/*', (req, res) => res.sendFile(`${__dirname}/public/index.html`));
+app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
+app.use(expressStaticGzip(path.join(__dirname, '..', 'client', 'dist')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
+});
 
 app.use(errorHandler);
 

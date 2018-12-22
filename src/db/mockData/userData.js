@@ -5,7 +5,7 @@ const userData = [
   {
     _id: userIds[0],
     username: 'Example',
-    email: 'example@gmail.com',
+    email: 'rnnsea001@gmail.com',
     password: 'pass',
     passwordConfirmation: 'pass',
     firstName: 'User',

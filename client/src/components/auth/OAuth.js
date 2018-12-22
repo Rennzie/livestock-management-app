@@ -70,7 +70,7 @@ export default class OAuth extends Component {
   render() {
     const { user, disabled } = this.state;
     const { provider } = this.props;
-    const { name, photo } = user;
+    const { name, photo, token } = user;
 
     // removed the bind(this) from the onClick methods. could cause an issue
     return (
@@ -80,6 +80,7 @@ export default class OAuth extends Component {
             <img src={photo} alt={name} />
             <FontAwesome name="times-circle" className="close" onClick={this.closeCard} />
             <h4>{name}</h4>
+            <div>Token:{token}</div>
           </div>
         ) : (
           <div className="button-wrapper fadein-fast">
