@@ -5,33 +5,23 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 // COMPONENTS
-import { library } from '@fortawesome/fontawesome-svg-core';
+// import { library } from '@fortawesome/fontawesome-svg-core';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faIgloo } from '@fortawesome/free-solid-svg-icons';
+// import { faIgloo } from '@fortawesome/free-solid-svg-icons';
 import BottomNav from './BottomNav';
-
-// Auth
 import Login from './auth/Login';
 import Register from './auth/Register';
-
-// General
 import Dashboard from './Dashboard/index';
-
-// Farms
 import FarmNew from './Farms/New';
-
-// Category/categories
 import CategoryManager from './CategoryManager';
 import ChangeNew from './Category/ChangeNew';
 import CategoryNew from './Category/New';
 import ChangeEditDelete from './Category/ChangeEditDelete';
 import CategoryShow from './Category/Show';
-
-// Dependancies
 import Auth from '../lib/Auth';
 import ServiceLogin from './auth/ServiceLogin';
 
-library.add(faIgloo);
+// library.add(faIgloo);
 
 const styles = () => ({
   appBackground: {

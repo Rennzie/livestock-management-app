@@ -68,7 +68,8 @@ export default class OAuth extends Component {
     return (
       <Paper>
         <Button color="primary" onClick={this.startAuth}>
-          <FontAwesomeIcon icon="igloo" />
+          Google
+          {/* <FontAwesomeIcon icon="igloo" /> */}
         </Button>
       </Paper>
     );
