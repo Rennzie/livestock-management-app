@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import withRouter from 'react-router-dom/withRouter';
 
 import Typography from '@material-ui/core/Typography';
 import Input from '@material-ui/core/Input';
@@ -11,7 +11,6 @@ import withStyles from '@material-ui/core/styles/withStyles';
 // Dependancies
 import axios from 'axios';
 import Auth from '../../lib/Auth';
-// import SubmitButton from '../common/SubmitButton';
 
 const styles = theme => ({
   fromWrapper: {
@@ -30,9 +29,8 @@ const styles = theme => ({
   }
 });
 
-class Login extends Component {
+class EmailLogin extends Component {
   state = {
-    // passwordVisible: false,
     email: '',
     password: ''
   };
@@ -65,7 +63,7 @@ class Login extends Component {
     return (
       <Fragment>
         <Typography variant="h5" align="center">
-          Login
+          Email Login
         </Typography>
 
         <div className={classes.fromWrapper}>
@@ -99,20 +97,15 @@ class Login extends Component {
             <Button className={classes.margin} onClick={this.handleLogin} color="secondary">
               Login
             </Button>
-            <Button
-              component={Link}
-              to="/register"
-              variant="text"
-              className={classes.margin}
-              color="secondary"
-            >
-              Not got an account? Register
-            </Button>
           </section>
+          <Typography variant="caption">
+            {' '}
+            Please beware that there is no password recovery for this option at this stage
+          </Typography>
         </div>
       </Fragment>
     );
   }
 }
 
-export default withRouter(withStyles(styles)(Login));
+export default withRouter(withStyles(styles)(EmailLogin));

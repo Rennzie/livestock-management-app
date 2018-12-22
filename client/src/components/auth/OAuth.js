@@ -2,9 +2,20 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
+import withStyles from '@material-ui/core/styles/withStyles';
 import API_URL from '../../../config/config';
 
-export default class OAuth extends Component {
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+    width: '100%'
+  },
+  margin: {
+    margin: theme.spacing.unit
+  }
+});
+
+class OAuth extends Component {
   componentDidMount() {
     const { socket, provider } = this.props;
 
@@ -64,14 +75,16 @@ export default class OAuth extends Component {
   }
 
   render() {
-    // removed the bind(this) from the onClick methods. could cause an issue
+    const { provider, classes } = this.props;
     return (
-      <Paper>
+      <Paper className={classes.button}>
         <Button color="primary" onClick={this.startAuth}>
-          Google
-          {/* <FontAwesomeIcon icon="igloo" /> */}
+          <FontAwesomeIcon className={classes.margin} icon={['fab', provider]} />
+          {`Sign In with ${provider}`}
         </Button>
       </Paper>
     );
   }
 }
+
+export default withStyles(styles)(OAuth);

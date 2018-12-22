@@ -5,11 +5,11 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 // COMPONENTS
-// import { library } from '@fortawesome/fontawesome-svg-core';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faIgloo } from '@fortawesome/free-solid-svg-icons';
 import BottomNav from './BottomNav';
-import Login from './auth/Login';
+import Header from './Header';
+import ChooseLogin from './auth/ChooseLogin';
+import EmailLogin from './auth/EmailLogin';
+import ServiceLogin from './auth/ServiceLogin';
 import Register from './auth/Register';
 import Dashboard from './Dashboard/index';
 import FarmNew from './Farms/New';
@@ -18,10 +18,9 @@ import ChangeNew from './Category/ChangeNew';
 import CategoryNew from './Category/New';
 import ChangeEditDelete from './Category/ChangeEditDelete';
 import CategoryShow from './Category/Show';
-import Auth from '../lib/Auth';
-import ServiceLogin from './auth/ServiceLogin';
 
-// library.add(faIgloo);
+// Dependancies
+import Auth from '../lib/Auth';
 
 const styles = () => ({
   appBackground: {
@@ -61,12 +60,15 @@ function App({ classes }) {
 
       {!loggedIn ? (
         <Switch>
-          <Route exact path="/" component={ServiceLogin} />
+          <Route exact path="/" component={ChooseLogin} />
+          <Route exact path="/email-login" component={EmailLogin} />
+          <Route exact path="/service-login" component={ServiceLogin} />
           <Route exact path="/register" component={Register} />
         </Switch>
       ) : (
         <Fragment>
           <main className={classes.appBackground}>
+            <Header />
             <Switch>
               <Route exact path="/" component={Dashboard} />
 
