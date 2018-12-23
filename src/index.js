@@ -11,6 +11,7 @@ import session from 'express-session';
 import http from 'http';
 import dotenv from 'dotenv';
 import Router from './config/routes';
+import authRouter from './config/endpoints/auth.router';
 import passportInit from './lib/passport.init';
 import errorHandler from './lib/errorHandler';
 import { PORT, DB_URI, CLIENT_ORIGIN } from './config/environment';
@@ -58,6 +59,7 @@ const io = socketio(server);
 
 app.set('io', io);
 
+app.use('/', authRouter);
 app.use('/api', Router);
 
 app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));

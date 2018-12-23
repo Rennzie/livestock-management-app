@@ -1,7 +1,7 @@
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
 import passport from 'passport';
 
-import { GOOGLE_CONFIG } from '../config/config';
+import GOOGLE_CONFIG from '../config/config';
 import User from '../models/user';
 
 export default () => {
