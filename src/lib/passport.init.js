@@ -5,15 +5,12 @@ import GOOGLE_CONFIG from '../config/config';
 import User from '../models/user';
 
 export default () => {
-  // Allowing passport to sesrialize and deserialize users into sessions
-  // passport.serializeUser((user, cb) => cb(null, user));
-  // passport.deserializeUser((obj, cb) => cb(null, obj));
-
-  // The function that is called when an OAuth provider sends back user
-  // information.  Normally, you would save the user to the database
-  // in a callback that was customized for each provider.
+  /**
+   *     The function that is called when an OAuth provider sends back user
+   *     information.  Normally, you would save the user to the database
+   *     in a callback that was customized for each provider.
+   */
   const callback = (req, accessToken, refreshToken, profile, next) => {
-    console.log('PASSPORT CALL BACK FIRED');
     const email = profile.emails[0].value;
     User.findOne({ email })
       .then(user => {
@@ -21,8 +18,10 @@ export default () => {
           // we will create a user here if they done exists; signing them up
           return next(null, false, { message: 'email is invalid' });
         }
-        // puts the user profile onto the req obj and calls next in line
-        // in thiscase it is the authController.google function
+        /**
+         *  Puts the user profile onto the req obj and calls next in line
+         *  in this case it is the authController.google function
+         */
         return next(null, user);
       })
       .catch(next);

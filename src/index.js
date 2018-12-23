@@ -11,7 +11,7 @@ import session from 'express-session';
 import http from 'http';
 import dotenv from 'dotenv';
 import Router from './config/routes';
-import authRouter from './config/endpoints/auth.router';
+import oAuthRouter from './config/endpoints/oAuth.router';
 import passportInit from './lib/passport.init';
 import errorHandler from './lib/errorHandler';
 import { PORT, DB_URI, CLIENT_ORIGIN } from './config/environment';
@@ -43,8 +43,10 @@ app.use(
   })
 );
 
-// saveUninitialized: true allows us to attach the socket id to the session
-// before we have athenticated the user
+/**
+ * saveUninitialized: true allows us to attach the socket id to the session
+ * before we have athenticated the user
+ */
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -53,13 +55,15 @@ app.use(
   })
 );
 
-// Connecting sockets to the server and adding them to the request
-// so that we can access them later in the controller
+/**
+ *  Connecting sockets to the server and adding them to the request
+ *  so that we can access them later in the controller
+ */
 const io = socketio(server);
 
 app.set('io', io);
 
-app.use('/', authRouter);
+app.use('/', oAuthRouter);
 app.use('/api', Router);
 
 app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));

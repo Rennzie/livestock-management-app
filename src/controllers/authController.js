@@ -2,11 +2,6 @@ import jwt from 'jsonwebtoken';
 import User from '../models/user';
 import { SECRET } from '../config/environment';
 
-function createAndSendToken(user, res, message) {
-  const token = generateToken(user);
-  return res.status(201).json({ user, message, token });
-}
-
 function generateToken(user) {
   const payload = {
     sub: user.id,
@@ -15,6 +10,11 @@ function generateToken(user) {
 
   const token = jwt.sign(payload, SECRET, { expiresIn: '6h' });
   return token;
+}
+
+function createAndSendToken(user, res, message) {
+  const token = generateToken(user);
+  return res.status(201).json({ user, message, token });
 }
 
 function login(req, res, next) {
@@ -36,9 +36,12 @@ function register(req, res, next) {
     .catch(next);
 }
 
-// callback fired at the end of passport auth protocal for google
+/**
+ *  Callback fired at the end of passport auth protocal for google
+ *  Generates a token with the user id and emit it via the socket to the
+ *  login page on the front end
+ * */
 function googleAuth(req) {
-  console.log('GOOGLEAUTH CONTROLLER FIRED');
   const io = req.app.get('io');
   const token = generateToken(req.user);
   io.in(req.session.socketId).emit('google', token);
