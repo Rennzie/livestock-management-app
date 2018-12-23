@@ -38,14 +38,9 @@ function register(req, res, next) {
 
 // callback fired at the end of passport auth protocal for google
 function googleAuth(req) {
-  console.log('googleAuth fired from withn the controller', req.user);
+  console.log('GOOGLEAUTH CONTROLLER FIRED');
   const io = req.app.get('io');
   const token = generateToken(req.user);
-  // const user = {
-  //   name: req.user.username,
-  //   token
-  //   // photo: req.user.photos[0].value.replace(/sz=50/gi, 'sz=250')
-  // };
   io.in(req.session.socketId).emit('google', token);
 }
 

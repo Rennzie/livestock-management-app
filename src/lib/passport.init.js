@@ -13,7 +13,7 @@ export default () => {
   // information.  Normally, you would save the user to the database
   // in a callback that was customized for each provider.
   const callback = (req, accessToken, refreshToken, profile, next) => {
-    // console.log('profile from google is ', profile);
+    console.log('PASSPORT CALL BACK FIRED');
     const email = profile.emails[0].value;
     User.findOne({ email })
       .then(user => {

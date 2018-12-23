@@ -11,6 +11,8 @@ const googleAuth = passport.authenticate('google', { session: false, scope: ['pr
 // With the socket id attached we can send back the right user info to
 // the right socket
 const addSocketIdtoSession = (req, res, next) => {
+  console.log('SOCKETID SAVED TO SESSION');
+
   req.session.socketId = req.query.socketId;
   next();
 };

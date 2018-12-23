@@ -4,10 +4,12 @@ dotenv.config();
 
 const providers = ['google'];
 
-const callbacks = providers.map(provider =>
-  process.env.NODE_ENV === 'production'
-    ? `http://react-auth-twitter.herokuapp.com/${provider}/callback`
-    : `http://localhost:4000/${provider}/callback`
+const callbacks = providers.map(
+  provider =>
+    // process.env.NODE_ENV === 'production'
+    //   ? `http://react-auth-twitter.herokuapp.com/${provider}/callback`
+    //   :
+    `http://localhost:4000/api/${provider}/callback`
 );
 
 const [googleURL] = callbacks;
