@@ -6,7 +6,7 @@ function newCategory(req, res, next) {
     .catch(next);
 }
 
-function indexcategories(req, res, next) {
+function indexCategories(req, res, next) {
   Category.find()
     .populate('farm')
     .then(categories => res.json(categories))
@@ -75,7 +75,7 @@ function showTrackedChange(req, res, next) {
 
 export default {
   create: newCategory,
-  index: indexcategories,
+  index: indexCategories,
   show: showCategory,
   edit: updateCategory,
   delete: deleteCategory,

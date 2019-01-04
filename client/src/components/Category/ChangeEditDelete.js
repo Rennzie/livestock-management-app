@@ -41,7 +41,8 @@ class ChangeEditDelete extends Component {
   };
 
   handleEditChange = changeType => () => {
-    const { createdAt, animalsMoved, reasonForChange } = this.state;
+    const { newChange } = this.state;
+    const { createdAt, animalsMoved, reasonForChange } = newChange;
     const { history, match } = this.props;
 
     const change = reasonForChange;
@@ -60,6 +61,8 @@ class ChangeEditDelete extends Component {
     ) {
       updatedChangeObj.animalsMoved = animalsMoved * -1;
     }
+
+    console.log('change obj is', updatedChangeObj);
 
     axios
       .put(
