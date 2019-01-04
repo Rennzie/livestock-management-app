@@ -16,9 +16,7 @@ const { ObjectId } = Schema.Types;
 // === SUB-DOCUMENTS ===//
 const ChangeTrackerSchema = new Schema({
   createdAt: Date,
-  reasonForChange: {
-    type: String
-  },
+  reasonForChange: String,
   animalsMoved: Number,
   notes: String
 });
@@ -45,23 +43,10 @@ const MonthlyDetailSchema = new Schema({
 // === DOCUMENT ===//
 const CategorySchema = new Schema(
   {
-    category: {
-      type: String,
-      enum: [
-        'bulls-1-2',
-        'bulls',
-        'calves',
-        'cows',
-        'heifers-1-2',
-        'heifers-2-3',
-        'heifers-culls',
-        'oxen-1-2',
-        'oxen-2-3',
-        'oxen-mature',
-        'weaner-heifers',
-        'weaner-oxen'
-      ]
-    },
+    category: String,
+    stockUnitFactor: Number,
+    stockUnitType: String,
+    inUse: Boolean,
     farm: { type: ObjectId, ref: 'Farm', required: true },
     currentMonthDetail: {
       openingTotal: { type: Number, default: 0 },
@@ -95,21 +80,6 @@ const CategorySchema = new Schema(
  *        A more robust solution would be to create change summary from the monthly detail archive??
  */
 CategorySchema.pre('save', function(next) {
-  // console.log('this from pre save is', this);
-
-  // at first save of a new month, archive last month, set the period and the openingTotal
-  // const period = moment().format('MMM-YYYY');
-  // let currentMonthUpdate = null;
-
-  // if (this.currentMonthDetail.period !== period) {
-  //   // archives the current month at first save of a new month
-  //   const lastMonth = JSON.parse(JSON.stringify(this.currentMonthDetail));
-  //   this.prevMonthsDetail.push(lastMonth);
-
-  //   currentMonthUpdate = startNewMonth(lastMonth.closingTotal, period);
-  // } else {
-  // }
-
   const currentMonthUpdate = this.currentMonthDetail;
 
   // updates the closing total and the change summary object
@@ -135,10 +105,6 @@ CategorySchema.methods.generateMonthsDetail = function() {
 
   if (this.currentMonthDetail.period === period) return this.save();
 
-  // when its a new month
-  // archive the months detail
-  // start a new months detail and carry over the closing total of previous month
-
   // Archive all the changes and start a new curreMonthChanges array
   const lastMonthsChanges = {};
   lastMonthsChanges.period = this.currentMonthDetail.period;
@@ -159,36 +125,7 @@ CategorySchema.methods.generateMonthsDetail = function() {
   return this.save();
 };
 
-/**
- *  If the changePeriod is !== currentSavePeriod then it should be the next month
- *
- *  Then we need to archive the pervious months changes
- *  and add the new change to the monthly changes array before saving
- *
- *  Otherwise just add the newChange to the currentMonthChanges array
- */
 CategorySchema.methods.newChange = function(newChange) {
-  // const lastMonth = moment()
-  //   .subtract(1, 'month')
-  //   .format('MMM-YYYY');
-  // const changePeriod = moment(newChange.createdAt).format('MMM-YYYY');
-  // // the period of the last saved monthlyDetail
-  // const currentSavedPeriod = this.currentMonthDetail.period;
-
-  // if (changePeriod !== currentSavedPeriod) {
-  //   // Archive all the changes and start a new curreMonthChanges array
-  //   const lastMonthsChanges = {};
-  //   lastMonthsChanges.period = lastMonth;
-  //   lastMonthsChanges.changes = [...this.currentMonthChanges];
-  //   this.prevMonthsChanges.push(lastMonthsChanges);
-
-  //   // make a fresh currentMonthChanges
-  //   this.currentMonthChanges = [];
-  //   this.currentMonthChanges.push(newChange);
-
-  //   return this.save();
-  // }
-
   this.currentMonthChanges.push(newChange);
 
   return this.save();

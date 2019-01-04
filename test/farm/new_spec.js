@@ -2,6 +2,7 @@
 
 import Farm from '../../src/models/farm';
 import User from '../../src/models/user';
+import Category from '../../src/models/category';
 import farmTestData from '../testData/farmData';
 import userTestData from '../testData/usersData';
 
@@ -35,6 +36,17 @@ describe('POST /api/farms', () => {
         expect(res.body.name).to.eq(farmData.name);
         expect(res.body._id).to.eq(farmData._id);
         expect(res.body.farmOwner).to.eq(farmData.farmOwner);
+        done();
+      });
+  });
+
+  it('should create default categories with the farms id', done => {
+    api
+      .post('/api/farms')
+      .send(farmData)
+      .then(() => Category.find({ farm: farmData._id }))
+      .then(categories => {
+        expect(categories.length).to.be.above(0);
         done();
       });
   });
