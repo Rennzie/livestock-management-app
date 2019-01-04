@@ -62,8 +62,6 @@ class ChangeEditDelete extends Component {
       updatedChangeObj.animalsMoved = animalsMoved * -1;
     }
 
-    console.log('change obj is', updatedChangeObj);
-
     axios
       .put(
         `/api/categories/${match.params.categoryId}/changes/${match.params.changeId}`,

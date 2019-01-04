@@ -12,5 +12,6 @@ export default function SecureRoute({ exact, component, path }) {
   if (!Auth.isAuthenticated()) {
     return <Redirect to="/" />;
   }
+
   return <Route exact={exact} path={path} component={component} />;
 }

@@ -1,20 +1,29 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import Switch from 'react-router-dom/Switch';
-import Route from 'react-router-dom/Route';
+import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import ChooseLogin from './auth/ChooseLogin';
-import EmailLogin from './auth/EmailLogin';
-import ServiceLogin from './auth/ServiceLogin';
-import Register from './auth/Register';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Pages from './Pages';
+import Login from './Login';
 
 import Auth from '../lib/Auth';
+
+import BottomNav from './BottomNav';
+import Header from './Header';
+
+const styles = () => ({
+  appBackground: {
+    backgroundColor: '#fbc02d',
+    height: '100vh',
+    width: '100vw'
+  }
+});
+
 /**
  *  This App component uses the new React hooks to ensure a user is logged in.
  *  This ensures that stockman can only be reached if there is a token in local memory
  *  The Auth.isAuthenticated checks to see a user has both a token and that it has not passed expirery.
  */
-function App() {
+
+function App({ classes }) {
   const [loggedIn, setLoggedIn] = useState(false);
 
   // /**
@@ -33,19 +42,14 @@ function App() {
     }
   });
 
-  // GOAL: make the un logged in user redirect to login from any page
-
   return (
-    <Fragment>
+    <main className={classes.appBackground}>
       <CssBaseline />
-      <Switch>
-        <Route exact path="/" component={ChooseLogin} />
-        <Route exact path="/email-login" component={EmailLogin} />
-        <Route exact path="/service-login" component={ServiceLogin} />
-        <Route exact path="/register" component={Register} />
-      </Switch>
-      {loggedIn && <Pages />}
-    </Fragment>
+      <Header />
+      <Login />
+      <Pages />
+      {loggedIn && <BottomNav />}
+    </main>
   );
 }
-export default App;
+export default withStyles(styles)(App);

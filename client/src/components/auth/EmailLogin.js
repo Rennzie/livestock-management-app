@@ -47,7 +47,7 @@ class EmailLogin extends Component {
         Auth.setToken(token);
 
         const { history } = this.props;
-        history.push('/');
+        history.push('/dashboard');
       })
       .catch(err => {
         console.log('login err is ===>', err.response);
