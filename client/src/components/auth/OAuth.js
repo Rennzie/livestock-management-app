@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import withRouter from 'react-router-dom/withRouter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
@@ -23,7 +24,9 @@ class OAuth extends Component {
     socket.on(provider, token => {
       this.popup.close();
       if (token) {
+        const { history } = this.props;
         localStorage.setItem('token', token);
+        history.push('/dashboard');
       }
     });
   }
@@ -87,4 +90,4 @@ class OAuth extends Component {
   }
 }
 
-export default withStyles(styles)(OAuth);
+export default withStyles(styles)(withRouter(OAuth));

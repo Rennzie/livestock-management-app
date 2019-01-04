@@ -107,7 +107,11 @@ class BottomNav extends Component {
           showLabels
           className={classes.root}
         >
-          <BottomNavigationAction onClick={this.handleClick('/')} label="Home" icon={<Home />} />
+          <BottomNavigationAction
+            onClick={this.handleClick('/dashboard')}
+            label="Home"
+            icon={<Home />}
+          />
 
           {/* <BottomNavigationAction
             disabled
