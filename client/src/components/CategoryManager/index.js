@@ -8,6 +8,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 // Dependancies
 import axios from 'axios';
 import moment from 'moment';
+import orderBy from 'lodash/orderBy';
 
 // Components
 import CategoryCard from './Card';
@@ -33,13 +34,22 @@ class CategoryManager extends Component {
     farm: null
   };
 
+  /**
+   * fetchs a populated farm and sorted the categories in alphabetical order
+   */
   componentDidMount() {
     const { match } = this.props;
     const { farmId } = match.params;
     axios
       .get(`/api/farms/${farmId}`)
 
-      .then(res => this.setState(() => ({ farm: res.data })));
+      .then(res => {
+        const sortedCategories = orderBy(res.data.categories, category => category.category, [
+          'asc'
+        ]);
+
+        this.setState(() => ({ farm: res.data, sortedCategories }));
+      });
   }
 
   handleCategoryChange = category => () => {
@@ -54,7 +64,7 @@ class CategoryManager extends Component {
   };
 
   render() {
-    const { farm } = this.state;
+    const { farm, sortedCategories } = this.state;
     const { classes } = this.props;
     const period = moment().format('MMM-YYYY');
     return (
@@ -81,7 +91,7 @@ class CategoryManager extends Component {
               </section>
             ) : (
               <section className={classes.panelContainer}>
-                {farm.categories.map(category => (
+                {sortedCategories.map(category => (
                   <CategoryCard key={category._id} category={category} />
                 ))}
               </section>
