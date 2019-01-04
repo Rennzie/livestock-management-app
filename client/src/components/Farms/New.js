@@ -40,7 +40,7 @@ class NewFarm extends Component {
     newFarmOne.farmOwner = Auth.currentUserId();
 
     const { history } = this.props;
-    axios.post('/api/farms', newFarmOne).then(() => history.push('/'));
+    axios.post('/api/farms', newFarmOne).then(() => history.push('/dashboard'));
   };
 
   handleChange = name => event => {
