@@ -43,14 +43,18 @@ class CategoryNew extends Component {
   // display them in a select field
   componentDidMount() {
     const userId = Auth.currentUserId();
-    axios.get(`/api/users/${userId}`).then(res => {
-      const { farms } = res.data;
-      if (farms.length === 1) {
-        this.setState({ farms, farmSelected: farms[0] });
-      } else {
-        this.setState({ farms });
-      }
-    });
+    axios.get(`/api/users/${userId}`).then(
+      res => {
+        const { farms } = res.data;
+        if (farms.length === 1) {
+          const remainingCategories = this.diffCategories(farms[0].categories);
+          this.setState({ farms, farmSelected: farms[0], remainingCategories });
+        } else {
+          this.setState({ farms });
+        }
+      },
+      () => console.log('=====> ', this.state)
+    );
   }
 
   handleRegister = () => {
@@ -79,15 +83,44 @@ class CategoryNew extends Component {
   handleFarmSelect = event => {
     const { farms } = this.state;
 
-    const farmSelected = farms.filter(farm => farm._id.toString() === event.target.value);
-    this.setState(() => ({ farmSelected: farmSelected[0] }));
+    const farmSelected = farms.filter(farm => farm._id.toString() === event.target.value)[0];
+    const remainingCategories = this.diffCategories(farmSelected.categories);
+    this.setState(
+      () => ({ farmSelected, remainingCategories }),
+      () => console.log('=======> ', this.state)
+    );
+  };
+
+  diffCategories = categories => {
+    // return an array of categories that are not in use
+    // conmare two arrays and return only those that do not exist one
+    const defaultCategories = [
+      { name: 'bulls-1-2', displayName: 'Bulls 1-2 Yrs' },
+      { name: 'bulls', displayName: 'Bulls' },
+      { name: 'calves', displayName: 'Calves' },
+      { name: 'cows', displayName: 'Cows' },
+      { name: 'heifers-1-2', displayName: 'Heifers 1-2 Yrs' },
+      { name: 'heifers-2-3', displayName: 'Heifers 2-3 Yrs' },
+      { name: 'heifers-culls', displayName: 'Heifers Culls' },
+      { name: 'oxen-1-2', displayName: 'Oxen 1-2 Yrs' },
+      { name: 'oxen-2-3', displayName: ' Oxen 2-3 Yrs' },
+      { name: 'oxen-mature', displayName: 'Oxen Mature' },
+      { name: 'weaner-heifers', displayName: 'Weaner Heifers' },
+      { name: 'weaner-oxen', displayName: 'Weaner Oxen' }
+    ];
+
+    const remainingCategories = defaultCategories.filter(
+      defaultCategory => !categories.some(category => category.category === defaultCategory.name)
+    );
+
+    return remainingCategories;
   };
 
   handleRegisterNewCategory = () => {};
 
   // NOTE: will add in a plus button so multiple categories can be registered at the same time
   render() {
-    const { farmSelected, farms, category, animalsMoved } = this.state;
+    const { farmSelected, farms, category, animalsMoved, remainingCategories } = this.state;
     const { classes } = this.props;
     return (
       <Fragment>
@@ -138,19 +171,16 @@ class CategoryNew extends Component {
                     onChange={this.handleChange('category')}
                     input={<Input name="category" id="category" />}
                   >
-                    <option value="">Select Category</option>
-                    <option value="bulls-1-2">Bulls 1-2 Yrs</option>
-                    <option value="bulls">Bulls</option>
-                    <option value="calves">Calves</option>
-                    <option value="cows">Cows</option>
-                    <option value="heifers-1-2">Heifers 1-2 Yrs</option>
-                    <option value="heifers-2-3">Heifers 2-3 Yrs</option>
-                    <option value="heifers-culls">Heifers Culls</option>
-                    <option value="oxen-1-2">Oxen 1-2 Yrs</option>
-                    <option value="oxen-2-3"> Oxen 2-3 Yrs</option>
-                    <option value="oxen-mature">Oxen Mature</option>
-                    <option value="weaner-heifers">Weaner Heifers</option>
-                    <option value="weaner-oxen">Weaner Oxen</option>
+                    {remainingCategories.length ? (
+                      <option value="">Select Category</option>
+                    ) : (
+                      <option value="">No Available Categories</option>
+                    )}
+                    {remainingCategories.map(remainingCategory => (
+                      <option key={remainingCategory.name} value={remainingCategory.name}>
+                        {remainingCategory.displayName}
+                      </option>
+                    ))}
                   </NativeSelect>
                 </FormControl>
 

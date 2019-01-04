@@ -5,6 +5,9 @@ import categoryTestData from '../testData/categoryData';
 
 // --- TEST DATA ---//
 const categoryData = categoryTestData.single;
+
+// a deleted category should set the inUse boolean to false in the farm model
+
 describe('DELETE /api/categories/:categoryId', () => {
   beforeEach(done => {
     Category.deleteMany({})

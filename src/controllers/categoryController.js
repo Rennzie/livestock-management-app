@@ -25,11 +25,7 @@ function updateCategory(req, res, next) {
   Category.findById(req.params.id)
     .then(category => category.set(req.body))
     .then(category => category.save())
-    .then(category => {
-      console.log('post set =====>', category);
-
-      return res.status(202).send(category);
-    })
+    .then(category => res.status(202).send(category))
     .catch(next);
 }
 
