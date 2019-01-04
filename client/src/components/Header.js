@@ -5,10 +5,10 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = () => ({
   header: {
-    position: 'fixed',
+    // position: 'fixed',
     width: '100%',
-    zIndex: 2,
-    top: 0
+    zIndex: 2
+    // top: 0
   }
 });
 

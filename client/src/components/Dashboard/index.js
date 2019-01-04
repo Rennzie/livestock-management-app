@@ -35,9 +35,6 @@ class Dashboard extends Component {
     const { classes } = this.props;
     return (
       <Fragment>
-        <Typography variant="h5" align="center">
-          Stockman.io{' '}
-        </Typography>
         {!user ? (
           <LoadingSpinner color="primary" />
         ) : (
