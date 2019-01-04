@@ -47,6 +47,9 @@ export default {
       _id: categoryIds[0],
       farm: farmIds[0],
       category: 'cows',
+      stockUnitFactor: 1.2,
+      stockUnitType: 'large',
+      inUse: true,
       currentMonthDetail: {
         openingTotal: 0,
         period: lastMonthString,
@@ -82,6 +85,9 @@ export default {
       _id: categoryIds[1],
       farm: farmIds[0],
       category: 'oxen-1-2',
+      stockUnitFactor: 0.8,
+      stockUnitType: 'large',
+      inUse: true,
       currentMonthDetail: {
         openingTotal: 0,
         period: lastMonthString,
@@ -118,6 +124,9 @@ export default {
     _id: categoryIds[0],
     farm: farmIds[0],
     category: 'cows',
+    stockUnitFactor: 1.2,
+    stockUnitType: 'large',
+    inUse: true,
     currentMonthDetail: {
       openingTotal: 0,
       period: lastMonthString,
@@ -150,8 +159,8 @@ export default {
     ]
   },
   update: {
-    farm: farmIds[1],
-    category: 'oxen-1-2'
+    category: 'oxen-1-2',
+    stockUnitFactor: 1
   },
   trackedChange: {
     _id: categoryIds[2],
@@ -168,6 +177,9 @@ export default {
     _id: categoryIds[0],
     farm: farmIds[0],
     category: 'cows',
+    stockUnitFactor: 1.2,
+    stockUnitType: 'large',
+    inUse: true,
     currentMonthDetail: {
       openingTotal: 0,
       period: lastMonthString,

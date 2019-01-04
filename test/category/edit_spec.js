@@ -5,7 +5,7 @@ import categoryTestData from '../testData/categoryData';
 
 // --- TEST DATA ---//
 const categoryData = categoryTestData.single;
-const categoryUpdate = categoryData.update;
+const categoryUpdate = categoryTestData.update;
 
 describe('PUT /api/categories/:categoryId/', () => {
   beforeEach(done => {
@@ -24,15 +24,13 @@ describe('PUT /api/categories/:categoryId/', () => {
       });
   });
 
-  xit('should update the changes with the correct info ', done => {
+  it('should update the changes with the correct info ', done => {
     api
       .put(`/api/categories/${categoryData._id}`)
       .send(categoryUpdate)
       .end((err, res) => {
-        // BUG: not updating or returning the correct data
-        console.log('the returned category is ====> ', res.body);
-        expect(res.body.farm).to.eq(categoryUpdate.farm);
         expect(res.body.category).to.eq(categoryUpdate.category);
+        expect(res.body.stockUnitFactor).to.eq(categoryUpdate.stockUnitFactor);
         done();
       });
   });

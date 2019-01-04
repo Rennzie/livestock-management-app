@@ -29,7 +29,7 @@ describe('POST /api/categories', () => {
         expect(res.body._id).to.eq(categoryData._id);
         expect(res.body.name).to.eq(categoryData.name);
         expect(res.body.category).to.eq(categoryData.category);
-        expect(res.body.change).to.eql(categoryData.change);
+        expect(res.body.stockUnitFactor).to.eq(categoryData.stockUnitFactor);
         done();
       });
   });

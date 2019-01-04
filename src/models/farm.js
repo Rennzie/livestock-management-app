@@ -7,7 +7,7 @@ const cattleDefaultCategories = modelDefaults.cattleDefaultCategories;
 
 const { ObjectId } = Schema.Types;
 
-const categoryName = new Schema({
+const CategoryNameSchema = new Schema({
   category: String,
   stockUnitFactor: Number,
   stockUnitType: String,
@@ -18,7 +18,7 @@ const FarmSchema = new Schema(
   {
     name: { type: String, required: true },
     farmOwner: { type: ObjectId, ref: 'user', required: true },
-    categoryNames: [categoryName]
+    categoryNames: [CategoryNameSchema]
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
@@ -27,7 +27,7 @@ const FarmSchema = new Schema(
  *  A farm should control what categories it contains
  *  There should be a list of in play names and as a diff against the start list
  *  In time: Users should be able to define there own category names
- *           Wont do this now as it might cause people to create pseudo groups
+ *           Won't do this now as it might cause people to create pseudo groups
  *
  */
 
@@ -47,6 +47,13 @@ FarmSchema.virtual('totalAnimals').get(function() {
   });
 
   return totalAnimals;
+});
+
+FarmSchema.virtual('unUsedCategories').get(function() {
+  if (!this.categoryNames) return null;
+  const unUsedCategories = this.categoryNames.filter(categoryName => !categoryName.inUse);
+
+  return unUsedCategories;
 });
 
 FarmSchema.pre('save', function(next) {

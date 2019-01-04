@@ -23,11 +23,13 @@ function showCategory(req, res, next) {
 
 function updateCategory(req, res, next) {
   Category.findById(req.params.id)
+    .then(category => category.set(req.body))
+    .then(category => category.save())
     .then(category => {
-      category.set(req.body);
-      return category.save();
+      console.log('post set =====>', category);
+
+      return res.status(202).send(category);
     })
-    .then(category => res.status(202).send(category))
     .catch(next);
 }
 
