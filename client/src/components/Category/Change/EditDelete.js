@@ -40,7 +40,7 @@ class ChangeEditDelete extends Component {
     });
   };
 
-  handleEditChange = changeType => () => {
+  handleEditChange = () => () => {
     const { newChange } = this.state;
     const { createdAt, animalsMoved, reasonForChange } = newChange;
     const { history, match } = this.props;
