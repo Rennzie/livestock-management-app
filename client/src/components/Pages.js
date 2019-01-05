@@ -7,10 +7,10 @@ import FarmNew from './Farms/New';
 import CategoryManager from './CategoryManager';
 import CategoryNew from './Category/New';
 import CategoryShow from './Category/Show';
-import ChangeNew from './Category/Change/New';
-import ChangeEditDelete from './Category/Change/EditDelete';
+// import ChangeEditDelete from './Category/Change/EditDelete';
 import SecureRoute from './common/SecureRoute';
 import CategoryEditDelete from './Category/EditDelete';
+import NewMovement from './Category/Movement/New';
 
 function Pages() {
   return (
@@ -26,15 +26,15 @@ function Pages() {
       <SecureRoute path="/categories/:categoryId/edit" component={CategoryEditDelete} />
       <SecureRoute path="/categories/:categoryId" component={CategoryShow} />
 
-      {/* Categories Movements */}
+      {/* Category Movements */}
       <SecureRoute
         path="/manage-categories/:categoryName/:categoryId/changes"
-        component={ChangeNew}
+        component={NewMovement}
       />
-      <SecureRoute
+      {/* <SecureRoute
         path="/manage-categories/:categoryId/changes/:changeId/edit"
         component={ChangeEditDelete}
-      />
+      /> */}
     </Switch>
   );
 }

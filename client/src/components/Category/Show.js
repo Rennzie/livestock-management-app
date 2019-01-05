@@ -72,11 +72,11 @@ class CategoryShow extends Component {
     );
   }
 
-  handleNewChange = changeType => () => {
+  handleNewChange = () => {
     const { category } = this.state;
     const { history } = this.props;
 
-    history.push(`/manage-categories/${category.category}/${category._id}/changes`, { changeType });
+    history.push(`/manage-categories/${category.category}/${category._id}/changes`);
   };
 
   handleChangeEdit = changeId => () => {
@@ -162,7 +162,7 @@ class CategoryShow extends Component {
                 <Divider />
               </div>
 
-              <Fab
+              {/* <Fab
                 disabled={!category}
                 onClick={this.handleNewChange('add')}
                 color="primary"
@@ -177,16 +177,16 @@ class CategoryShow extends Component {
                 className={classes.fabButton}
               >
                 <RemoveIcon />
-              </Fab>
+              </Fab> */}
               <Fab
                 disabled={!category}
-                onClick={this.handleNewChange('transfer')}
+                onClick={this.handleNewChange}
                 color="default"
                 variant="extended"
                 className={classes.fabButton}
               >
                 <SwapIcon />
-                Transfer
+                Log Movement
               </Fab>
 
               <CategoryHistory
