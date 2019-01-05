@@ -37,9 +37,17 @@ function CategoryCard({ category, classes }) {
       <CapitalizeText className={classes.margin} gutterBottom variant="subtitle2">
         {category.category}
       </CapitalizeText>
-      <Typography className={classes.margin} variant="body1">
-        Total: {category.currentMonthDetail.closingTotal}
-      </Typography>
+      <div>
+        <Typography className={classes.margin} variant="body1">
+          Total: {category.currentMonthDetail.closingTotal}
+        </Typography>
+        <Typography className={classes.margin} variant="body1">
+          LSU: {category.stockUnits}
+        </Typography>
+        <Typography className={classes.margin} variant="body1">
+          LSU Factor: {category.stockUnitFactor}
+        </Typography>
+      </div>
     </Paper>
   );
 }

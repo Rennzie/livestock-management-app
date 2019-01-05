@@ -49,6 +49,17 @@ FarmSchema.virtual('totalAnimals').get(function() {
   return totalAnimals;
 });
 
+FarmSchema.virtual('totalStockUnits').get(function() {
+  if (!this.categories) return null;
+
+  let totalStockUnits = 0;
+  this.categories.forEach(category => {
+    totalStockUnits += category.stockUnits;
+  });
+
+  return totalStockUnits;
+});
+
 FarmSchema.virtual('unUsedCategories').get(function() {
   if (!this.categoryNames) return null;
   const unUsedCategories = this.categoryNames.filter(categoryName => !categoryName.inUse);

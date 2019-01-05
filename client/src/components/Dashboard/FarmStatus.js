@@ -33,7 +33,10 @@ function FarmStatus({ user, classes }) {
       {user.farms.map(farm => (
         <div key={farm._id} className={classes.spreadRow}>
           <Typography variant="subtitle1">{farm.name}</Typography>
-          <Typography variant="subtitle1">{farm.totalAnimals}</Typography>
+          <div>
+            <Typography variant="subtitle1">Animals: {farm.totalAnimals}</Typography>
+            <Typography variant="subtitle1">LSU: {farm.totalStockUnits}</Typography>
+          </div>
         </div>
       ))}
     </div>

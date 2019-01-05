@@ -98,6 +98,11 @@ CategorySchema.pre('save', function(next) {
 });
 
 // --- VIRTUALS ---//
+
+CategorySchema.virtual('stockUnits').get(function() {
+  const stockUnits = this.stockUnitFactor * this.currentMonthDetail.closingTotal;
+  return stockUnits;
+});
 // --- METHODS ---//
 
 CategorySchema.methods.generateMonthsDetail = function() {
