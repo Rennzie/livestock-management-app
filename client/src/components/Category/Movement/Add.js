@@ -5,6 +5,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import Input from '@material-ui/core/Input';
 import withStyles from '@material-ui/core/styles/withStyles';
+import IntegerSelect from '../../common/IntegerSelect';
 
 const styles = theme => ({
   margins: {
@@ -12,7 +13,14 @@ const styles = theme => ({
   }
 });
 
-function AddMovement({ movementOptions, movementOption, classes }) {
+function AddMovement({
+  movementOptions,
+  movementOption,
+  classes,
+  handleChange,
+  animalsMoved,
+  handleCountChange
+}) {
   // dropdown with options for selection
   // number field which returns a number
   // NEXT: write the handlers for select changes
@@ -25,7 +33,7 @@ function AddMovement({ movementOptions, movementOption, classes }) {
         <NativeSelect
           value={movementOption}
           className={classes.margin}
-          // onChange={this.handleFarmSelect}
+          onChange={handleChange('movementOption')}
           input={<Input name="movementOption" id="movementOption" />}
         >
           <option value="">select reason</option>
@@ -37,9 +45,12 @@ function AddMovement({ movementOptions, movementOption, classes }) {
                 </option>
               );
             }
+            return null;
           })}
         </NativeSelect>
       </FormControl>
+
+      <IntegerSelect number={animalsMoved} handleCountChange={handleCountChange} />
     </Fragment>
   );
 }

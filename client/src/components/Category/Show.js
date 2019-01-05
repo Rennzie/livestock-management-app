@@ -13,7 +13,7 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import SwapIcon from '@material-ui/icons/SwapHoriz';
 import LoadingSpinner from '../common/LoadingSpinner';
 import CapitalizeText from '../common/CapitalizeText';
-import CategoryHistory from './Change/History';
+import CategoryHistory from './Movement/History';
 
 const styles = theme => ({
   header: {

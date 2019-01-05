@@ -74,16 +74,45 @@ const movementOptions = [
 
 class NewMovement extends Component {
   state = {
-    value: 'add'
+    value: 'add',
+    movementOption: '',
+    animalsMoved: 0
   };
 
   handleRadioChange = event => {
     const { value } = event.target;
-    this.setState(() => ({ value }));
+    const movementOption = '';
+    this.setState(() => ({ value, movementOption }));
+  };
+
+  handleChange = name => event => {
+    const { value } = event.target;
+    this.setState(() => ({ [name]: value }));
+  };
+
+  handleCountChange = countType => event => {
+    if (countType === 'countUp') {
+      this.setState((prevState, props) => ({ animalsMoved: prevState.animalsMoved + 1 }));
+    }
+
+    if (countType === 'countDown') {
+      this.setState((prevState, props) => ({ animalsMoved: prevState.animalsMoved - 1 }));
+    }
+
+    if (countType === 'countChange') {
+      let animalsMoved;
+      if (!event.target.value) {
+        animalsMoved = null;
+      } else {
+        animalsMoved = parseInt(event.target.value, 10);
+      }
+      console.log('=====>', animalsMoved);
+      this.setState(() => ({ animalsMoved }));
+    }
   };
 
   render() {
-    const { value } = this.state;
+    const { value, movementOption, animalsMoved } = this.state;
     const { classes } = this.props;
     return (
       <Fragment>
@@ -105,7 +134,15 @@ class NewMovement extends Component {
           </RadioGroup>
         </FormControl>
 
-        {value === 'add' && <AddMovement movementOptions={movementOptions} movementOption="" />}
+        {value === 'add' && (
+          <AddMovement
+            handleChange={this.handleChange}
+            handleCountChange={this.handleCountChange}
+            movementOptions={movementOptions}
+            movementOption={movementOption}
+            animalsMoved={animalsMoved}
+          />
+        )}
         {value === 'remove' && <RemoveMovement />}
         {value === 'transfer' && <TransferMovement />}
       </Fragment>
