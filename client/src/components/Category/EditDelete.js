@@ -62,9 +62,13 @@ class CategoryEditDelete extends Component {
         <Typography align="center" variant="h5">
           Edit/Delete Category
         </Typography>
+        {category && (
+          <Typography align="center" variant="subtitle1">
+            {category.category}
+          </Typography>
+        )}
         <div className={classes.form}>
           <Input
-            // className={classes.number}
             type="number"
             id="stockUnitFactor"
             name="stockUnitFactor"
