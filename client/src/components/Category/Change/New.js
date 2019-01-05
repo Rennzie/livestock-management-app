@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import moment from 'moment';
 import axios from 'axios';
-import ChangeForm from './Change/Form';
+import ChangeForm from './Form';
 
 const styles = () => ({});
 

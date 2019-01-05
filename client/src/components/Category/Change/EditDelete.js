@@ -4,8 +4,8 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import moment from 'moment';
 import axios from 'axios';
-import ChangeForm from './Change/Form';
-import SubmitButton from '../common/SubmitButton';
+import ChangeForm from './Form';
+import SubmitButton from '../../common/SubmitButton';
 
 const styles = theme => ({
   margin: {

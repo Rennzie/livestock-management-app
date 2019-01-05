@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Axios from 'axios';
+import Link from 'react-router-dom/Link';
 import classNames from 'classnames';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -13,7 +14,7 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import SwapIcon from '@material-ui/icons/SwapHoriz';
 import LoadingSpinner from '../common/LoadingSpinner';
 import CapitalizeText from '../common/CapitalizeText';
-import CategoryHistory from './ChangeHistory';
+import CategoryHistory from './Change/History';
 
 const styles = theme => ({
   header: {
@@ -84,10 +85,10 @@ class CategoryShow extends Component {
     history.push(`/manage-categories/${match.params.categoryId}/changes/${changeId}/edit`);
   };
 
-  handleRemove = () => {
+  handleGoToEdit = () => {
     const { category } = this.state;
     const { history } = this.props;
-    Axios.delete(`/api/categories/${category._id}`).then(() => history.push('/'));
+    history.push(`/categories/${category._id}/edit`);
   };
 
   render() {
@@ -102,9 +103,13 @@ class CategoryShow extends Component {
           <Typography variant="subtitle1" align="center">
             {!category ? 'Period' : category.currentMonthDetail.period}
           </Typography>
-          <IconButton disabled={!category} onClick={this.handleRemove}>
-            <Icon fontSize="small">delete</Icon>
-          </IconButton>
+          <Fragment>
+            {category && (
+              <IconButton onClick={this.handleGoToEdit}>
+                <Icon fontSize="small">edit</Icon>
+              </IconButton>
+            )}
+          </Fragment>
         </Paper>
         <Fragment>
           {!category ? (

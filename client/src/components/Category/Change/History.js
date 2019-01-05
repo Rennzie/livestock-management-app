@@ -15,8 +15,8 @@ import moment from 'moment';
 import orderBy from 'lodash/orderBy';
 
 // Components
-import CapitalizeText from '../common/CapitalizeText';
-import LoadingSpinner from '../common/LoadingSpinner';
+import CapitalizeText from '../../common/CapitalizeText';
+import LoadingSpinner from '../../common/LoadingSpinner';
 
 const styles = theme => ({
   container: {
