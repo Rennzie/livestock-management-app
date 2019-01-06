@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import AppBar from '@material-ui/core/AppBar';
@@ -26,6 +27,9 @@ const styles = {
   menuButton: {
     marginLeft: -12,
     marginRight: 20
+  },
+  headerFont: {
+    fontFamily: 'Audiowide'
   },
   draw: {
     paperAnchorBottom: {
@@ -69,8 +73,13 @@ class TopNav extends Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h5" color="inherit" align="center" className={classes.grow}>
-              Stockman
+            <Typography
+              variant="title"
+              color="inherit"
+              align="center"
+              className={classNames(classes.grow, classes.headerFont)}
+            >
+              STOCKMAN
             </Typography>
           </Toolbar>
         </AppBar>
