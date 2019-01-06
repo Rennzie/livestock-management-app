@@ -1,22 +1,15 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import withRouter from 'react-router-dom/withRouter';
 
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Divider from '@material-ui/core/Divider';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 // Icons
 import Home from '@material-ui/icons/Home';
-import BurgerMenu from '@material-ui/icons/Menu';
-// import AnimalIcon from '@material-ui/icons/Pets';
-import SettingsIcon from '@material-ui/icons/Settings';
-import LogOutIcon from '@material-ui/icons/PowerSettingsNew';
+import RainIcon from '@material-ui/icons/Grain';
+import AnimalIcon from '@material-ui/icons/Pets';
 
 const styles = {
   root: {
@@ -33,8 +26,7 @@ const styles = {
 
 class BottomNav extends Component {
   state = {
-    value: 0,
-    open: false
+    value: 0
   };
 
   handleChange = (event, value) => {
@@ -58,49 +50,10 @@ class BottomNav extends Component {
 
   render() {
     const { classes } = this.props;
-    const { value, open } = this.state;
+    const { value } = this.state;
 
     return (
       <Fragment>
-        <Drawer
-          className={classes.draw.paperAnchorBottom}
-          anchor="bottom"
-          open={open}
-          onClose={this.toggleBurgerMenu('open', false)}
-        >
-          <div
-            tabIndex={0}
-            role="button"
-            onClick={this.toggleBurgerMenu('open', false)}
-            onKeyDown={this.toggleBurgerMenu('open', false)}
-          >
-            <List>
-              <ListItem button onClick={this.handleClick('/new/farm')}>
-                <ListItemText primary="New Farm" />
-              </ListItem>
-              <ListItem button onClick={this.handleClick('/new/category')}>
-                <ListItemText primary="New Category" />
-              </ListItem>
-
-              <Divider />
-
-              <ListItem disabled button onClick={this.handleClick('/settings')}>
-                <ListItemIcon>
-                  <SettingsIcon />
-                </ListItemIcon>
-                <ListItemText primary="Account and Settings" />
-              </ListItem>
-
-              <ListItem button onClick={this.handleLogOut}>
-                <ListItemIcon>
-                  <LogOutIcon />
-                </ListItemIcon>
-                <ListItemText primary="Log Out" />
-              </ListItem>
-            </List>
-          </div>
-        </Drawer>
-
         <BottomNavigation
           value={value}
           onChange={this.handleChange}
@@ -113,22 +66,27 @@ class BottomNav extends Component {
             icon={<Home />}
           />
 
-          {/* <BottomNavigationAction
+          <BottomNavigationAction
             disabled
             onClick={this.handleClick('/manage-animals')}
-            label="Animals"
+            label="Categories"
             icon={<AnimalIcon />}
-          /> */}
+          />
 
           <BottomNavigationAction
-            onClick={this.toggleBurgerMenu('open', true)}
-            label="Menu"
-            icon={<BurgerMenu />}
+            disabled
+            onClick={this.handleClick('/manage-animals')}
+            label="Rainfall"
+            icon={<RainIcon />}
           />
         </BottomNavigation>
       </Fragment>
     );
   }
 }
+
+BottomNav.propTypes = {
+  classes: PropTypes.object.isRequired
+};
 
 export default withRouter(withStyles(styles)(BottomNav));

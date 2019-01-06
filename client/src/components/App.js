@@ -8,6 +8,7 @@ import Auth from '../lib/Auth';
 
 import BottomNav from './BottomNav';
 import Header from './Header';
+import TopNav from './TopNav';
 
 const styles = () => ({
   appBackground: {
@@ -45,7 +46,8 @@ function App({ classes }) {
   return (
     <main className={classes.appBackground}>
       <CssBaseline />
-      <Header />
+      {!loggedIn && <Header />}
+      {loggedIn && <TopNav />}
       <Login />
       <Pages />
       {loggedIn && <BottomNav />}
