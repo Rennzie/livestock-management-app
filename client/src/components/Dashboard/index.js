@@ -1,9 +1,4 @@
 import React, { Fragment, Component } from 'react';
-import Link from 'react-router-dom/Link';
-
-import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 // Dependancies
@@ -32,41 +27,9 @@ class Dashboard extends Component {
 
   render() {
     const { user } = this.state;
-    const { classes } = this.props;
+    // const { classes } = this.props;
     return (
-      <Fragment>
-        {!user ? (
-          <LoadingSpinner color="primary" />
-        ) : (
-          <Fragment>
-            <FarmStatus user={user} />
-            {user.farms.length === 0 ? (
-              <Typography variant="subtitle1" align="center">
-                You have not registered a farm yet.
-                <Link to="/new/farm"> Click here </Link>
-                to add one.
-              </Typography>
-            ) : (
-              user.farms.map(farm => (
-                <Link
-                  key={farm._id}
-                  to={`/${farm.name}/${farm._id}/manage-categories`}
-                  style={{ textDecoration: 'none' }}
-                >
-                  <Card className={classes.margin}>
-                    <CardContent>
-                      <Typography variant="subtitle1" align="center">
-                        {' '}
-                        {farm.name}: Category Manager{' '}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))
-            )}
-          </Fragment>
-        )}
-      </Fragment>
+      <Fragment>{!user ? <LoadingSpinner color="primary" /> : <FarmStatus user={user} />}</Fragment>
     );
   }
 }
