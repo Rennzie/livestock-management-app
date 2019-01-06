@@ -43,18 +43,15 @@ class CategoryNew extends Component {
   // display them in a select field
   componentDidMount() {
     const userId = Auth.currentUserId();
-    axios.get(`/api/users/${userId}`).then(
-      res => {
-        const { farms } = res.data;
-        if (farms.length === 1) {
-          const remainingCategories = this.diffCategories(farms[0].categories);
-          this.setState({ farms, farmSelected: farms[0], remainingCategories });
-        } else {
-          this.setState({ farms });
-        }
-      },
-      () => console.log('=====> ', this.state)
-    );
+    axios.get(`/api/users/${userId}`).then(res => {
+      const { farms } = res.data;
+      if (farms.length === 1) {
+        const remainingCategories = this.diffCategories(farms[0].categories);
+        this.setState({ farms, farmSelected: farms[0], remainingCategories });
+      } else {
+        this.setState({ farms });
+      }
+    });
   }
 
   handleRegister = () => {

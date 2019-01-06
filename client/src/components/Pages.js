@@ -2,6 +2,7 @@ import React from 'react';
 import Switch from 'react-router-dom/Switch';
 
 // COMPONENTS
+import { withStyles } from '@material-ui/core';
 import Dashboard from './Dashboard/index';
 import FarmNew from './Farms/New';
 import CategoryManager from './CategoryManager';
@@ -12,31 +13,41 @@ import SecureRoute from './common/SecureRoute';
 import CategoryEditDelete from './Category/EditDelete';
 import NewMovement from './Category/Movement/New';
 
-function Pages() {
+const styles = theme => ({
+  bodyContainer: {
+    height: '100%',
+    overflow: 'auto',
+    paddingBottom: '112px'
+  }
+});
+
+function Pages({ classes }) {
   return (
-    <Switch>
-      <SecureRoute exact path="/dashboard" component={Dashboard} />
+    <main className={classes.bodyContainer}>
+      <Switch>
+        <SecureRoute exact path="/dashboard" component={Dashboard} />
 
-      {/* Add Inventory */}
-      <SecureRoute exact path="/new/farm" component={FarmNew} />
-      <SecureRoute exact path="/new/category" component={CategoryNew} />
+        {/* Add Inventory */}
+        <SecureRoute exact path="/new/farm" component={FarmNew} />
+        <SecureRoute exact path="/new/category" component={CategoryNew} />
 
-      {/* Manage Categories */}
-      <SecureRoute path="/:farmName/:farmId/manage-categories" component={CategoryManager} />
-      <SecureRoute path="/categories/:categoryId/edit" component={CategoryEditDelete} />
-      <SecureRoute path="/categories/:categoryId" component={CategoryShow} />
+        {/* Manage Categories */}
+        <SecureRoute exact path="/manage-categories" component={CategoryManager} />
+        <SecureRoute path="/categories/:categoryId/edit" component={CategoryEditDelete} />
+        <SecureRoute path="/categories/:categoryId" component={CategoryShow} />
 
-      {/* Category Movements */}
-      <SecureRoute
-        path="/manage-categories/:categoryName/:categoryId/changes"
-        component={NewMovement}
-      />
-      {/* <SecureRoute
+        {/* Category Movements */}
+        <SecureRoute
+          path="/manage-categories/:categoryName/:categoryId/changes"
+          component={NewMovement}
+        />
+        {/* <SecureRoute
         path="/manage-categories/:categoryId/changes/:changeId/edit"
         component={ChangeEditDelete}
       /> */}
-    </Switch>
+      </Switch>
+    </main>
   );
 }
 
-export default Pages;
+export default withStyles(styles)(Pages);

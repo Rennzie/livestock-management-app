@@ -2,6 +2,10 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
@@ -9,14 +13,24 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+
+    <!-- Import manifest.json -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#FBC02D" />
+    <link
+      rel="apple-touch-startup-image"
+      href="splash/launch-1536x2048.png"
+      media="(min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)"
     />
+
     <title>Stockman</title>
   </head>
   <body>
     <div id="root"></div>
   </body>
+
+  <!-- Prompt a message in the browser if users disabled JS -->
+  <noscript>Your browser does not support JavaScript!</noscript>
 </html>
