@@ -10,6 +10,9 @@ const styles = () => ({
     width: '100%',
     zIndex: 2
     // top: 0
+  },
+  headerFont: {
+    fontFamily: 'Audiowide'
   }
 });
 
@@ -17,8 +20,8 @@ function Header({ classes }) {
   return (
     <section className={classes.header}>
       <Paper square>
-        <Typography variant="h5" align="center">
-          Stockman
+        <Typography className={classes.headerFont} variant="h5" align="center">
+          STOCKMAN
         </Typography>
       </Paper>
     </section>

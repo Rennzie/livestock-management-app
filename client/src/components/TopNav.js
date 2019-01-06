@@ -54,8 +54,8 @@ class TopNav extends Component {
 
   handleLogOut = () => {
     localStorage.removeItem('token');
-    const { history } = this.props;
-    history.push('/');
+    // const { history } = this.props;
+    // history.push('/');
   };
 
   render() {
