@@ -23,6 +23,7 @@ function Pages() {
 
       {/* Manage Categories */}
       <SecureRoute path="/:farmName/:farmId/manage-categories" component={CategoryManager} />
+      <SecureRoute path="/manage-categories" component={CategoryManager} />
       <SecureRoute path="/categories/:categoryId/edit" component={CategoryEditDelete} />
       <SecureRoute path="/categories/:categoryId" component={CategoryShow} />
 

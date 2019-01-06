@@ -67,15 +67,14 @@ class BottomNav extends Component {
           />
 
           <BottomNavigationAction
-            disabled
-            onClick={this.handleClick('/manage-animals')}
+            onClick={this.handleClick('/manage-categories')}
             label="Categories"
             icon={<AnimalIcon />}
           />
 
           <BottomNavigationAction
             disabled
-            onClick={this.handleClick('/manage-animals')}
+            onClick={this.handleClick('/rainfall')}
             label="Rainfall"
             icon={<RainIcon />}
           />

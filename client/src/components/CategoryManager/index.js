@@ -40,16 +40,11 @@ class CategoryManager extends Component {
   componentDidMount() {
     const { match } = this.props;
     const { farmId } = match.params;
-    axios
-      .get(`/api/farms/${farmId}`)
+    axios.get(`/api/farms/${farmId}`).then(res => {
+      const sortedCategories = orderBy(res.data.categories, category => category.category, ['asc']);
 
-      .then(res => {
-        const sortedCategories = orderBy(res.data.categories, category => category.category, [
-          'asc'
-        ]);
-
-        this.setState(() => ({ farm: res.data, sortedCategories }));
-      });
+      this.setState(() => ({ farm: res.data, sortedCategories }));
+    });
   }
 
   handleCategoryChange = category => () => {
