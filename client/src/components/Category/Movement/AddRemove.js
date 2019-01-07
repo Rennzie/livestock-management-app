@@ -6,6 +6,7 @@ import NativeSelect from '@material-ui/core/NativeSelect';
 import Input from '@material-ui/core/Input';
 import withStyles from '@material-ui/core/styles/withStyles';
 import IntegerSelect from '../../common/IntegerSelect';
+import SubmitButton from '../../common/SubmitButton';
 
 const styles = theme => ({
   margin: {
@@ -17,6 +18,7 @@ function AddRemoveMovement({
   movementOptions,
   reasonForChange,
   classes,
+  handleAddRemoveSubmit,
   handleChange,
   animalsMoved,
   handleCountChange,
@@ -58,6 +60,13 @@ function AddRemoveMovement({
       </FormControl>
 
       <IntegerSelect number={animalsMoved} handleCountChange={handleCountChange} />
+      <SubmitButton
+        name="Log Movement"
+        disabled={!reasonForChange}
+        handleClick={handleAddRemoveSubmit}
+        variant="contained"
+        color="secondary"
+      />
     </Fragment>
   );
 }
@@ -70,6 +79,7 @@ AddRemoveMovement.propTypes = {
   handleChange: PropTypes.func.isRequired,
   animalsMoved: PropTypes.number.isRequired,
   handleCountChange: PropTypes.func.isRequired,
+  handleAddRemoveSubmit: PropTypes.func.isRequired,
   createdAt: PropTypes.string.isRequired
 };
 

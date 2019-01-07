@@ -10,7 +10,7 @@ import Bovine from '../models/bovine';
 // Import all the mock data
 import bovineData from './mockData/bovineData';
 import userData from './mockData/userData';
-import categoriesData from './mockData/categoryData';
+// import categoriesData from './mockData/categoryData';
 import farmData from './mockData/farmData';
 
 // Use bluebird to make promises easier
@@ -31,8 +31,8 @@ User.create(userData)
   .then(users => console.log(`created ${users.length} new users`))
   .then(() => Farm.create(farmData))
   .then(farms => console.log(`created ${farms.length} new farms`))
-  .then(() => Category.create(categoriesData))
-  .then(categories => console.log(`created ${categories.length} new categories`))
+  // .then(() => Category.create(categoriesData))
+  // .then(categories => console.log(`created ${categories.length} new categories`))
   .then(() => Bovine.create(bovineData))
   .then(bovines => console.log(`created ${bovines.length} new bovines`))
   .catch(err => console.log('Seeding error is', err))

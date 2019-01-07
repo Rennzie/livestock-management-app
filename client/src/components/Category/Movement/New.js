@@ -9,7 +9,6 @@ import Input from '@material-ui/core/Input';
 import withStyles from '@material-ui/core/styles/withStyles';
 import moment from 'moment';
 import axios from 'axios';
-import SubmitButton from '../../common/SubmitButton';
 
 import AddRemoveMovement from './AddRemove';
 import TransferMovement from './Transfer';
@@ -76,17 +75,24 @@ const movementOptions = [
 
 class NewMovement extends Component {
   state = {
-    movementType: 'remove',
-    reasonForChange: '',
     animalsMoved: 0,
-    createdAt: ''
+    createdAt: '',
+    movementType: 'transfer',
+    reasonForChange: '',
+    transferTo: ''
   };
 
   componentDidMount() {
-    this.setState(() => ({ createdAt: moment().format('YYYY-MM-DD') }));
+    const { location } = this.props;
+    axios.get(`/api/farms/${location.state.farmId}`).then(res =>
+      this.setState(() => ({
+        categories: res.data.categories,
+        createdAt: moment().format('YYYY-MM-DD')
+      }))
+    );
   }
 
-  handleRadioChange = event => {
+  handleSelectMoveType = event => {
     const { value } = event.target;
     const reasonForChange = '';
     this.setState(() => ({ movementType: value, reasonForChange }));
@@ -132,15 +138,50 @@ class NewMovement extends Component {
     newMovement.reasonForChange = reasonForChange;
 
     axios
-      .post(`/api/categories/${match.params.categoryId}/changes`)
+      .post(`/api/categories/${match.params.categoryId}/changes`, newMovement)
       .then(() => history.push(`/manage-categories/${match.params.categoryId}`));
   };
 
-  // NEXT: bug with data presented to history causing capitalizetext to crash
+  handleTransferSubmit = () => {
+    const { createdAt, animalsMoved, transferTo } = this.state;
+    const { match, history } = this.props;
+
+    const transferOut = {
+      reasonForChange: 'transferOut'
+    };
+    transferOut.animalsMoved = animalsMoved * -1;
+    transferOut.createdAt = moment(createdAt);
+
+    const transferIn = {
+      reasonForChange: 'transferIn'
+    };
+    transferIn.animalsMoved = animalsMoved;
+    transferIn.createdAt = moment(createdAt);
+
+    function sendTransferOut() {
+      return axios.post(`/api/categories/${match.params.categoryId}/changes`, transferOut);
+    }
+
+    function sendTransferIn() {
+      return axios.post(`/api/categories/${transferTo}/changes`, transferIn);
+    }
+
+    axios
+      .all([sendTransferOut(), sendTransferIn()])
+      .then(() => history.push(`/manage-categories/${match.params.categoryId}`));
+  };
 
   render() {
-    const { movementType, reasonForChange, animalsMoved, createdAt } = this.state;
+    const {
+      animalsMoved,
+      categories,
+      createdAt,
+      movementType,
+      reasonForChange,
+      transferTo
+    } = this.state;
     const { classes } = this.props;
+
     return (
       <Fragment>
         <Typography variant="h5" align="center">
@@ -153,42 +194,49 @@ class NewMovement extends Component {
           <NativeSelect
             value={movementType}
             className={classes.select}
-            onChange={this.handleRadioChange}
+            onChange={this.handleSelectMoveType}
             input={<Input name="movementType" id="movementType" />}
           >
             <option value="add">Add Animals</option>
             <option value="remove">Remove Animals</option>
-            <option value="transfer">Transfer Animals</option>
+            <option value="transfer">Transfer Out of Category</option>
           </NativeSelect>
         </FormControl>
 
         {(movementType === 'add' || movementType === 'remove') && (
           <AddRemoveMovement
-            movementType={movementType}
-            handleChange={this.handleChange}
-            handleCountChange={this.handleCountChange}
-            movementOptions={movementOptions}
-            reasonForChange={reasonForChange}
             animalsMoved={animalsMoved}
             createdAt={createdAt}
+            handleAddRemoveSubmit={this.handleAddRemoveSubmit}
+            handleChange={this.handleChange}
+            handleCountChange={this.handleCountChange}
+            movementType={movementType}
+            movementOptions={movementOptions}
+            reasonForChange={reasonForChange}
           />
         )}
 
-        {movementType === 'transfer' && <TransferMovement />}
-        <SubmitButton
-          name="Log Movement"
-          disabled={!reasonForChange}
-          handleClick={this.handleAddRemoveSubmit}
-          variant="contained"
-          color="secondary"
-        />
+        {movementType === 'transfer' && categories && (
+          <TransferMovement
+            createdAt={createdAt}
+            animalsMoved={animalsMoved}
+            handleChange={this.handleChange}
+            handleCountChange={this.handleCountChange}
+            handleTransferSubmit={this.handleTransferSubmit}
+            transferTo={transferTo}
+            categories={categories}
+          />
+        )}
       </Fragment>
     );
   }
 }
 
 NewMovement.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(NewMovement);

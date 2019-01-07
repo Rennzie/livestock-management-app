@@ -72,11 +72,14 @@ class CategoryShow extends Component {
     );
   }
 
-  handleNewChange = () => {
+  handleNewMovement = () => {
     const { category } = this.state;
     const { history } = this.props;
 
-    history.push(`/manage-categories/${category._id}/changes`);
+    history.push({
+      pathname: `/manage-categories/${category._id}/changes`,
+      state: { farmId: category.farm._id }
+    });
   };
 
   handleChangeEdit = changeId => () => {
@@ -164,7 +167,7 @@ class CategoryShow extends Component {
 
               <Fab
                 disabled={!category}
-                onClick={this.handleNewChange}
+                onClick={this.handleNewMovement}
                 color="default"
                 variant="extended"
                 className={classes.fabButton}
