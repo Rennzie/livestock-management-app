@@ -15,15 +15,15 @@ const styles = theme => ({
 });
 
 function AddRemoveMovement({
-  movementOptions,
-  reasonForChange,
+  animalsMoved,
   classes,
+  createdAt,
   handleAddRemoveSubmit,
   handleChange,
-  animalsMoved,
   handleCountChange,
-  createdAt,
-  movementType
+  movementOptions,
+  movementType,
+  reasonForChange
 }) {
   return (
     <Fragment>
@@ -36,14 +36,11 @@ function AddRemoveMovement({
         value={createdAt}
       />
       <FormControl variant="outlined" required fullWidth>
-        {/* <InputLabel className={classes.margin} htmlFor="reasonForChange">
-          Movements In
-        </InputLabel> */}
         <NativeSelect
-          value={reasonForChange}
           className={classes.margin}
-          onChange={handleChange('reasonForChange')}
           input={<Input name="reasonForChange" id="reasonForChange" />}
+          onChange={handleChange('reasonForChange')}
+          value={reasonForChange}
         >
           <option value="">select reason</option>
           {movementOptions.map(movement => {
@@ -61,26 +58,26 @@ function AddRemoveMovement({
 
       <IntegerSelect number={animalsMoved} handleCountChange={handleCountChange} />
       <SubmitButton
-        name="Log Movement"
+        color="secondary"
         disabled={!reasonForChange}
         handleClick={handleAddRemoveSubmit}
+        name="Log Movement"
         variant="contained"
-        color="secondary"
       />
     </Fragment>
   );
 }
 
 AddRemoveMovement.propTypes = {
-  movementType: PropTypes.string.isRequired,
-  movementOptions: PropTypes.array.isRequired,
-  reasonForChange: PropTypes.string.isRequired,
-  classes: PropTypes.object.isRequired,
-  handleChange: PropTypes.func.isRequired,
   animalsMoved: PropTypes.number.isRequired,
-  handleCountChange: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired,
+  createdAt: PropTypes.string.isRequired,
   handleAddRemoveSubmit: PropTypes.func.isRequired,
-  createdAt: PropTypes.string.isRequired
+  handleChange: PropTypes.func.isRequired,
+  handleCountChange: PropTypes.func.isRequired,
+  movementOptions: PropTypes.array.isRequired,
+  movementType: PropTypes.string.isRequired,
+  reasonForChange: PropTypes.string.isRequired
 };
 
 export default withStyles(styles)(AddRemoveMovement);

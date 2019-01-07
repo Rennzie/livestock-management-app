@@ -5,6 +5,7 @@ import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import Input from '@material-ui/core/Input';
 import withStyles from '@material-ui/core/styles/withStyles';
+import orderBy from 'lodash/orderBy';
 import IntegerSelect from '../../common/IntegerSelect';
 import SubmitButton from '../../common/SubmitButton';
 
@@ -13,6 +14,8 @@ const styles = theme => ({
     margin: theme.spacing.unit * 2
   }
 });
+
+const sortAsc = (items, sortField) => orderBy(items, item => item[sortField], ['asc']);
 
 function TransferMovement({
   animalsMoved,
@@ -30,19 +33,19 @@ function TransferMovement({
         className={classes.margin}
         id="createdAt"
         label="Transfer Date"
-        type="date"
         onChange={handleChange('createdAt')}
+        type="date"
         value={createdAt}
       />
       <FormControl variant="outlined" required fullWidth>
         <NativeSelect
-          value={transferTo}
           className={classes.margin}
-          onChange={handleChange('transferTo')}
           input={<Input name="transferTo" id="transferTo" />}
+          onChange={handleChange('transferTo')}
+          value={transferTo}
         >
           <option value="">transfer into...</option>
-          {categories.map(category => (
+          {sortAsc(categories, 'category').map(category => (
             <option key={category._id} value={category._id}>
               {/* <CapitalizeText>{category.category}</CapitalizeText> */}
               {category.category}
@@ -51,13 +54,13 @@ function TransferMovement({
         </NativeSelect>
       </FormControl>
 
-      <IntegerSelect number={animalsMoved} handleCountChange={handleCountChange} />
+      <IntegerSelect handleCountChange={handleCountChange} number={animalsMoved} />
       <SubmitButton
-        name="Log Movement"
+        color="secondary"
         disabled={!transferTo}
         handleClick={handleTransferSubmit}
+        name="Log Movement"
         variant="contained"
-        color="secondary"
       />
     </Fragment>
   );

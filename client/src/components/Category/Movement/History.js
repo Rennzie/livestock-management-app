@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-
+import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
 import Paper from '@material-ui/core/Paper';
@@ -80,8 +80,12 @@ class CategoryHistory extends Component {
                         <Typography variant="caption">{row.animalsMoved}</Typography>
                       </TableCell>
 
-                      <TableCell onClick={handleChangeEdit(row._id)}>
-                        <Icon fontSize="small">edit</Icon>
+                      <TableCell
+                      // onClick={handleChangeEdit(row._id)}
+                      >
+                        <Icon color="disabled" fontSize="small">
+                          edit
+                        </Icon>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -96,5 +100,11 @@ class CategoryHistory extends Component {
     );
   }
 }
+
+CategoryHistory.propTypes = {
+  changes: PropTypes.array.isRequired,
+  classes: PropTypes.object.isRequired,
+  handleChangeEdit: PropTypes.func.isRequired
+};
 
 export default withStyles(styles)(CategoryHistory);

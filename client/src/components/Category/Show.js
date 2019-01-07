@@ -1,15 +1,13 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import Axios from 'axios';
 import classNames from 'classnames';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
 import SwapIcon from '@material-ui/icons/SwapHoriz';
 import LoadingSpinner from '../common/LoadingSpinner';
 import CapitalizeText from '../common/CapitalizeText';
@@ -18,15 +16,14 @@ import CategoryHistory from './Movement/History';
 const styles = theme => ({
   header: {
     display: 'flex',
-    justifyContent: 'space-between',
-    position: 'fixed',
+    justifyContent: 'space-around',
     width: '100%',
     zIndex: 2,
-    top: 0
+    margin: theme.spacing.unit * 2
   },
   detailContainer: {
-    paddingTop: theme.spacing.unit * 10,
-    marginBottom: 56,
+    // paddingTop: theme.spacing.unit * 10,
+    // marginBottom: 56,
     marginLeft: theme.spacing.unit * 2,
     marginRight: theme.spacing.unit * 2,
     height: '100%'
@@ -53,12 +50,8 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit * 10
   },
   fabButton: {
-    // position: 'absolute',
     zIndex: 20,
-    // bottom: 30,
-    // left: 0,
-    // right: 0,
-    margin: theme.spacing.unit
+    margin: `${theme.spacing.unit} auto`
   }
 });
 class CategoryShow extends Component {
@@ -78,7 +71,7 @@ class CategoryShow extends Component {
 
     history.push({
       pathname: `/manage-categories/${category._id}/changes`,
-      state: { farmId: category.farm._id }
+      state: { farmId: category.farm._id, categoryName: category.category }
     });
   };
 
@@ -98,13 +91,16 @@ class CategoryShow extends Component {
     const { classes } = this.props;
     return (
       <Fragment>
-        <Paper className={classes.header} square>
-          <CapitalizeText variant="h5" align="center">
-            {!category ? 'Category' : category.category}
-          </CapitalizeText>
-          <Typography variant="subtitle1" align="center">
-            {!category ? 'Period' : category.currentMonthDetail.period}
-          </Typography>
+        <section className={classes.header}>
+          <div>
+            <CapitalizeText variant="h5" align="center">
+              {!category ? 'Category' : category.category}
+            </CapitalizeText>
+            <Typography variant="subtitle1" align="center">
+              {!category ? 'Period' : category.currentMonthDetail.period}
+            </Typography>
+          </div>
+
           <Fragment>
             {category && (
               <IconButton onClick={this.handleGoToEdit}>
@@ -112,7 +108,8 @@ class CategoryShow extends Component {
               </IconButton>
             )}
           </Fragment>
-        </Paper>
+        </section>
+
         <Fragment>
           {!category ? (
             <LoadingSpinner />
@@ -152,6 +149,14 @@ class CategoryShow extends Component {
                     {category.currentMonthDetail.closingTotal}
                   </Typography>
                 </div>
+                <div className={classes.spreadRow}>
+                  <Typography variant="subtitle1">Total LSU:</Typography>
+                  <Typography variant="subtitle1">{category.stockUnits}</Typography>
+                </div>
+                <div className={classes.spreadRow}>
+                  <Typography variant="subtitle1">LSU Factor:</Typography>
+                  <Typography variant="subtitle1">{category.stockUnitFactor}</Typography>
+                </div>
               </div>
 
               <div className={classNames(classes.column, classes.changeDetail)}>
@@ -166,19 +171,19 @@ class CategoryShow extends Component {
               </div>
 
               <Fab
+                color="default"
+                className={classes.fabButton}
                 disabled={!category}
                 onClick={this.handleNewMovement}
-                color="default"
                 variant="extended"
-                className={classes.fabButton}
               >
                 <SwapIcon />
                 Log Movement
               </Fab>
 
               <CategoryHistory
-                handleChangeEdit={this.handleChangeEdit}
                 changes={category.currentMonthChanges}
+                handleChangeEdit={this.handleChangeEdit}
               />
             </section>
           )}
@@ -187,5 +192,11 @@ class CategoryShow extends Component {
     );
   }
 }
+
+CategoryShow.propTypes = {
+  classes: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired
+};
 
 export default withStyles(styles)(CategoryShow);

@@ -12,6 +12,7 @@ import axios from 'axios';
 
 import AddRemoveMovement from './AddRemove';
 import TransferMovement from './Transfer';
+import CapitalizeText from '../../common/CapitalizeText';
 
 const styles = theme => ({
   formControl: {
@@ -82,14 +83,23 @@ class NewMovement extends Component {
     transferTo: ''
   };
 
+  /**
+   *  Fetchs the correct farm incase the movement is a transfer
+   *  Filters out the current category from the list to avoid transfering into
+   *  the same category (this out be redundant).
+   */
   componentDidMount() {
-    const { location } = this.props;
-    axios.get(`/api/farms/${location.state.farmId}`).then(res =>
+    const { location, match } = this.props;
+    axios.get(`/api/farms/${location.state.farmId}`).then(res => {
+      const otherCategories = res.data.categories.filter(
+        category => category._id.toString() !== match.params.categoryId
+      );
       this.setState(() => ({
-        categories: res.data.categories,
+        categoryName: location.state.categoryName,
+        categories: otherCategories,
         createdAt: moment().format('YYYY-MM-DD')
-      }))
-    );
+      }));
+    });
   }
 
   handleSelectMoveType = event => {
@@ -103,6 +113,12 @@ class NewMovement extends Component {
     this.setState(() => ({ [name]: value }));
   };
 
+  /**
+   *  Handler used for IngeterSelect component. It will updated the number
+   *  depending on the method used, button up, down, or cursor change.
+   *
+   *  It ensure the end result is a number and not a string
+   */
   handleCountChange = countType => event => {
     if (countType === 'countUp') {
       this.setState(prevState => ({ animalsMoved: prevState.animalsMoved + 1 }));
@@ -123,6 +139,9 @@ class NewMovement extends Component {
     }
   };
 
+  /**
+   * Simply handles the post request to submit an add or remove movement
+   */
   handleAddRemoveSubmit = () => {
     const { createdAt, reasonForChange, movementType } = this.state;
     let { animalsMoved } = this.state;
@@ -142,6 +161,10 @@ class NewMovement extends Component {
       .then(() => history.push(`/manage-categories/${match.params.categoryId}`));
   };
 
+  /**
+   *  Handles the formatting and sending of two requests for transfering
+   *  animals out of the current category into the selected category
+   */
   handleTransferSubmit = () => {
     const { createdAt, animalsMoved, transferTo } = this.state;
     const { match, history } = this.props;
@@ -175,6 +198,7 @@ class NewMovement extends Component {
     const {
       animalsMoved,
       categories,
+      categoryName,
       createdAt,
       movementType,
       reasonForChange,
@@ -187,6 +211,11 @@ class NewMovement extends Component {
         <Typography variant="h5" align="center">
           New Movement
         </Typography>
+        {categoryName && (
+          <Typography variant="subtitle1" align="center">
+            <CapitalizeText>{categoryName}</CapitalizeText>
+          </Typography>
+        )}
         <FormControl variant="outlined" required fullWidth>
           <InputLabel className={classes.select} htmlFor="movementType">
             Movements Type
@@ -218,13 +247,13 @@ class NewMovement extends Component {
 
         {movementType === 'transfer' && categories && (
           <TransferMovement
-            createdAt={createdAt}
             animalsMoved={animalsMoved}
+            categories={categories}
+            createdAt={createdAt}
             handleChange={this.handleChange}
             handleCountChange={this.handleCountChange}
             handleTransferSubmit={this.handleTransferSubmit}
             transferTo={transferTo}
-            categories={categories}
           />
         )}
       </Fragment>

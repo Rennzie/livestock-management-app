@@ -43,7 +43,7 @@ class CategoryEditDelete extends Component {
 
     axios
       .put(`/api/categories/${category._id}`, updateObj)
-      .then(() => history.push(`/categories/${category._id}`));
+      .then(() => history.push(`/manage-categories/${category._id}`));
   };
 
   handleRemove = () => {
@@ -51,7 +51,7 @@ class CategoryEditDelete extends Component {
     const { history } = this.props;
     axios
       .delete(`/api/categories/${category._id}`)
-      .then(() => history.push(`/${category.farm.name}/${category.farm._id}/manage-categories`));
+      .then(() => history.push(`/manage-categories/${category.farm._id}`));
   };
 
   render() {
