@@ -33,14 +33,12 @@ function Pages({ classes }) {
 
         {/* Manage Categories */}
         <SecureRoute exact path="/manage-categories" component={CategoryManager} />
+        <SecureRoute path="/manage-categories/:categoryId/changes" component={NewMovement} />
+        <SecureRoute path="/manage-categories/:categoryId" component={CategoryShow} />
+
         <SecureRoute path="/categories/:categoryId/edit" component={CategoryEditDelete} />
-        <SecureRoute path="/categories/:categoryId" component={CategoryShow} />
 
         {/* Category Movements */}
-        <SecureRoute
-          path="/manage-categories/:categoryName/:categoryId/changes"
-          component={NewMovement}
-        />
         {/* <SecureRoute
         path="/manage-categories/:categoryId/changes/:changeId/edit"
         component={ChangeEditDelete}

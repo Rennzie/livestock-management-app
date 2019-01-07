@@ -31,7 +31,7 @@ function CategoryCard({ category, classes }) {
   return (
     <Paper
       component={Link}
-      to={`/categories/${category._id}`}
+      to={`/manage-categories/${category._id}`}
       className={classNames(classes.margin, classes.padding, classes.spreadRow)}
     >
       <CapitalizeText className={classes.margin} gutterBottom variant="subtitle2">

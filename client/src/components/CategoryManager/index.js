@@ -65,17 +65,6 @@ class CategoryManager extends Component {
     this.setState(() => ({ selectedFarm: farm }));
   };
 
-  handleCategoryChange = category => () => {
-    const { history } = this.props;
-    history.push(`/manage-classes/${category.category}/changes`, { categoryId: category._id });
-  };
-
-  handleGoToHistory = category => () => {
-    const id = category._id;
-    const { history } = this.props;
-    history.push(`/manage-categories/${id}/changes/history`);
-  };
-
   render() {
     const { farms, selectedFarm } = this.state;
     const { classes } = this.props;
@@ -131,8 +120,7 @@ class CategoryManager extends Component {
 }
 
 CategoryManager.propTypes = {
-  classes: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(CategoryManager);

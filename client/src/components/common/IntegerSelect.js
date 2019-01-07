@@ -9,9 +9,11 @@ const styles = theme => ({
   margin: {
     margin: theme.spacing.unit
   },
-  numberSize: {
-    fontSize: '40px',
-    textAlign: 'center'
+  // numberField: {
+  // },
+  root: {
+    fontSize: '60px',
+    fontAlignLast: 'center'
   },
   counterWrapper: {
     display: 'flex',
@@ -30,7 +32,11 @@ function IntegerSelect({ number, handleCountChange, classes }) {
       </IconButton>
 
       <Input
-        className={classes.numberSize}
+        style={{ fontAlign: 'center', fontSize: '60px' }}
+        // classes={{ multiline: classes.root }}
+        multiline
+        // inputComponent="textarea"
+        // className={classes.numberField}
         disableUnderline
         onChange={handleCountChange('countChange')}
         value={number}

@@ -69,9 +69,10 @@ class CategoryEditDelete extends Component {
         )}
         <div className={classes.form}>
           <Input
-            type="number"
+            // type="number"
             id="stockUnitFactor"
             name="stockUnitFactor"
+            placeholder="Stock Unit Factor"
             value={stockUnitFactor}
             onChange={this.handleChange('stockUnitFactor')}
           />

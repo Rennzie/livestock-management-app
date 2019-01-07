@@ -1,23 +1,25 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 
 import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Radio from '@material-ui/core/Radio';
+import InputLabel from '@material-ui/core/InputLabel';
+import NativeSelect from '@material-ui/core/NativeSelect';
+import Input from '@material-ui/core/Input';
 import withStyles from '@material-ui/core/styles/withStyles';
+import moment from 'moment';
+import axios from 'axios';
+import SubmitButton from '../../common/SubmitButton';
 
-import AddMovement from './Add';
-import RemoveMovement from './Remove';
+import AddRemoveMovement from './AddRemove';
 import TransferMovement from './Transfer';
 
 const styles = theme => ({
   formControl: {
     margin: theme.spacing.unit * 3
   },
-  group: {
-    margin: `${theme.spacing.unit}px 0`
+  select: {
+    margin: theme.spacing.unit * 2
   }
 });
 
@@ -74,15 +76,20 @@ const movementOptions = [
 
 class NewMovement extends Component {
   state = {
-    value: 'add',
-    movementOption: '',
-    animalsMoved: 0
+    movementType: 'remove',
+    reasonForChange: '',
+    animalsMoved: 0,
+    createdAt: ''
   };
+
+  componentDidMount() {
+    this.setState(() => ({ createdAt: moment().format('YYYY-MM-DD') }));
+  }
 
   handleRadioChange = event => {
     const { value } = event.target;
-    const movementOption = '';
-    this.setState(() => ({ value, movementOption }));
+    const reasonForChange = '';
+    this.setState(() => ({ movementType: value, reasonForChange }));
   };
 
   handleChange = name => event => {
@@ -92,11 +99,11 @@ class NewMovement extends Component {
 
   handleCountChange = countType => event => {
     if (countType === 'countUp') {
-      this.setState((prevState, props) => ({ animalsMoved: prevState.animalsMoved + 1 }));
+      this.setState(prevState => ({ animalsMoved: prevState.animalsMoved + 1 }));
     }
 
     if (countType === 'countDown') {
-      this.setState((prevState, props) => ({ animalsMoved: prevState.animalsMoved - 1 }));
+      this.setState(prevState => ({ animalsMoved: prevState.animalsMoved - 1 }));
     }
 
     if (countType === 'countChange') {
@@ -106,48 +113,82 @@ class NewMovement extends Component {
       } else {
         animalsMoved = parseInt(event.target.value, 10);
       }
-      console.log('=====>', animalsMoved);
       this.setState(() => ({ animalsMoved }));
     }
   };
 
+  handleAddRemoveSubmit = () => {
+    const { createdAt, reasonForChange, movementType } = this.state;
+    let { animalsMoved } = this.state;
+    const { match, history } = this.props;
+
+    if (movementType === 'remove') {
+      animalsMoved *= -1;
+    }
+
+    const newMovement = {};
+    newMovement.createdAt = moment(createdAt);
+    newMovement.animalsMoved = animalsMoved;
+    newMovement.reasonForChange = reasonForChange;
+
+    axios
+      .post(`/api/categories/${match.params.categoryId}/changes`)
+      .then(() => history.push(`/manage-categories/${match.params.categoryId}`));
+  };
+
+  // NEXT: bug with data presented to history causing capitalizetext to crash
+
   render() {
-    const { value, movementOption, animalsMoved } = this.state;
+    const { movementType, reasonForChange, animalsMoved, createdAt } = this.state;
     const { classes } = this.props;
     return (
       <Fragment>
         <Typography variant="h5" align="center">
           New Movement
         </Typography>
-
-        <FormControl component="fieldset" className={classes.formControl}>
-          {/* <FormLabel component="legend">Gender</FormLabel> */}
-          <RadioGroup
-            name="movementSelect"
-            className={classes.group}
-            value={value}
+        <FormControl variant="outlined" required fullWidth>
+          <InputLabel className={classes.select} htmlFor="movementType">
+            Movements Type
+          </InputLabel>
+          <NativeSelect
+            value={movementType}
+            className={classes.select}
             onChange={this.handleRadioChange}
+            input={<Input name="movementType" id="movementType" />}
           >
-            <FormControlLabel value="add" control={<Radio />} label="Add" />
-            <FormControlLabel value="remove" control={<Radio />} label="Remove" />
-            <FormControlLabel value="transfer" control={<Radio />} label="Transfer" />
-          </RadioGroup>
+            <option value="add">Add Animals</option>
+            <option value="remove">Remove Animals</option>
+            <option value="transfer">Transfer Animals</option>
+          </NativeSelect>
         </FormControl>
 
-        {value === 'add' && (
-          <AddMovement
+        {(movementType === 'add' || movementType === 'remove') && (
+          <AddRemoveMovement
+            movementType={movementType}
             handleChange={this.handleChange}
             handleCountChange={this.handleCountChange}
             movementOptions={movementOptions}
-            movementOption={movementOption}
+            reasonForChange={reasonForChange}
             animalsMoved={animalsMoved}
+            createdAt={createdAt}
           />
         )}
-        {value === 'remove' && <RemoveMovement />}
-        {value === 'transfer' && <TransferMovement />}
+
+        {movementType === 'transfer' && <TransferMovement />}
+        <SubmitButton
+          name="Log Movement"
+          disabled={!reasonForChange}
+          handleClick={this.handleAddRemoveSubmit}
+          variant="contained"
+          color="secondary"
+        />
       </Fragment>
     );
   }
 }
+
+NewMovement.propTypes = {
+  classes: PropTypes.object.isRequired
+};
 
 export default withStyles(styles)(NewMovement);
