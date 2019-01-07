@@ -19,10 +19,35 @@
     <!-- Import manifest.json -->
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#FBC02D" />
+
+    <!-- Apple specific PWA links -->
+    <link rel="apple-touch-icon" href="/icon-512.png" />
+    <!-- <link rel="apple-mobile-web-app-capable" content="yes" /> -->
+    <link rel="apple-mobile-web-app-status-bar-style" content="default" />
+
+    <!-- iPhone Xr (828px x 1792px) -->
     <link
       rel="apple-touch-startup-image"
-      href="splash/launch-1536x2048.png"
-      media="(min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)"
+      media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)"
+      href="./splash/ios-xr.png"
+    />
+    <!-- iPhone X, Xs (1125px x 2436px) -->
+    <link
+      rel="apple-touch-startup-image"
+      media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)"
+      href="./splash/ios-x.png"
+    />
+    <!-- iPhone 8 Plus, 7 Plus, 6s Plus, 6 Plus (1242px x 2208px) -->
+    <link
+      rel="apple-touch-startup-image"
+      media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)"
+      href="./splash/ios-8-plus.png"
+    />
+    <!-- iPhone 8, 7, 6s, 6 (750px x 1334px) -->
+    <link
+      rel="apple-touch-startup-image"
+      media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)"
+      href="./splash/ios-8.png"
     />
 
     <title>Stockman</title>
