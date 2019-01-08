@@ -175,12 +175,25 @@ class EditDeleteMovement extends Component {
       .then(() => history.push(`/manage-categories/${match.params.categoryId}`));
   };
 
+  handleAddRemoveDelete = () => {
+    const { match, history } = this.props;
+    axios
+      .delete(`/api/categories/${match.params.categoryId}/changes/${match.params.movementId}`)
+      .then(() => history.push(`/manage-categories/${match.params.categoryId}`));
+  };
+
   /**
    *  Handles the formatting and sending of two requests for transfering
    *  animals out of the current category into the selected category
    */
   handleTransferEdit = () => {
-    const { createdAt, animalsMoved, reasonForChange, transferPairId } = this.state;
+    const {
+      createdAt,
+      animalsMoved,
+      reasonForChange,
+      transferPairId,
+      transferPairCategory
+    } = this.state;
     const { match, history } = this.props;
 
     const transferOutEdit = {};
@@ -196,14 +209,14 @@ class EditDeleteMovement extends Component {
     let transferInAddress = '';
     if (reasonForChange === 'transferOut') {
       transferOutAddress = `/api/categories/${match.params.categoryId}/changes/${
-        match.params.categoryId
+        match.params.movementId
       }`;
-      transferInAddress = `/api/categories/${transferPairId}/changes/${transferPairId}`;
+      transferInAddress = `/api/categories/${transferPairCategory}/changes/${transferPairId}`;
     } else if (reasonForChange === 'transferIn') {
       transferInAddress = `/api/categories/${match.params.categoryId}/changes/${
-        match.params.categoryId
+        match.params.movementId
       }`;
-      transferOutAddress = `/api/categories/${transferPairId}/changes/${transferPairId}`;
+      transferOutAddress = `/api/categories/${transferPairCategory}/changes/${transferPairId}`;
     }
 
     function sendTransferOutEdit() {
@@ -216,6 +229,24 @@ class EditDeleteMovement extends Component {
 
     axios
       .all([sendTransferOutEdit(), sendTransferInEdit()])
+      .then(() => history.push(`/manage-categories/${match.params.categoryId}`));
+  };
+
+  handleTransferDelete = () => {
+    const { transferPairId, transferPairCategory } = this.state;
+    const { match, history } = this.props;
+    function sendTransferOut() {
+      return axios.delete(
+        `/api/categories/${match.params.categoryId}/changes/${match.params.movementId}`
+      );
+    }
+
+    function sendTransferIn() {
+      return axios.delete(`/api/categories/${transferPairCategory}/changes/${transferPairId}`);
+    }
+
+    axios
+      .all([sendTransferOut(), sendTransferIn()])
       .then(() => history.push(`/manage-categories/${match.params.categoryId}`));
   };
 
