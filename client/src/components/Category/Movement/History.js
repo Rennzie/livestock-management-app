@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unused-prop-types */
+/* eslint-disable react/require-default-props */
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
@@ -48,7 +50,7 @@ class CategoryHistory extends Component {
 
   render() {
     const { sortedChanges } = this.state;
-    const { classes, handleChangeEdit } = this.props;
+    const { classes, handleEditDeleteMovement } = this.props;
     return (
       <Fragment>
         {sortedChanges ? (
@@ -58,8 +60,8 @@ class CategoryHistory extends Component {
                 <TableHead>
                   <TableRow>
                     <TableCell>Date</TableCell>
-                    <TableCell>Reason</TableCell>
-                    <TableCell numeric>Moved</TableCell>
+                    <TableCell>Movement</TableCell>
+                    <TableCell numeric>Number</TableCell>
                     <TableCell />
                   </TableRow>
                 </TableHead>
@@ -77,15 +79,13 @@ class CategoryHistory extends Component {
                       </TableCell>
 
                       <TableCell numeric>
-                        <Typography variant="caption">{row.animalsMoved}</Typography>
+                        <Typography variant="caption">
+                          {row.animalsMoved < 0 ? row.animalsMoved * -1 : row.animalsMoved}
+                        </Typography>
                       </TableCell>
 
-                      <TableCell
-                      // onClick={handleChangeEdit(row._id)}
-                      >
-                        <Icon color="disabled" fontSize="small">
-                          edit
-                        </Icon>
+                      <TableCell onClick={handleEditDeleteMovement(row._id)}>
+                        <Icon fontSize="small">edit</Icon>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -104,7 +104,9 @@ class CategoryHistory extends Component {
 CategoryHistory.propTypes = {
   changes: PropTypes.array.isRequired,
   classes: PropTypes.object.isRequired,
-  handleChangeEdit: PropTypes.func.isRequired
+  handleEditDeleteMovement: PropTypes.func.isRequired,
+  history: PropTypes.object,
+  match: PropTypes.object
 };
 
 export default withStyles(styles)(CategoryHistory);

@@ -70,20 +70,20 @@ class CategoryShow extends Component {
     const { history } = this.props;
 
     history.push({
-      pathname: `/manage-categories/${category._id}/changes`,
+      pathname: `/manage-categories/${category._id}/movements`,
       state: { farmId: category.farm._id, categoryName: category.category }
     });
   };
 
-  handleChangeEdit = changeId => () => {
+  handleEditDeleteMovement = changeId => () => {
     const { history, match } = this.props;
-    history.push(`/manage-categories/${match.params.categoryId}/changes/${changeId}/edit`);
+    history.push(`/manage-categories/${match.params.categoryId}/movements/${changeId}/edit`);
   };
 
   handleGoToEdit = () => {
     const { category } = this.state;
     const { history } = this.props;
-    history.push(`/categories/${category._id}/edit`);
+    history.push(`/manage-categories/${category._id}/edit`);
   };
 
   render() {
@@ -137,7 +137,7 @@ class CategoryShow extends Component {
                     Out:
                   </Typography>
                   <Typography variant="caption">
-                    {category.currentMonthDetail.outChanges}
+                    {category.currentMonthDetail.outChanges * -1}
                   </Typography>
                 </div>
 
@@ -164,7 +164,9 @@ class CategoryShow extends Component {
                 {category.currentMonthDetail.changes.map(change => (
                   <div className={classes.spreadRow} key={change._id}>
                     <CapitalizeText variant="subtitle2">{change.name}</CapitalizeText>
-                    <Typography variant="subtitle2">{change.total}</Typography>
+                    <Typography variant="subtitle2">
+                      {change.total < 0 ? change.total * -1 : change.total}
+                    </Typography>
                   </div>
                 ))}
                 <Divider />
@@ -183,7 +185,7 @@ class CategoryShow extends Component {
 
               <CategoryHistory
                 changes={category.currentMonthChanges}
-                handleChangeEdit={this.handleChangeEdit}
+                handleEditDeleteMovement={this.handleEditDeleteMovement}
               />
             </section>
           )}

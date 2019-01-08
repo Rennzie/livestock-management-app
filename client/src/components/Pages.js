@@ -9,10 +9,10 @@ import FarmNew from './Farms/New';
 import CategoryManager from './CategoryManager';
 import CategoryNew from './Category/New';
 import CategoryShow from './Category/Show';
-// import ChangeEditDelete from './Category/Change/EditDelete';
 import SecureRoute from './common/SecureRoute';
 import CategoryEditDelete from './Category/EditDelete';
 import NewMovement from './Category/Movement/New';
+import EditDeleteMovement from './Category/Movement/EditDelete';
 
 const styles = theme => ({
   bodyContainer: {
@@ -35,16 +35,13 @@ function Pages({ classes }) {
 
         {/* Manage Categories */}
         <SecureRoute exact path="/manage-categories" component={CategoryManager} />
-        <SecureRoute path="/manage-categories/:categoryId/changes" component={NewMovement} />
+        <SecureRoute
+          path="/manage-categories/:categoryId/movements/:movementId/edit"
+          component={EditDeleteMovement}
+        />
+        <SecureRoute path="/manage-categories/:categoryId/movements" component={NewMovement} />
+        <SecureRoute path="/manage-categories/:categoryId/edit" component={CategoryEditDelete} />
         <SecureRoute path="/manage-categories/:categoryId" component={CategoryShow} />
-
-        <SecureRoute path="/categories/:categoryId/edit" component={CategoryEditDelete} />
-
-        {/* Category Movements */}
-        {/* <SecureRoute
-        path="/manage-categories/:categoryId/changes/:changeId/edit"
-        component={ChangeEditDelete}
-      /> */}
       </Switch>
     </main>
   );

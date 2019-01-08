@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
@@ -7,7 +8,6 @@ import Input from '@material-ui/core/Input';
 import withStyles from '@material-ui/core/styles/withStyles';
 import orderBy from 'lodash/orderBy';
 import IntegerSelect from '../../common/IntegerSelect';
-import SubmitButton from '../../common/SubmitButton';
 
 const styles = theme => ({
   margin: {
@@ -24,7 +24,6 @@ function TransferMovement({
   createdAt,
   handleChange,
   handleCountChange,
-  handleTransferSubmit,
   transferTo
 }) {
   return (
@@ -37,44 +36,37 @@ function TransferMovement({
         type="date"
         value={createdAt}
       />
-      <FormControl variant="outlined" required fullWidth>
-        <NativeSelect
-          className={classes.margin}
-          input={<Input name="transferTo" id="transferTo" />}
-          onChange={handleChange('transferTo')}
-          value={transferTo}
-        >
-          <option value="">transfer into...</option>
-          {sortAsc(categories, 'category').map(category => (
-            <option key={category._id} value={category._id}>
-              {/* <CapitalizeText>{category.category}</CapitalizeText> */}
-              {category.category}
-            </option>
-          ))}
-        </NativeSelect>
-      </FormControl>
+      {categories && (
+        <FormControl variant="outlined" required fullWidth>
+          <NativeSelect
+            className={classes.margin}
+            input={<Input name="transferTo" id="transferTo" />}
+            onChange={handleChange('transferTo')}
+            value={transferTo}
+          >
+            <option value="">transfer into...</option>
+            {sortAsc(categories, 'category').map(category => (
+              <option key={category._id} value={category._id}>
+                {category.category}
+              </option>
+            ))}
+          </NativeSelect>
+        </FormControl>
+      )}
 
       <IntegerSelect handleCountChange={handleCountChange} number={animalsMoved} />
-      <SubmitButton
-        color="secondary"
-        disabled={!transferTo}
-        handleClick={handleTransferSubmit}
-        name="Log Movement"
-        variant="contained"
-      />
     </Fragment>
   );
 }
 
 TransferMovement.propTypes = {
   animalsMoved: PropTypes.number.isRequired,
-  categories: PropTypes.array.isRequired,
+  categories: PropTypes.array,
   classes: PropTypes.object.isRequired,
   createdAt: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleCountChange: PropTypes.func.isRequired,
-  handleTransferSubmit: PropTypes.func.isRequired,
-  transferTo: PropTypes.string.isRequired
+  transferTo: PropTypes.string
 };
 
 export default withStyles(styles)(TransferMovement);

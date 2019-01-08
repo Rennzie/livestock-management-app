@@ -21,7 +21,6 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'prettier/prettier': 'error',
     'react/forbid-prop-types': 0,
-    'react/prop-types': 1,
     // 'comma-dangle': 0,
     'object-curly-newline': 0,
     'arrow-parens': 0,

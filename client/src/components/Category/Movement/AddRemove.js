@@ -6,7 +6,6 @@ import NativeSelect from '@material-ui/core/NativeSelect';
 import Input from '@material-ui/core/Input';
 import withStyles from '@material-ui/core/styles/withStyles';
 import IntegerSelect from '../../common/IntegerSelect';
-import SubmitButton from '../../common/SubmitButton';
 
 const styles = theme => ({
   margin: {
@@ -18,7 +17,6 @@ function AddRemoveMovement({
   animalsMoved,
   classes,
   createdAt,
-  handleAddRemoveSubmit,
   handleChange,
   handleCountChange,
   movementOptions,
@@ -46,7 +44,7 @@ function AddRemoveMovement({
           {movementOptions.map(movement => {
             if (movement.type === movementType) {
               return (
-                <option key={movement.name} value={movement.name}>
+                <option key={movement.reasonForChange} value={movement.reasonForChange}>
                   {movement.displayName}
                 </option>
               );
@@ -57,13 +55,6 @@ function AddRemoveMovement({
       </FormControl>
 
       <IntegerSelect number={animalsMoved} handleCountChange={handleCountChange} />
-      <SubmitButton
-        color="secondary"
-        disabled={!reasonForChange || animalsMoved < 0}
-        handleClick={handleAddRemoveSubmit}
-        name="Log Movement"
-        variant="contained"
-      />
     </Fragment>
   );
 }
@@ -72,7 +63,6 @@ AddRemoveMovement.propTypes = {
   animalsMoved: PropTypes.number.isRequired,
   classes: PropTypes.object.isRequired,
   createdAt: PropTypes.string.isRequired,
-  handleAddRemoveSubmit: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleCountChange: PropTypes.func.isRequired,
   movementOptions: PropTypes.array.isRequired,

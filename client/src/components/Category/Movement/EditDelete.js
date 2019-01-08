@@ -9,11 +9,11 @@ import Input from '@material-ui/core/Input';
 import withStyles from '@material-ui/core/styles/withStyles';
 import moment from 'moment';
 import axios from 'axios';
+import SubmitButton from '../../common/SubmitButton';
 
 import AddRemoveMovement from './AddRemove';
 import TransferMovement from './Transfer';
 import CapitalizeText from '../../common/CapitalizeText';
-import SubmitButton from '../../common/SubmitButton';
 import Generate from '../../../lib/Generate';
 
 const styles = theme => ({
@@ -76,32 +76,41 @@ const movementOptions = [
   }
 ];
 
-class NewMovement extends Component {
-  state = {
-    animalsMoved: 0,
-    createdAt: '',
-    movementType: 'remove',
-    reasonForChange: '',
-    transferTo: ''
-  };
+class EditDeleteMovement extends Component {
+  state = {};
 
   /**
-   *  Fetchs the correct farm incase the movement is a transfer
-   *  Filters out the current category from the list to avoid transfering into
-   *  the same category (this out be redundant).
+   *  Fetchs the correct change to be edit, places it on state to be used in forms
    */
   componentDidMount() {
     const { location, match } = this.props;
-    axios.get(`/api/farms/${location.state.farmId}`).then(res => {
-      const otherCategories = res.data.categories.filter(
-        category => category._id.toString() !== match.params.categoryId
-      );
-      this.setState(() => ({
-        categoryName: location.state.categoryName,
-        categories: otherCategories,
-        createdAt: moment().format('YYYY-MM-DD')
-      }));
-    });
+
+    axios
+      .get(`/api/categories/${match.params.categoryId}/changes/${match.params.movementId}`)
+      .then(res => {
+        const createdAt = moment(res.data.createdAt).format('YYYY-MM-DD');
+        const animalsMoved =
+          res.data.animalsMoved < 0 ? res.data.animalsMoved * -1 : res.data.animalsMoved;
+        let transferPairId = null;
+        let transferPairCategory = null;
+        if (res.data.transferPairId) {
+          // eslint-disable-next-line prefer-destructuring
+          transferPairId = res.data.transferPairId;
+          // eslint-disable-next-line prefer-destructuring
+          transferPairCategory = res.data.transferPairCategory;
+        }
+        this.setState(
+          () => ({
+            createdAt,
+            movementType: res.data.movementType,
+            animalsMoved,
+            reasonForChange: res.data.reasonForChange,
+            transferPairId,
+            transferPairCategory
+          }),
+          () => console.log('=======>', this.state)
+        );
+      });
   }
 
   handleSelectMoveType = event => {
@@ -144,7 +153,7 @@ class NewMovement extends Component {
   /**
    * Simply handles the post request to submit an add or remove movement
    */
-  handleAddRemoveSubmit = () => {
+  handleAddRemoveEdit = () => {
     const { createdAt, reasonForChange, movementType } = this.state;
     let { animalsMoved } = this.state;
     const { match, history } = this.props;
@@ -153,20 +162,16 @@ class NewMovement extends Component {
       animalsMoved *= -1;
     }
 
-    const movementDetailObj = movementOptions.filter(
-      movement => movement.reasonForChange === reasonForChange
-    );
-
     const newMovement = {};
     newMovement.createdAt = moment(createdAt);
     newMovement.animalsMoved = animalsMoved;
     newMovement.reasonForChange = reasonForChange;
-    newMovement.displayName = movementDetailObj.displayName;
-    newMovement.multiplier = movementDetailObj.multiplier;
-    newMovement.movementType = movementType;
 
     axios
-      .post(`/api/categories/${match.params.categoryId}/changes`, newMovement)
+      .put(
+        `/api/categories/${match.params.categoryId}/changes/${match.params.movementId}`,
+        newMovement
+      )
       .then(() => history.push(`/manage-categories/${match.params.categoryId}`));
   };
 
@@ -174,60 +179,54 @@ class NewMovement extends Component {
    *  Handles the formatting and sending of two requests for transfering
    *  animals out of the current category into the selected category
    */
-  handleTransferSubmit = () => {
-    const { createdAt, animalsMoved, transferTo } = this.state;
+  handleTransferEdit = () => {
+    const { createdAt, animalsMoved, reasonForChange, transferPairId } = this.state;
     const { match, history } = this.props;
 
-    const OUT_ID = Generate.newId();
-    const IN_ID = Generate.newId();
+    const transferOutEdit = {};
+    transferOutEdit.createdAt = moment(createdAt);
+    transferOutEdit.animalsMoved = animalsMoved * -1;
 
-    const transferOut = {
-      _id: OUT_ID,
-      displayName: 'Transfer Out',
-      multiplier: -1,
-      reasonForChange: 'transferOut',
-      transferPairId: IN_ID,
-      movementType: 'transfer'
-    };
+    const transferInEdit = {};
+    transferInEdit.createdAt = moment(createdAt);
+    transferInEdit.animalsMoved = animalsMoved;
 
-    transferOut.createdAt = moment(createdAt);
-    transferOut.animalsMoved = animalsMoved * -1;
-    transferOut.transferPairCategory = transferTo;
-
-    const transferIn = {
-      _id: IN_ID,
-      displayName: 'Transfer In',
-      multiplier: 1,
-      reasonForChange: 'transferIn',
-      transferPairId: OUT_ID,
-      movementType: 'transfer'
-    };
-    transferIn.createdAt = moment(createdAt);
-    transferIn.animalsMoved = animalsMoved;
-    transferIn.transferPairCategory = match.params.categoryId;
-
-    function sendTransferOut() {
-      return axios.post(`/api/categories/${match.params.categoryId}/changes`, transferOut);
+    // address depends on it being transfer in or out
+    let transferOutAddress = '';
+    let transferInAddress = '';
+    if (reasonForChange === 'transferOut') {
+      transferOutAddress = `/api/categories/${match.params.categoryId}/changes/${
+        match.params.categoryId
+      }`;
+      transferInAddress = `/api/categories/${transferPairId}/changes/${transferPairId}`;
+    } else if (reasonForChange === 'transferIn') {
+      transferInAddress = `/api/categories/${match.params.categoryId}/changes/${
+        match.params.categoryId
+      }`;
+      transferOutAddress = `/api/categories/${transferPairId}/changes/${transferPairId}`;
     }
 
-    function sendTransferIn() {
-      return axios.post(`/api/categories/${transferTo}/changes`, transferIn);
+    function sendTransferOutEdit() {
+      return axios.put(transferOutAddress, transferOutEdit);
+    }
+
+    function sendTransferInEdit() {
+      return axios.put(transferInAddress, transferInEdit);
     }
 
     axios
-      .all([sendTransferOut(), sendTransferIn()])
+      .all([sendTransferOutEdit(), sendTransferInEdit()])
       .then(() => history.push(`/manage-categories/${match.params.categoryId}`));
   };
 
   render() {
     const {
       animalsMoved,
-      categories,
       categoryName,
       createdAt,
       movementType,
-      reasonForChange,
-      transferTo
+      reasonForChange
+      // transferTo
     } = this.state;
     const { classes } = this.props;
 
@@ -241,7 +240,7 @@ class NewMovement extends Component {
             <CapitalizeText>{categoryName}</CapitalizeText>
           </Typography>
         )}
-        <FormControl variant="outlined" required fullWidth>
+        {/* <FormControl variant="outlined" required fullWidth>
           <InputLabel className={classes.select} htmlFor="movementType">
             Movements Type
           </InputLabel>
@@ -255,14 +254,30 @@ class NewMovement extends Component {
             <option value="remove">Remove Animals</option>
             <option value="transfer">Transfer Out of Category</option>
           </NativeSelect>
-        </FormControl>
+        </FormControl> */}
+
+        {movementType === 'add' && (
+          <Typography className={classes.select} variant="subtitle1">
+            Edit added Animals
+          </Typography>
+        )}
+        {movementType === 'remove' && (
+          <Typography className={classes.select} variant="subtitle1">
+            Edit removed Animals
+          </Typography>
+        )}
+        {movementType === 'transfer' && (
+          <Typography className={classes.select} variant="subtitle1">
+            Edit transfered Animals
+          </Typography>
+        )}
 
         {(movementType === 'add' || movementType === 'remove') && (
           <Fragment>
             <AddRemoveMovement
               animalsMoved={animalsMoved}
               createdAt={createdAt}
-              handleAddRemoveSubmit={this.handleAddRemoveSubmit}
+              handleAddRemoveEdit={this.handleAddRemoveEdit}
               handleChange={this.handleChange}
               handleCountChange={this.handleCountChange}
               movementType={movementType}
@@ -272,29 +287,40 @@ class NewMovement extends Component {
             <SubmitButton
               color="secondary"
               disabled={!reasonForChange || animalsMoved < 0}
-              handleClick={this.handleAddRemoveSubmit}
-              name="Log Movement"
+              handleClick={this.handleAddRemoveEdit}
+              name="Edit Movement"
+              variant="contained"
+            />
+            <SubmitButton
+              color="secondary"
+              disabled={!reasonForChange || animalsMoved < 0}
+              handleClick={this.handleAddRemoveDelete}
+              name="Delete Movement"
               variant="contained"
             />
           </Fragment>
         )}
 
-        {movementType === 'transfer' && categories && (
+        {movementType === 'transfer' && (
           <Fragment>
             <TransferMovement
               animalsMoved={animalsMoved}
-              categories={categories}
+              // categories={categories}
               createdAt={createdAt}
               handleChange={this.handleChange}
               handleCountChange={this.handleCountChange}
-              handleTransferSubmit={this.handleTransferSubmit}
-              transferTo={transferTo}
+              // transferTo={transferTo}
             />
             <SubmitButton
               color="secondary"
-              disabled={!transferTo}
-              handleClick={this.handleTransferSubmit}
-              name="Log Transfer"
+              handleClick={this.handleTransferEdit}
+              name="Edit Transfer"
+              variant="contained"
+            />
+            <SubmitButton
+              color="secondary"
+              handleClick={this.handleTransferDelete}
+              name="Delete Transfer"
               variant="contained"
             />
           </Fragment>
@@ -304,11 +330,11 @@ class NewMovement extends Component {
   }
 }
 
-NewMovement.propTypes = {
+EditDeleteMovement.propTypes = {
   classes: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(NewMovement);
+export default withStyles(styles)(EditDeleteMovement);

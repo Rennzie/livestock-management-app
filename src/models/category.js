@@ -14,11 +14,26 @@ const { ObjectId } = Schema.Types;
  */
 
 // === SUB-DOCUMENTS ===//
+/**
+ *  Movements are started on the front end.
+ *  Each document will contain the information need to correctly display, edit, delete the movment
+ */
 const ChangeTrackerSchema = new Schema({
   createdAt: Date,
   reasonForChange: String,
+  displayName: String,
   animalsMoved: Number,
-  notes: String
+  notes: String,
+
+  // An ID string for the paried tansfer provided when the change is a transfer
+  transferPairId: String,
+  transferPairCategory: String,
+
+  // Either 1 or -1, used to correctly display the numbers or to ensure it is negative when a remove
+  multiplier: Number,
+
+  // One of three, add, remove, tranfer
+  movementType: { type: String, enum: ['add', 'remove', 'transfer'] }
 });
 
 const ChangeArchiveSchema = new Schema({
