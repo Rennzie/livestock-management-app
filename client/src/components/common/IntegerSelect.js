@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { stringify } from 'querystring';
 
 const styles = theme => ({
   margin: {
