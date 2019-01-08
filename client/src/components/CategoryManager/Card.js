@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Link from 'react-router-dom/Link';
 
@@ -42,7 +43,7 @@ function CategoryCard({ category, classes }) {
           Total: {category.currentMonthDetail.closingTotal}
         </Typography>
         <Typography className={classes.margin} variant="body1">
-          LSU: {category.stockUnits}
+          LSU: {Math.round(category.stockUnits)}
         </Typography>
         <Typography className={classes.margin} variant="body1">
           LSU Factor: {category.stockUnitFactor}
@@ -51,5 +52,10 @@ function CategoryCard({ category, classes }) {
     </Paper>
   );
 }
+
+CategoryCard.propTypes = {
+  category: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
+};
 
 export default withStyles(styles)(CategoryCard);

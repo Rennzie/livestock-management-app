@@ -11,18 +11,13 @@ import Home from '@material-ui/icons/Home';
 import RainIcon from '@material-ui/icons/Grain';
 import AnimalIcon from '@material-ui/icons/Pets';
 
-const styles = {
+const styles = () => ({
   root: {
     width: '100%',
     position: 'fixed',
     bottom: 0
-  },
-  draw: {
-    paperAnchorBottom: {
-      backgroundColor: 'red'
-    }
   }
-};
+});
 
 class BottomNav extends Component {
   state = {
@@ -85,7 +80,8 @@ class BottomNav extends Component {
 }
 
 BottomNav.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 export default withRouter(withStyles(styles)(BottomNav));

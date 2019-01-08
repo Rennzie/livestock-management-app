@@ -1,16 +1,14 @@
-import React, { Fragment } from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
-import Input from '@material-ui/core/Input';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { stringify } from 'querystring';
 
 const styles = theme => ({
   margin: {
     margin: theme.spacing.unit
   },
-  // numberField: {
-  // },
   root: {
     fontSize: '60px',
     fontAlignLast: 'center'
@@ -31,22 +29,32 @@ function IntegerSelect({ number, handleCountChange, classes }) {
         <Icon fontSize="large">keyboard_arrow_up</Icon>
       </IconButton>
 
-      <Input
-        style={{ fontAlign: 'center', fontSize: '60px' }}
-        // classes={{ multiline: classes.root }}
-        multiline
-        // inputComponent="textarea"
-        // className={classes.numberField}
-        disableUnderline
+      <textarea
         onChange={handleCountChange('countChange')}
+        maxLength={5}
+        rows={1}
+        spellCheck={false}
+        style={{
+          backgroundColor: 'transparent',
+          border: 'none',
+          fontSize: '60px',
+          resize: 'none',
+          textAlign: 'center'
+        }}
         value={number}
       />
 
-      <IconButton onClick={handleCountChange('countDown')}>
+      <IconButton disabled={number <= 0} onClick={handleCountChange('countDown')}>
         <Icon fontSize="large">keyboard_arrow_down</Icon>
       </IconButton>
     </section>
   );
 }
+
+IntegerSelect.propTypes = {
+  number: PropTypes.number.isRequired,
+  handleCountChange: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired
+};
 
 export default withStyles(styles)(IntegerSelect);

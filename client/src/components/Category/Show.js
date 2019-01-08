@@ -151,7 +151,7 @@ class CategoryShow extends Component {
                 </div>
                 <div className={classes.spreadRow}>
                   <Typography variant="subtitle1">Total LSU:</Typography>
-                  <Typography variant="subtitle1">{category.stockUnits}</Typography>
+                  <Typography variant="subtitle1">{Math.round(category.stockUnits)}</Typography>
                 </div>
                 <div className={classes.spreadRow}>
                   <Typography variant="subtitle1">LSU Factor:</Typography>

@@ -78,7 +78,7 @@ class NewMovement extends Component {
   state = {
     animalsMoved: 0,
     createdAt: '',
-    movementType: 'transfer',
+    movementType: 'remove',
     reasonForChange: '',
     transferTo: ''
   };
@@ -117,7 +117,7 @@ class NewMovement extends Component {
    *  Handler used for IngeterSelect component. It will updated the number
    *  depending on the method used, button up, down, or cursor change.
    *
-   *  It ensure the end result is a number and not a string
+   *  It ensures the end result is a number and not a string
    */
   handleCountChange = countType => event => {
     if (countType === 'countUp') {

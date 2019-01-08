@@ -58,6 +58,7 @@ const CategorySchema = new Schema(
     },
 
     currentMonthChanges: [ChangeTrackerSchema],
+    changesArchive: [ChangeTrackerSchema],
     prevMonthsDetail: [MonthlyDetailSchema],
     prevMonthsChanges: [ChangeArchiveSchema]
   },
@@ -110,11 +111,11 @@ CategorySchema.methods.generateMonthsDetail = function() {
 
   if (this.currentMonthDetail.period === period) return this.save();
 
-  // Archive all the changes and start a new curreMonthChanges array
-  const lastMonthsChanges = {};
-  lastMonthsChanges.period = this.currentMonthDetail.period;
-  lastMonthsChanges.changes = [...this.currentMonthChanges];
-  this.prevMonthsChanges.push(lastMonthsChanges);
+  // Archive all the changes and start a new currentMonthChanges array
+  // const lastMonthsChanges = {};
+  // lastMonthsChanges.period = this.currentMonthDetail.period;
+  // lastMonthsChanges.changes = [...this.currentMonthChanges];
+  this.changesArchive = [...this.currentMonthChanges];
 
   // make a reset the current month changes
   this.currentMonthChanges = [];

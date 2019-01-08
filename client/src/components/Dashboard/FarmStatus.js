@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -12,13 +12,14 @@ const styles = theme => ({
     paddingRight: theme.spacing.unit * 3
   },
   margin: {
-    margin: theme.spacing.unit
+    margin: theme.spacing.unit * 4
   },
   column: {
+    boxSizing: 'border-box',
     display: 'flex',
     flexDirection: 'column',
-    alignItem: 'center',
-    width: '100%'
+    alignItem: 'center'
+    // width: '100%'
   }
 });
 
@@ -35,12 +36,17 @@ function FarmStatus({ user, classes }) {
           <Typography variant="subtitle1">{farm.name}</Typography>
           <div>
             <Typography variant="subtitle1">Animals: {farm.totalAnimals}</Typography>
-            <Typography variant="subtitle1">LSU: {farm.totalStockUnits}</Typography>
+            <Typography variant="subtitle1">LSU: {Math.round(farm.totalStockUnits)}</Typography>
           </div>
         </div>
       ))}
     </div>
   );
 }
+
+FarmStatus.propTypes = {
+  classes: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired
+};
 
 export default withStyles(styles)(FarmStatus);

@@ -59,7 +59,7 @@ function AddRemoveMovement({
       <IntegerSelect number={animalsMoved} handleCountChange={handleCountChange} />
       <SubmitButton
         color="secondary"
-        disabled={!reasonForChange}
+        disabled={!reasonForChange || animalsMoved < 0}
         handleClick={handleAddRemoveSubmit}
         name="Log Movement"
         variant="contained"

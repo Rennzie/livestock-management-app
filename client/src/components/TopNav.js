@@ -16,6 +16,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import SettingsIcon from '@material-ui/icons/Settings';
 import LogOutIcon from '@material-ui/icons/PowerSettingsNew';
+import withRouter from 'react-router-dom/withRouter';
 
 const styles = {
   root: {
@@ -63,7 +64,7 @@ class TopNav extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <AppBar position="static" color="default">
+        <AppBar position="fixed" color="default">
           <Toolbar>
             <IconButton
               onClick={this.toggleBurgerMenu('open', true)}
@@ -131,4 +132,4 @@ TopNav.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(TopNav);
+export default withRouter(withStyles(styles)(TopNav));
