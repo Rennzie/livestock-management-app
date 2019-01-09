@@ -19,6 +19,7 @@ const sortAsc = (items, sortField) => orderBy(items, item => item[sortField], ['
 
 function TransferMovement({
   animalsMoved,
+  availableAnimals,
   categories,
   classes,
   createdAt,
@@ -54,13 +55,18 @@ function TransferMovement({
         </FormControl>
       )}
 
-      <IntegerSelect handleCountChange={handleCountChange} number={animalsMoved} />
+      <IntegerSelect
+        disableAddBtn={animalsMoved >= availableAnimals}
+        handleCountChange={handleCountChange}
+        number={animalsMoved}
+      />
     </Fragment>
   );
 }
 
 TransferMovement.propTypes = {
   animalsMoved: PropTypes.number.isRequired,
+  availableAnimals: PropTypes.number.isRequired,
   categories: PropTypes.array,
   classes: PropTypes.object.isRequired,
   createdAt: PropTypes.string.isRequired,

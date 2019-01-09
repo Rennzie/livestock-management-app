@@ -22,6 +22,9 @@ const styles = theme => ({
   },
   select: {
     margin: theme.spacing.unit * 2
+  },
+  margin: {
+    margin: theme.spacing.unit
   }
 });
 
@@ -96,11 +99,18 @@ class NewMovement extends Component {
       const otherCategories = res.data.categories.filter(
         category => category._id.toString() !== match.params.categoryId
       );
-      this.setState(() => ({
-        categoryName: location.state.categoryName,
-        categories: otherCategories,
-        createdAt: moment().format('YYYY-MM-DD')
-      }));
+      const currentCategory = res.data.categories.filter(
+        category => category._id.toString() === match.params.categoryId
+      )[0];
+      this.setState(
+        () => ({
+          categoryName: location.state.categoryName,
+          categories: otherCategories,
+          createdAt: moment().format('YYYY-MM-DD'),
+          availableAnimals: currentCategory.currentMonthDetail.closingTotal
+        }),
+        () => console.log('STATE===========> ', this.state)
+      );
     });
   }
 
@@ -222,6 +232,7 @@ class NewMovement extends Component {
   render() {
     const {
       animalsMoved,
+      availableAnimals,
       categories,
       categoryName,
       createdAt,
@@ -237,9 +248,20 @@ class NewMovement extends Component {
           New Movement
         </Typography>
         {categoryName && (
-          <Typography variant="subtitle1" align="center">
-            <CapitalizeText>{categoryName}</CapitalizeText>
-          </Typography>
+          <Fragment>
+            <Typography variant="subtitle1" align="center">
+              <CapitalizeText>{categoryName}</CapitalizeText>
+            </Typography>
+            <Typography className={classes.margin} variant="subtitle1">
+              Before Movement: {availableAnimals}
+            </Typography>
+            <Typography className={classes.margin} variant="subtitle1">
+              After Movement:{' '}
+              {movementType === 'add'
+                ? availableAnimals + animalsMoved
+                : availableAnimals - animalsMoved}
+            </Typography>
+          </Fragment>
         )}
         <FormControl variant="outlined" required fullWidth>
           <InputLabel className={classes.select} htmlFor="movementType">
@@ -257,10 +279,11 @@ class NewMovement extends Component {
           </NativeSelect>
         </FormControl>
 
-        {(movementType === 'add' || movementType === 'remove') && (
+        {(movementType === 'add' || movementType === 'remove') && categories && (
           <Fragment>
             <AddRemoveMovement
               animalsMoved={animalsMoved}
+              availableAnimals={availableAnimals}
               createdAt={createdAt}
               handleAddRemoveSubmit={this.handleAddRemoveSubmit}
               handleChange={this.handleChange}
@@ -283,6 +306,7 @@ class NewMovement extends Component {
           <Fragment>
             <TransferMovement
               animalsMoved={animalsMoved}
+              availableAnimals={availableAnimals}
               categories={categories}
               createdAt={createdAt}
               handleChange={this.handleChange}

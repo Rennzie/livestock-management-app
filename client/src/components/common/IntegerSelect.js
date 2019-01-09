@@ -21,10 +21,10 @@ const styles = theme => ({
   }
 });
 
-function IntegerSelect({ number, handleCountChange, classes }) {
+function IntegerSelect({ number, handleCountChange, classes, disableAddBtn }) {
   return (
     <section className={classes.counterWrapper}>
-      <IconButton onClick={handleCountChange('countUp')}>
+      <IconButton disabled={disableAddBtn} onClick={handleCountChange('countUp')}>
         <Icon fontSize="large">keyboard_arrow_up</Icon>
       </IconButton>
 
@@ -51,9 +51,14 @@ function IntegerSelect({ number, handleCountChange, classes }) {
 }
 
 IntegerSelect.propTypes = {
+  disableAddBtn: PropTypes.bool,
   number: PropTypes.number.isRequired,
   handleCountChange: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired
+};
+
+IntegerSelect.defaultProps = {
+  disableAddBtn: false
 };
 
 export default withStyles(styles)(IntegerSelect);

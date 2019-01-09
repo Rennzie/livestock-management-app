@@ -15,6 +15,7 @@ const styles = theme => ({
 
 function AddRemoveMovement({
   animalsMoved,
+  availableAnimals,
   classes,
   createdAt,
   handleChange,
@@ -54,13 +55,18 @@ function AddRemoveMovement({
         </NativeSelect>
       </FormControl>
 
-      <IntegerSelect number={animalsMoved} handleCountChange={handleCountChange} />
+      <IntegerSelect
+        disableAddBtn={movementType === 'remove' && animalsMoved >= availableAnimals}
+        number={animalsMoved}
+        handleCountChange={handleCountChange}
+      />
     </Fragment>
   );
 }
 
 AddRemoveMovement.propTypes = {
   animalsMoved: PropTypes.number.isRequired,
+  availableAnimals: PropTypes.number.isRequired,
   classes: PropTypes.object.isRequired,
   createdAt: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
