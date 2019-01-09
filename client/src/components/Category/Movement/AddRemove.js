@@ -66,7 +66,7 @@ function AddRemoveMovement({
 
 AddRemoveMovement.propTypes = {
   animalsMoved: PropTypes.number.isRequired,
-  availableAnimals: PropTypes.number.isRequired,
+  availableAnimals: PropTypes.number,
   classes: PropTypes.object.isRequired,
   createdAt: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
@@ -74,6 +74,10 @@ AddRemoveMovement.propTypes = {
   movementOptions: PropTypes.array.isRequired,
   movementType: PropTypes.string.isRequired,
   reasonForChange: PropTypes.string.isRequired
+};
+
+AddRemoveMovement.defaultProps = {
+  availableAnimals: null
 };
 
 export default withStyles(styles)(AddRemoveMovement);

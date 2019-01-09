@@ -66,7 +66,7 @@ function TransferMovement({
 
 TransferMovement.propTypes = {
   animalsMoved: PropTypes.number.isRequired,
-  availableAnimals: PropTypes.number.isRequired,
+  availableAnimals: PropTypes.number,
   categories: PropTypes.array,
   classes: PropTypes.object.isRequired,
   createdAt: PropTypes.string.isRequired,

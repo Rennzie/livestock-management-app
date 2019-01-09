@@ -41,9 +41,20 @@ function register(req, res, next) {
  *  Generates a token with the user id and emit it via the socket to the
  *  login page on the front end
  * */
-function googleAuth(req) {
+async function googleAuth(req) {
   const io = req.app.get('io');
-  const token = generateToken(req.user);
+  const user = await req.user;
+  console.log('REQ.USER IS =======> ', user);
+
+  let token = '';
+  if (req.user) {
+    token = generateToken(user);
+  }
+
+  if (req.newUser) {
+    console.log('NEW USER IS ========> ', req.newUser);
+    token = generateToken(req.newUser);
+  }
   io.in(req.session.socketId).emit('google', token);
 }
 

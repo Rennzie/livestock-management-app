@@ -1,5 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import Link from 'react-router-dom/Link';
+import PropTypes from 'prop-types';
 
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -194,18 +195,18 @@ class Register extends Component {
           handleClick={this.handleRegister}
           name="REGISTER"
         />
-        <Button
-          component={Link}
-          to="/login"
-          variant="text"
-          className={classes.margin}
-          color="secondary"
-        >
+        <Button component={Link} to="/" variant="text" className={classes.margin} color="secondary">
           Got an account? Sign in
         </Button>
       </Fragment>
     );
   }
 }
+
+Register.propTypes = {
+  classes: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
+};
 
 export default withStyles(styles)(Register);

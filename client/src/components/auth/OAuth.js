@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import withRouter from 'react-router-dom/withRouter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
 import API_URL from '../../../config/config';
 
@@ -80,14 +80,24 @@ class OAuth extends Component {
   render() {
     const { provider, classes } = this.props;
     return (
-      <Paper className={classes.button}>
-        <Button color="primary" onClick={this.startAuth}>
-          <FontAwesomeIcon className={classes.margin} icon={['fab', provider]} />
-          {`Sign In with ${provider}`}
-        </Button>
-      </Paper>
+      <Button
+        className={classes.button}
+        color="default"
+        onClick={this.startAuth}
+        variant="contained"
+      >
+        <FontAwesomeIcon className={classes.margin} icon={['fab', provider]} />
+        {`Continue with ${provider}`}
+      </Button>
     );
   }
 }
+
+OAuth.propTypes = {
+  classes: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  provider: PropTypes.string.isRequired,
+  socket: PropTypes.object.isRequired
+};
 
 export default withStyles(styles)(withRouter(OAuth));

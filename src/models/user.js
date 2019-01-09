@@ -8,7 +8,8 @@ const UserSchema = new Schema(
     password: { type: String, require: true },
     firstName: String,
     surname: String,
-    dateOfBirth: Date
+    dateOfBirth: Date,
+    profilePic: String
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );

@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import Link from 'react-router-dom/Link';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
@@ -15,6 +16,10 @@ const styles = theme => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  button: {
+    margin: theme.spacing.unit,
+    width: '100%'
   },
   margin: {
     margin: theme.spacing.unit
@@ -35,7 +40,7 @@ function ChooseLogin({ classes }) {
         <Button
           variant="contained"
           color="secondary"
-          className={classes.margin}
+          className={classes.button}
           component={Link}
           to="/email-login"
         >
@@ -47,7 +52,7 @@ function ChooseLogin({ classes }) {
           component={Link}
           to="/register"
           variant="text"
-          className={classes.margin3}
+          className={classes.button}
         >
           Not got an account? Register
         </Button>
@@ -55,5 +60,9 @@ function ChooseLogin({ classes }) {
     </Fragment>
   );
 }
+
+ChooseLogin.propTypes = {
+  classes: PropTypes.object.isRequired
+};
 
 export default withStyles(styles)(ChooseLogin);

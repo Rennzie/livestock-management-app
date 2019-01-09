@@ -1,14 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import withRouter from 'react-router-dom/withRouter';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 // Icons
 import Home from '@material-ui/icons/Home';
-import RainIcon from '@material-ui/icons/Grain';
 import AnimalIcon from '@material-ui/icons/Pets';
 
 const styles = () => ({
@@ -71,7 +70,8 @@ class BottomNav extends Component {
             disabled
             onClick={this.handleClick('/rainfall')}
             label="Rainfall"
-            icon={<RainIcon />}
+            color="disabled"
+            icon={<FontAwesomeIcon size="2x" icon={['fas', 'cloud-rain']} />}
           />
         </BottomNavigation>
       </Fragment>

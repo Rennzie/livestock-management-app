@@ -15,8 +15,14 @@ export default () => {
     User.findOne({ email })
       .then(user => {
         if (!user) {
-          // we will create a user here if they done exists; signing them up
-          return next(null, false, { message: 'email is invalid' });
+          // Creates a new user if they do not have an account
+          const newUser = User.create({
+            email,
+            firstName: profile.name.givenName,
+            surname: profile.name.familyName,
+            profilePic: profile.photos[0].value
+          });
+          return next(null, newUser);
         }
         /**
          *  Puts the user profile onto the req obj and calls next in line
