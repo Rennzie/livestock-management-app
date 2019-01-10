@@ -16,12 +16,13 @@ export default () => {
       .then(user => {
         if (!user) {
           // Creates a new user if they do not have an account
-          const newUser = User.create({
-            email,
-            firstName: profile.name.givenName,
-            surname: profile.name.familyName,
-            profilePic: profile.photos[0].value
-          }).then(() => next(null, newUser));
+          return next(null, false, { message: 'email is invalid' });
+          // const newUser = User.create({
+          //   email,
+          //   firstName: profile.name.givenName,
+          //   surname: profile.name.familyName,
+          //   profilePic: profile.photos[0].value
+          // }).then(() => next(null, newUser));
         }
         /**
          *  Puts the user profile onto the req obj and calls next in line
