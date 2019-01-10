@@ -21,8 +21,7 @@ export default () => {
             firstName: profile.name.givenName,
             surname: profile.name.familyName,
             profilePic: profile.photos[0].value
-          });
-          return next(null, newUser);
+          }).then(() => next(null, newUser));
         }
         /**
          *  Puts the user profile onto the req obj and calls next in line
