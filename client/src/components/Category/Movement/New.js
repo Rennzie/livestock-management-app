@@ -15,6 +15,7 @@ import TransferMovement from './Transfer';
 import CapitalizeText from '../../common/CapitalizeText';
 import SubmitButton from '../../common/SubmitButton';
 import Generate from '../../../lib/Generate';
+import LoadingSpinner from '../../common/LoadingSpinner';
 
 const styles = theme => ({
   formControl: {
@@ -102,15 +103,12 @@ class NewMovement extends Component {
       const currentCategory = res.data.categories.filter(
         category => category._id.toString() === match.params.categoryId
       )[0];
-      this.setState(
-        () => ({
-          categoryName: location.state.categoryName,
-          categories: otherCategories,
-          createdAt: moment().format('YYYY-MM-DD'),
-          availableAnimals: currentCategory.currentMonthDetail.closingTotal
-        }),
-        () => console.log('STATE===========> ', this.state)
-      );
+      this.setState(() => ({
+        categoryName: location.state.categoryName,
+        categories: otherCategories,
+        createdAt: moment().format('YYYY-MM-DD'),
+        availableAnimals: currentCategory.currentMonthDetail.closingTotal
+      }));
     });
   }
 
@@ -247,80 +245,87 @@ class NewMovement extends Component {
         <Typography variant="h5" align="center">
           New Movement
         </Typography>
-        {categoryName && (
-          <Fragment>
-            <Typography variant="subtitle1" align="center">
-              <CapitalizeText>{categoryName}</CapitalizeText>
-            </Typography>
-            <Typography className={classes.margin} variant="subtitle1">
-              Before Movement: {availableAnimals}
-            </Typography>
-            <Typography className={classes.margin} variant="subtitle1">
-              After Movement:{' '}
-              {movementType === 'add'
-                ? availableAnimals + animalsMoved
-                : availableAnimals - animalsMoved}
-            </Typography>
-          </Fragment>
-        )}
-        <FormControl variant="outlined" required fullWidth>
-          <InputLabel className={classes.select} htmlFor="movementType">
-            Movements Type
-          </InputLabel>
-          <NativeSelect
-            value={movementType}
-            className={classes.select}
-            onChange={this.handleSelectMoveType}
-            input={<Input name="movementType" id="movementType" />}
-          >
-            <option value="add">Add Animals</option>
-            <option value="remove">Remove Animals</option>
-            <option value="transfer">Transfer Out of Category</option>
-          </NativeSelect>
-        </FormControl>
 
-        {(movementType === 'add' || movementType === 'remove') && categories && (
+        {!categories ? (
+          <LoadingSpinner />
+        ) : (
           <Fragment>
-            <AddRemoveMovement
-              animalsMoved={animalsMoved}
-              availableAnimals={availableAnimals}
-              createdAt={createdAt}
-              handleAddRemoveSubmit={this.handleAddRemoveSubmit}
-              handleChange={this.handleChange}
-              handleCountChange={this.handleCountChange}
-              movementType={movementType}
-              movementOptions={movementOptions}
-              reasonForChange={reasonForChange}
-            />
-            <SubmitButton
-              color="secondary"
-              disabled={!reasonForChange || animalsMoved < 0}
-              handleClick={this.handleAddRemoveSubmit}
-              name="Log Movement"
-              variant="contained"
-            />
-          </Fragment>
-        )}
+            {categoryName && (
+              <Fragment>
+                <Typography variant="subtitle1" align="center">
+                  <CapitalizeText>{categoryName}</CapitalizeText>
+                </Typography>
+                <Typography className={classes.margin} variant="subtitle1">
+                  Before Movement: {availableAnimals}
+                </Typography>
+                <Typography className={classes.margin} variant="subtitle1">
+                  After Movement:{' '}
+                  {movementType === 'add'
+                    ? availableAnimals + animalsMoved
+                    : availableAnimals - animalsMoved}
+                </Typography>
+              </Fragment>
+            )}
+            <FormControl variant="outlined" required fullWidth>
+              <InputLabel className={classes.select} htmlFor="movementType">
+                Movements Type
+              </InputLabel>
+              <NativeSelect
+                value={movementType}
+                className={classes.select}
+                onChange={this.handleSelectMoveType}
+                input={<Input name="movementType" id="movementType" />}
+              >
+                <option value="add">Add Animals</option>
+                <option value="remove">Remove Animals</option>
+                <option value="transfer">Transfer Out of Category</option>
+              </NativeSelect>
+            </FormControl>
 
-        {movementType === 'transfer' && categories && (
-          <Fragment>
-            <TransferMovement
-              animalsMoved={animalsMoved}
-              availableAnimals={availableAnimals}
-              categories={categories}
-              createdAt={createdAt}
-              handleChange={this.handleChange}
-              handleCountChange={this.handleCountChange}
-              handleTransferSubmit={this.handleTransferSubmit}
-              transferTo={transferTo}
-            />
-            <SubmitButton
-              color="secondary"
-              disabled={!transferTo}
-              handleClick={this.handleTransferSubmit}
-              name="Log Transfer"
-              variant="contained"
-            />
+            {(movementType === 'add' || movementType === 'remove') && categories && (
+              <Fragment>
+                <AddRemoveMovement
+                  animalsMoved={animalsMoved}
+                  availableAnimals={availableAnimals}
+                  createdAt={createdAt}
+                  handleAddRemoveSubmit={this.handleAddRemoveSubmit}
+                  handleChange={this.handleChange}
+                  handleCountChange={this.handleCountChange}
+                  movementType={movementType}
+                  movementOptions={movementOptions}
+                  reasonForChange={reasonForChange}
+                />
+                <SubmitButton
+                  color="secondary"
+                  disabled={!reasonForChange || animalsMoved < 0}
+                  handleClick={this.handleAddRemoveSubmit}
+                  name="Log Movement"
+                  variant="contained"
+                />
+              </Fragment>
+            )}
+
+            {movementType === 'transfer' && categories && (
+              <Fragment>
+                <TransferMovement
+                  animalsMoved={animalsMoved}
+                  availableAnimals={availableAnimals}
+                  categories={categories}
+                  createdAt={createdAt}
+                  handleChange={this.handleChange}
+                  handleCountChange={this.handleCountChange}
+                  handleTransferSubmit={this.handleTransferSubmit}
+                  transferTo={transferTo}
+                />
+                <SubmitButton
+                  color="secondary"
+                  disabled={!transferTo}
+                  handleClick={this.handleTransferSubmit}
+                  name="Log Transfer"
+                  variant="contained"
+                />
+              </Fragment>
+            )}
           </Fragment>
         )}
       </Fragment>

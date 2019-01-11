@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
-
 import Typography from '@material-ui/core/Typography';
 import Input from '@material-ui/core/Input';
 import withStyles from '@material-ui/core/styles/withStyles';
 import SubmitButton from '../common/SubmitButton';
+import LoadingSpinner from '../common/LoadingSpinner';
 
 const styles = theme => ({
   margin: {
@@ -62,7 +63,9 @@ class CategoryEditDelete extends Component {
         <Typography align="center" variant="h5">
           Edit/Delete Category
         </Typography>
-        {category && (
+        {!category ? (
+          <LoadingSpinner />
+        ) : (
           <Typography align="center" variant="subtitle1">
             {category.category}
           </Typography>
@@ -72,6 +75,7 @@ class CategoryEditDelete extends Component {
             // type="number"
             id="stockUnitFactor"
             name="stockUnitFactor"
+            autoComplete="false"
             placeholder="Stock Unit Factor"
             value={stockUnitFactor}
             onChange={this.handleChange('stockUnitFactor')}
@@ -82,7 +86,7 @@ class CategoryEditDelete extends Component {
             className={classes.margin}
             color="secondary"
             handleClick={this.handleSubmit}
-            name="Log Change"
+            name="Edit Category"
           />
           <SubmitButton
             disabled={!category}
@@ -97,5 +101,11 @@ class CategoryEditDelete extends Component {
     );
   }
 }
+
+CategoryEditDelete.propTypes = {
+  classes: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
+};
 
 export default withStyles(styles)(CategoryEditDelete);
